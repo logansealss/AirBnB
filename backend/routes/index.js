@@ -2,6 +2,10 @@
 const express = require('express');
 const router = express.Router();
 
+// import api/index.js and connect it to the router
+const apiRouter = require('./api');
+router.use('/api', apiRouter);
+
 router.get("/api/csrf/restore", (req, res) => {
   const csrfToken = req.csrfToken();
   res.cookie("XSRF-TOKEN", csrfToken);
