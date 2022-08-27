@@ -24,7 +24,7 @@ const spotInfo = [
     lat: 29.4260,
     lng: 98.4861,
     name: 'The Alamo',
-    description: 'The Alamo Mission, commonly called the Alamo and originally known as the Misión San Antonio de Valero, is a historic Spanish mission and fortress compound founded in the 18th century by Roman Catholic missionaries in what is now San Antonio, Texas, United States.',
+    description: 'The Alamo Mission, commonly called the Alamo and originally known as the Misión San Antonio de Valero, is a historic Spanish mission and fortress compound founded in the 18th century by Roman Catholic missionaries in what is now San Antonio, Texas.',
     price: 500
   },
   {
