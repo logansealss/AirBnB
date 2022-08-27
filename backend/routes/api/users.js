@@ -39,13 +39,42 @@ const validateSignup = [
     handleValidationErrors
 ];
 
+function isStringWithChars(input){
+    return (typeof input === 'string' && input.length > 0);
+}
+
 // Sign up
 router.post(
     '/',
-    validateSignup,
     async (req, res) => {
 
         const { email, password, username, firstName, lastName } = req.body;
+        
+        const inputErrorObject = {};
+        
+        if(!isStringWithChars(email)){
+            inputErrorObject.email = 'Invalid email';
+        }
+        if(!isStringWithChars(username)){
+            inputErrorObject.username = "Username is required";
+        }
+        if(!isStringWithChars(username)){
+            inputErrorObject.firstName = "First Name is required";
+        }
+        if(!isStringWithChars(username)){
+            inputErrorObject.lastName = "Last Name is required";
+        }
+        
+        if(Object.keys(inputErrorObject).length > 0){
+            res.status(400);
+            res.json({
+                "message": "Validation error",
+                "statusCode": 400,
+                "errors": inputErrorObject
+            });
+            return;
+        }
+
         const userWithUsernameOrEmail = await User.findOne({
             where: {
                 [Op.or]: [{username}, {email}]
