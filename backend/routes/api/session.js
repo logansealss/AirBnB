@@ -44,7 +44,7 @@ router.post(
     async (req, res, next) => {
         const { credential, password } = req.body;
         
-        if(!isStringWithChars(credential) || !isStringWithChars(password)){
+        if(credential === undefined || password === undefined){
             res.status(400);
             return res.json({
                 "message": "Validation error",

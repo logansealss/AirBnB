@@ -50,40 +50,21 @@ router.post(
     async (req, res) => {
 
         const { email, password, username, firstName, lastName } = req.body;
-        
-        const inputErrorObject = {};
-        
-        if(!isStringWithChars(email)){
-            inputErrorObject.email = 'Invalid email';
-        }
-        if(!isStringWithChars(username)){
-            inputErrorObject.username = "Username is required";
-        }
-        if(!isStringWithChars(username)){
-            inputErrorObject.firstName = "First Name is required";
-        }
-        if(!isStringWithChars(username)){
-            inputErrorObject.lastName = "Last Name is required";
-        }
-        
-        if(Object.keys(inputErrorObject).length > 0){
-            res.status(400);
-            res.json({
-                "message": "Validation error",
-                "statusCode": 400,
-                "errors": inputErrorObject
-            });
-            return;
-        }
 
-        const userWithUsernameOrEmail = await User.findOne({
+        let userWithUsernameOrEmail = await User.findOne({
             where: {
-                [Op.or]: [{username}, {email}]
+                [Op.or]: [{email}, {username}]
+            },
+            attributes: {
+                include: ['username', 'email']
             }
         });
 
         // user with email or username already exist
         if(userWithUsernameOrEmail){
+
+            userWithUsernameOrEmail = userWithUsernameOrEmail.toJSON();
+
             if(userWithUsernameOrEmail.email === email){
                 res.status(403);
                 res.json({
@@ -105,7 +86,24 @@ router.post(
             }
         }else{
 
-            let user = await User.signup({ email, username, password, firstName, lastName });
+
+            let user;
+            try{
+                user = await User.signup({ email, username, password, firstName, lastName });
+            }catch(err){
+                console.log(err);
+                res.status(400);
+                return res.json({
+                    "message": "Validation error",
+                    "statusCode": 400,
+                    "errors": {
+                      "email": "Invalid email",
+                      "username": "Username is required",
+                      "firstName": "First Name is required",
+                      "lastName": "Last Name is required"
+                    }
+                });
+            }
     
             const token = await setTokenCookie(res, user);
 
