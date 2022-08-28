@@ -1,7 +1,7 @@
 // backend/routes/api/session.js
 const express = require('express')
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
 const { check } = require('express-validator');
@@ -12,13 +12,13 @@ const router = express.Router();
 // Restore session user
 router.get(
     '/',
-    restoreUser,
+    [restoreUser, requireAuth],
     (req, res) => {
         const { user } = req;
         if (user) {
-            return res.json({
-            user: user.toSafeObject()
-            });
+            return res.json(
+                user.toSafeObject()
+            );
         } else return res.json({});
     }
 );
@@ -34,28 +34,46 @@ const validateLogin = [
     handleValidationErrors
 ];
 
+function isStringWithChars(input){
+    return (typeof input === 'string' && input.length > 0);
+}
+
 // Log in
 router.post(
     '/',
-    validateLogin,
     async (req, res, next) => {
         const { credential, password } = req.body;
+        
+        if(!isStringWithChars(credential) || !isStringWithChars(password)){
+            res.status(400);
+            return res.json({
+                "message": "Validation error",
+                "statusCode": 400,
+                "errors": {
+                  "credential": "Email or username is required",
+                  "password": "Password is required"
+                }
+            });
+        }
 
         const user = await User.login({ credential, password });
 
         if (!user) {
-            const err = new Error('Login failed');
-            err.status = 401;
-            err.title = 'Login failed';
-            err.errors = ['The provided credentials were invalid.'];
-            return next(err);
+            res.status(401);
+            return res.json({
+                "message": "Invalid credentials",
+                "statusCode": 401
+            });
         }
 
-        await setTokenCookie(res, user);
+        const token = await setTokenCookie(res, user);
 
-        return res.json({
-            user
-        });
+        const userObj = user.toJSON();
+        userObj.token = token;
+
+        return res.json(
+            userObj
+        );
     }
 );
 

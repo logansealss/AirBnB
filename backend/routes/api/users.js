@@ -15,23 +15,23 @@ const validateSignup = [
     check('email')
         .exists({ checkFalsy: true })
         .isEmail()
-        .withMessage('Please provide a valid email.'),
+        .withMessage('Invalid email'),
     check('username')
         .exists({ checkFalsy: true })
         .isLength({ min: 4 })
-        .withMessage('Please provide a username with at least 4 characters.'),
+        .withMessage('Username is required'),
     check('username')
         .not()
         .isEmail()
-        .withMessage('Username cannot be an email.'),
+        .withMessage('Username is required'),
     check('firstName')
         .exists({ checkFalsy: true })
         .isLength({ min: 1 })
-        .withMessage('Please provide a firstName with at least 1 character.'),
+        .withMessage('First Name is required'),
     check('lastName')
         .exists({ checkFalsy: true })
         .isLength({ min: 1 })
-        .withMessage('Please provide a lastName with at least 1 character.'),
+        .withMessage('Last Name is required'),
     check('password')
         .exists({ checkFalsy: true })
         .isLength({ min: 6 })
@@ -46,6 +46,7 @@ function isStringWithChars(input){
 // Sign up
 router.post(
     '/',
+    // validateSignup,
     async (req, res) => {
 
         const { email, password, username, firstName, lastName } = req.body;
@@ -83,23 +84,22 @@ router.post(
 
         // user with email or username already exist
         if(userWithUsernameOrEmail){
-
-            if(userWithUsernameOrEmail.username === username){
-                res.status(403);
-                res.json({
-                    "message": "User already exists",
-                    "statusCode": 403,
-                    "errors": {
-                      "username": "User with that username already exists"
-                    }
-                });
-            }else{
+            if(userWithUsernameOrEmail.email === email){
                 res.status(403);
                 res.json({
                     "message": "User already exists",
                     "statusCode": 403,
                     "errors": {
                       "email": "User with that email already exists"
+                    }
+                });
+            }else{
+                res.status(403);
+                res.json(                {
+                    "message": "User already exists",
+                    "statusCode": 403,
+                    "errors": {
+                      "username": "User with that username already exists"
                     }
                 });
             }

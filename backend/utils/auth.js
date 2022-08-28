@@ -52,14 +52,14 @@ const restoreUser = (req, res, next) => {
 };
 
 // If there is no current user, return an error
-const requireAuth = function (req, _res, next) {
+const requireAuth = function (req, res, next) {
     if (req.user) return next();
-  
-    const err = new Error('Unauthorized');
-    err.title = 'Unauthorized';
-    err.errors = ['Unauthorized'];
-    err.status = 401;
-    return next(err);
+
+    res.status(401);
+    return res.json({
+        "message": "Authentication required",
+        "statusCode": 401
+    });
 };
 
 module.exports = { setTokenCookie, restoreUser, requireAuth };
