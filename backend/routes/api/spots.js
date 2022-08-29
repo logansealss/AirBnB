@@ -120,4 +120,93 @@ router.get('/', async (req, res, next) => {
     });
 });
 
+router.post('/:id/images', requireAuth,async (req, res, next) => {
+
+    const spot = await Spot.findByPk(req.params.id);
+
+    if(spot){
+        const spotObj = spot.toJSON();
+        if(spotObj.ownerId !== req.user.id){
+            res.status(403);
+            return res.json({
+                "message": "Forbidden",
+                "statusCode": 403
+            });
+        }else{
+
+            let {url, preview} = req.body;
+
+            if(preview === undefined){
+                preview = 'false';
+            }
+
+            if(typeof url !== 'string' || (preview !== 'true' && preview !== 'false')){
+                res.status(400);
+                res.json({
+                    "message": "Validation Error",
+                    "statusCode": 400,
+                    "errors": {
+                      url: "Url is required",
+                      preview: 'Preview must be a boolean'
+                    }
+                });
+            }else{
+
+                if(preview === 'true'){
+                    preview = true;
+                }else{
+                    preview = false;
+                }
+
+                const newImage = await SpotImage.create({
+                    url, preview, spotId: Number(req.params.id)
+                });
+
+                const newImageObj = newImage.toJSON();
+                delete newImageObj.createdAt;
+                delete newImageObj.updatedAt;
+                delete newImageObj.spotId;
+
+                return res.json(newImageObj)
+            }
+        }
+    }else{
+        res.status(404);
+        return res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        });
+    }
+
+    res.json('success!')
+});
+
+router.delete('/:id', requireAuth, async (req, res, next) => {
+
+    const spot = await Spot.findByPk(req.params.id);
+
+    if(spot){
+        const spotObj = spot.toJSON();
+        if(spotObj.ownerId !== req.user.id){
+            res.status(403);
+            return res.json({
+                "message": "Forbidden",
+                "statusCode": 403
+            });
+        }else{
+            await spot.destroy();
+            res.json({
+                "message": "Successfully deleted",
+                "statusCode": 200
+            });
+        }
+    }else{
+        res.status(404);
+        return res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        });
+    }
+});
+
 module.exports = router;
