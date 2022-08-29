@@ -3,6 +3,7 @@ const express = require('express')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User, Spot, SpotImage, Review, sequelize } = require('../../db/models');
+sequelize.Sequelize.DataTypes.postgres.DECIMAL.parse = parseFloat;
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
