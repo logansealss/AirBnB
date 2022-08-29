@@ -181,6 +181,29 @@ router.post('/:id/images', requireAuth,async (req, res, next) => {
     res.json('success!')
 });
 
+router.post('/', requireAuth, async (req, res, next) => {
+
+    const   {address, city, state, 
+            country, lat, lng, name, 
+            description, price} = req.body;
+
+    const newSpot = await Spot.create({
+        ownerId: req.user.id,
+        address, 
+        city, 
+        state, 
+        country, 
+        lat, 
+        lng, 
+        name, 
+        description, 
+        price,
+    });
+
+    res.status(201);
+    res.json(newSpot);
+}); 
+
 router.delete('/:id', requireAuth, async (req, res, next) => {
 
     const spot = await Spot.findByPk(req.params.id);
