@@ -9,7 +9,14 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-router.get('/', async (req, res, next) => {
+async function getSpotsWithRatingPreview(ownerId){
+
+    const whereObj = {};
+
+    if(ownerId){
+
+        whereObj.ownerId = ownerId;
+    }
 
     const spots = await Spot.findAll({
         include: {
@@ -20,6 +27,7 @@ router.get('/', async (req, res, next) => {
             attributes: ['url'],
             limit: 1
         },
+        where: whereObj,
         order: [['id']]
     });
 
@@ -48,9 +56,26 @@ router.get('/', async (req, res, next) => {
 
         spots[i] = curSpotObj;
     }
+
+    return spots;
+}
+
+router.get('/current', requireAuth, async (req, res, next) => {
+
+    const userSpots = await getSpotsWithRatingPreview(req.user.id);
+
+    return res.json({
+        Spots: userSpots
+    });
+
+});
+
+router.get('/', async (req, res, next) => {
+
+    const allSpots = await getSpotsWithRatingPreview();
     
     res.json({
-        Spots: spots
+        Spots: allSpots
     });
 });
 
