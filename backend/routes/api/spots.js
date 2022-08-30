@@ -8,6 +8,10 @@ sequelize.Sequelize.DataTypes.postgres.DECIMAL.parse = parseFloat;
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
+function isStringWithChars(input){
+    return (typeof input === 'string' && input.length > 0);
+}
+
 const router = express.Router();
 
 async function getSpotsWithRatingPreview(ownerId){
@@ -138,38 +142,37 @@ router.post('/:id/images', requireAuth,async (req, res, next) => {
             let {url, preview} = req.body;
 
             if(preview === undefined){
-                preview = 'false';
+                preview = false;
             }
 
-            if(typeof url !== 'string' || (preview !== 'true' && preview !== 'false')){
+            const errorsObj = {};
+
+            if(!isStringWithChars(url)){
+                errorsObj.url = "Url is required and must be a string";
+            }
+            if(typeof preview !== 'boolean'){
+                errorsObj.preview = "Preview is optional and must be a boolean";
+            }
+            
+            if(Object.keys(errorsObj).length > 0){
                 res.status(400);
-                res.json({
+                return res.json({
                     "message": "Validation Error",
                     "statusCode": 400,
-                    "errors": {
-                      url: "Url is required",
-                      preview: 'Preview must be a boolean'
-                    }
+                    "errors": errorsObj
                 });
-            }else{
-
-                if(preview === 'true'){
-                    preview = true;
-                }else{
-                    preview = false;
-                }
-
-                const newImage = await SpotImage.create({
-                    url, preview, spotId: Number(req.params.id)
-                });
-
-                const newImageObj = newImage.toJSON();
-                delete newImageObj.createdAt;
-                delete newImageObj.updatedAt;
-                delete newImageObj.spotId;
-
-                return res.json(newImageObj)
             }
+            
+            const newImage = await SpotImage.create({
+                url, preview, spotId: Number(req.params.id)
+            });
+
+            const newImageObj = newImage.toJSON();
+            delete newImageObj.createdAt;
+            delete newImageObj.updatedAt;
+            delete newImageObj.spotId;
+
+            return res.json(newImageObj)
         }
     }else{
         res.status(404);
@@ -178,8 +181,6 @@ router.post('/:id/images', requireAuth,async (req, res, next) => {
             "statusCode": 404
         });
     }
-
-    res.json('success!')
 });
 
 router.post('/', requireAuth, async (req, res, next) => {
