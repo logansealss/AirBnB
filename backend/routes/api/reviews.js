@@ -12,10 +12,8 @@ router.get('/current', requireAuth, async (req, res, next) => {
         where: {
             userId: req.user.id
         },
-        attributes: {
-            include: ['id']
-        },
-        include: [{
+        include: [
+            {
             model: User,
             attributes: ['id', 'firstName', 'lastName']
         },{
@@ -31,31 +29,24 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 limit: 1,
                 attributes: ['url']
             }
+        },
+        {
+            model: ReviewImage,
+            attributes: ['id', 'url']
         }]
     });
 
     for(let i = 0; i < reviews.length; i++){
 
-        const curReview = reviews[i].toJSON();
+        const reviewObj = reviews[i].toJSON();
 
-        const previewImage = curReview.Spot.SpotImages[0].url;
+        reviewObj.Spot.previewImage = reviewObj.Spot.SpotImages[0].url;
+        delete reviewObj.Spot.SpotImages;
 
-        curReview.Spot.previewImage = previewImage;
-        delete curReview.Spot.SpotImages;
-
-        const reviewImages = await ReviewImage.findAll({
-            where: {
-                reviewId: curReview.id
-            },
-            attributes: ['id', 'url']
-        });
-
-        curReview.ReviewImages = reviewImages;
-
-        reviews[i] = curReview;
+        reviews[i] = reviewObj;
     }
 
-    res.json({Reviews: reviews});
+    return res.json({Reviews: reviews});
 });
 
 

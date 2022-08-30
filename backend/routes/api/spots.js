@@ -2,7 +2,7 @@
 const express = require('express')
 
 const { requireAuth } = require('../../utils/auth');
-const { User, Spot, SpotImage, Review, sequelize } = require('../../db/models');
+const { User, Spot, SpotImage, Review, sequelize, ReviewImage } = require('../../db/models');
 sequelize.Sequelize.DataTypes.postgres.DECIMAL.parse = parseFloat;
 
 const router = express.Router();
@@ -64,6 +64,37 @@ router.get('/current', requireAuth, async (req, res, next) => {
         Spots: userSpots
     });
 
+});
+
+router.get('/:id/reviews', async (req, res, next) => {
+
+    const spot = await Spot.findByPk(req.params.id);
+
+    if(spot){
+
+        const spotObj = spot.toJSON();
+        const reviews = await Review.findAll({
+            where: {
+                spotId: spotObj.id
+            },
+            include: [{
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },{
+                model: ReviewImage,
+                attributes: ['id', 'url']
+            }]
+        });
+
+        return res.json({Reviews: reviews});
+
+    }else{
+        res.status(404);
+        return res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        });
+    }
 });
 
 router.get('/:id', async (req, res, next) => {
