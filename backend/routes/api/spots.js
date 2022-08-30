@@ -226,6 +226,81 @@ router.post('/', requireAuth, async (req, res, next) => {
     res.json(newSpot);
 }); 
 
+router.put('/:id', requireAuth, async (req, res, next) => {
+
+    const   {address, city, state, 
+            country, lat, lng, name, 
+            description, price} = req.body;
+
+    if  (address === undefined || city === undefined || state === undefined
+        || country === undefined || lat === undefined || lng === undefined
+        || name === undefined || description === undefined || price === undefined){
+
+            res.status(400);
+            return res.json({
+                "message": "Validation Error",
+                "statusCode": 400,
+                "errors": {
+                  "address": "Street address is required",
+                  "city": "City is required",
+                  "state": "State is required",
+                  "country": "Country is required",
+                  "lat": "Latitude is not valid",
+                  "lng": "Longitude is not valid",
+                  "name": "Name must be less than 50 characters",
+                  "description": "Description is required",
+                  "price": "Price per day is required"
+                }
+            });
+    }
+
+    const curSpot = await Spot.findByPk(req.params.id);
+
+    if(curSpot){
+
+        try{
+            await curSpot.update({
+                address, 
+                city, 
+                state, 
+                country, 
+                lat, 
+                lng, 
+                name, 
+                description, 
+                price,
+            });
+
+            return res.json(curSpot);
+        }catch(err){
+            res.status(400);
+            return res.json({
+                "message": "Validation Error",
+                "statusCode": 400,
+                "errors": {
+                  "address": "Street address is required",
+                  "city": "City is required",
+                  "state": "State is required",
+                  "country": "Country is required",
+                  "lat": "Latitude is not valid",
+                  "lng": "Longitude is not valid",
+                  "name": "Name must be less than 50 characters",
+                  "description": "Description is required",
+                  "price": "Price per day is required"
+                }
+            });
+        }
+
+    }else{
+
+        res.status(404);
+        return res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        });
+    }
+});
+
 router.delete('/:id', requireAuth, async (req, res, next) => {
 
     const spot = await Spot.findByPk(req.params.id);
