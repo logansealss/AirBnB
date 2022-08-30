@@ -1,16 +1,9 @@
-// backend/routes/api/users.js
+// backend/routes/api/spots.js
 const express = require('express')
 
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
+const { requireAuth } = require('../../utils/auth');
 const { User, Spot, SpotImage, Review, sequelize } = require('../../db/models');
 sequelize.Sequelize.DataTypes.postgres.DECIMAL.parse = parseFloat;
-
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
-
-function isStringWithChars(input){
-    return (typeof input === 'string' && input.length > 0);
-}
 
 const router = express.Router();
 
