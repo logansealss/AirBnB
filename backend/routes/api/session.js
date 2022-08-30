@@ -43,8 +43,14 @@ router.post(
     '/',
     async (req, res, next) => {
         const { credential, password } = req.body;
+
+        let user;
+
+        try{
+            user = await User.login({ credential, password });
         
-        if(credential === undefined || password === undefined){
+        }catch(err){
+            // credential or password not provided
             res.status(400);
             return res.json({
                 "message": "Validation error",
@@ -55,9 +61,7 @@ router.post(
                 }
             });
         }
-
-        const user = await User.login({ credential, password });
-
+        
         if (!user) {
             res.status(401);
             return res.json({
