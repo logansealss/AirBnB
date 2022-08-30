@@ -23,29 +23,18 @@ router.post(
 
         const { email, password, username, firstName, lastName } = req.body;
 
-        const errors = {};
-
-        if(!isStringWithChars(email)){
-            errors.email = "Invalid email";
-        }
-        if(!isStringWithChars(username)){
-            errors.username = "Username is required";
-        }
-        if(!isStringWithChars(firstName)){
-            errors.firstName = "First Name is required";
-        }
-        if(!isStringWithChars(lastName)){
-            errors.lastName = "Last Name is required";
-        }
-
-        if(Object.keys(errors).length > 0){
-
+        if(!username || !email){
             res.status(400);
             return res.json({
                 "message": "Validation error",
                 "statusCode": 400,
-                "errors": errors
-            });
+                "errors": {
+                  "email": "Invalid email",
+                  "username": "Username is required",
+                  "firstName": "First Name is required",
+                  "lastName": "Last Name is required"
+                }
+            })
         }
 
         let userWithUsernameOrEmail = await User.findOne({
@@ -88,7 +77,6 @@ router.post(
             try{
                 user = await User.signup({ email, username, password, firstName, lastName });
             }catch(err){
-                console.log(err);
                 res.status(400);
                 return res.json({
                     "message": "Validation error",
@@ -103,9 +91,8 @@ router.post(
             }
     
             const token = await setTokenCookie(res, user);
-
+            
             user = user.toJSON();
-
             user.token = token;
     
             return res.json(user);
