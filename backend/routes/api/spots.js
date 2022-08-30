@@ -128,9 +128,9 @@ router.get('/', async (req, res, next) => {
 router.post('/:id/images', requireAuth,async (req, res, next) => {
 
     const spot = await Spot.findByPk(req.params.id);
+    const spotObj = spot.toJSON();
 
     if(spot){
-        const spotObj = spot.toJSON();
         if(spotObj.ownerId !== req.user.id){
             res.status(403);
             return res.json({
@@ -141,30 +141,9 @@ router.post('/:id/images', requireAuth,async (req, res, next) => {
 
             let {url, preview} = req.body;
 
-            if(preview === undefined){
-                preview = false;
-            }
-
-            const errorsObj = {};
-
-            if(!isStringWithChars(url)){
-                errorsObj.url = "Url is required and must be a string";
-            }
-            if(typeof preview !== 'boolean'){
-                errorsObj.preview = "Preview is optional and must be a boolean";
-            }
-            
-            if(Object.keys(errorsObj).length > 0){
-                res.status(400);
-                return res.json({
-                    "message": "Validation Error",
-                    "statusCode": 400,
-                    "errors": errorsObj
-                });
-            }
-            
-            const newImage = await SpotImage.create({
-                url, preview, spotId: Number(req.params.id)
+            const newImage = await spot.createSpotImage({
+                url,
+                preview
             });
 
             const newImageObj = newImage.toJSON();
