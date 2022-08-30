@@ -43,16 +43,22 @@ router.post(
     '/',
     async (req, res, next) => {
         const { credential, password } = req.body;
+
+        const errorObj = {};
+
+        if(!isStringWithChars(credential)){
+            errorObj.credential = "Email or username is required";
+        }
+        if(!isStringWithChars(password)){
+            errorObj.password = "Password is required";
+        }
         
-        if(credential === undefined || password === undefined){
+        if(Object.keys(errorObj).length > 0){
             res.status(400);
             return res.json({
                 "message": "Validation error",
                 "statusCode": 400,
-                "errors": {
-                  "credential": "Email or username is required",
-                  "password": "Password is required"
-                }
+                "errors": errorObj
             });
         }
 

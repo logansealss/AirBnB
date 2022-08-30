@@ -26,10 +26,7 @@ router.post(
         const errors = {};
 
         if(!isStringWithChars(email)){
-            errors.email = "Email is required and must be valid";
-        }
-        if(!isStringWithChars(password)){
-            errors.password = "Password is required";
+            errors.email = "Invalid email";
         }
         if(!isStringWithChars(username)){
             errors.username = "Username is required";
