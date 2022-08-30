@@ -149,7 +149,64 @@ router.get('/', async (req, res, next) => {
     });
 });
 
-router.post('/:id/images', requireAuth,async (req, res, next) => {
+router.post('/:id/reviews', requireAuth, async (req, res, next) => {
+
+    const spot = await Spot.findByPk(req.params.id);
+
+    if(spot){
+        const spotObj = spot.toJSON();
+
+        const userSpotReview = await Review.findOne({
+            where: {
+                userId: req.user.id,
+                spotId: spotObj.id
+            }
+        });
+
+        if(userSpotReview){
+            res.status(403);
+            return res.json({
+                "message": "User already has a review for this spot",
+                "statusCode": 403
+            });
+
+        }else{
+
+            const {review, stars} = req.body;
+
+            try{
+                const newReview = await spot.createReview({
+                    userId: req.user.id,
+                    review,
+                    stars
+                })
+
+                res.status(201);
+                return res.json(newReview);
+            }catch(err){
+
+                res.status(400);
+                return res.json({
+                    "message": "Validation error",
+                    "statusCode": 400,
+                    "errors": {
+                      "review": "Review text is required",
+                      "stars": "Stars must be an integer from 1 to 5",
+                    }
+                });
+            }
+        }
+
+    }else{
+        res.status(404);
+        return res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        });
+    }
+});
+
+router.post('/:id/images', requireAuth, async (req, res, next) => {
 
     const spot = await Spot.findByPk(req.params.id);
     
