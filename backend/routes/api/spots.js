@@ -128,9 +128,9 @@ router.get('/', async (req, res, next) => {
 router.post('/:id/images', requireAuth,async (req, res, next) => {
 
     const spot = await Spot.findByPk(req.params.id);
-    const spotObj = spot.toJSON();
-
+    
     if(spot){
+        const spotObj = spot.toJSON();
         if(spotObj.ownerId !== req.user.id){
             res.status(403);
             return res.json({
