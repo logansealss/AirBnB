@@ -2,7 +2,7 @@
 const express = require('express')
 
 const { requireAuth } = require('../../utils/auth');
-const { User, Spot, SpotImage, Review, ReviewImage } = require('../../db/models');
+const { User, Spot, SpotImage, Review, ReviewImage, Booking } = require('../../db/models');
 
 const router = express.Router();
 
@@ -87,6 +87,92 @@ router.post('/:id/images', requireAuth, async (req, res, next) => {
 
         res.json(newReviewImage);
 
+    }else{
+
+        res.status(404);
+        return res.json({
+            "message": "Review couldn't be found",
+            "statusCode": 404
+        });
+    }
+});
+
+router.put('/:reviewId', requireAuth, async (req, res, next) => {
+
+    const {review, stars} = req.body;
+    const userReview = await Review.findByPk(req.params.reviewId);
+
+    if(userReview){
+
+        if(userReview.userId !== req.user.id){
+            res.status(403);
+            return res.json({
+                "message": "Forbidden",
+                "statusCode": 403
+            });
+        }
+
+        if(!review || !stars){
+            res.status(400);
+            return res.json({
+                "message": "Validation error",
+                "statusCode": 400,
+                "errors": {
+                  "review": "Review text is required",
+                  "stars": "Stars must be an integer from 1 to 5",
+                }
+            });
+        }
+
+        try{
+
+            await userReview.update({review, stars});
+
+            return res.json(userReview);
+        }catch(err){
+            res.status(400);
+            return res.json({
+                "message": "Validation error",
+                "statusCode": 400,
+                "errors": {
+                  "review": "Review text is required",
+                  "stars": "Stars must be an integer from 1 to 5",
+                }
+            });
+        }
+
+
+    }else{
+
+        res.status(404);
+        return res.json({
+            "message": "Review couldn't be found",
+            "statusCode": 404
+        });
+    }
+});
+
+router.delete('/:reviewId', requireAuth, async (req, res, next) => {
+
+    const userReview = await Review.findByPk(req.params.reviewId);
+
+    if(userReview){
+
+        if(userReview.userId !== req.user.id){
+
+            res.status(403);
+            return res.json({
+                "message": "Forbidden",
+                "statusCode": 403
+            });
+        }
+
+        await userReview.destroy();
+
+        return res.json({
+            "message": "Successfully deleted",
+            "statusCode": 200
+        });
     }else{
 
         res.status(404);

@@ -179,7 +179,7 @@ router.post('/:id/reviews', requireAuth, async (req, res, next) => {
                     userId: req.user.id,
                     review,
                     stars
-                })
+                });
 
                 res.status(201);
                 return res.json(newReview);
