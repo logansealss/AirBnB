@@ -318,6 +318,15 @@ router.put('/:id', requireAuth, async (req, res, next) => {
 
     if(curSpot){
 
+        if(curSpot.ownerId !== req.user.id){
+
+            res.status(403);
+            return res.json({
+                "message": "Forbidden",
+                "statusCode": 403
+            });
+        }
+
         try{
             await curSpot.update({
                 address, 

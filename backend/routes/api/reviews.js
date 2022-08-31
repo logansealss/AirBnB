@@ -40,7 +40,14 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
         const reviewObj = reviews[i].toJSON();
 
-        reviewObj.Spot.previewImage = reviewObj.Spot.SpotImages[0].url;
+        const previewImageUrlObj = reviewObj.Spot.SpotImages[0];
+
+        if(previewImageUrlObj){
+            reviewObj.Spot.previewImage = previewImageUrlObj.url;
+        }else{
+            reviewObj.Spot.previewImage = null;
+        }
+
         delete reviewObj.Spot.SpotImages;
 
         reviews[i] = reviewObj;
@@ -85,7 +92,13 @@ router.post('/:id/images', requireAuth, async (req, res, next) => {
             reviewId: review.id
         });
 
-        res.json(newReviewImage);
+        const newReviewImageObj = newReviewImage.toJSON();
+
+        delete newReviewImageObj.createdAt;
+        delete newReviewImageObj.updatedAt;
+        delete newReviewImageObj.reviewId;
+
+        res.json(newReviewImageObj);
 
     }else{
 
