@@ -1,8 +1,8 @@
-// backend/routes/api/spots.js
+// backend/routes/api/reviews.js
 const express = require('express')
 
 const { requireAuth } = require('../../utils/auth');
-const { User, Spot, SpotImage, Review, ReviewImage, Booking } = require('../../db/models');
+const { User, Spot, SpotImage, Review, ReviewImage } = require('../../db/models');
 
 const router = express.Router();
 
