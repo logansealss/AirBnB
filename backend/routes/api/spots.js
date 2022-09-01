@@ -3,19 +3,12 @@ const express = require('express')
 
 const { requireAuth } = require('../../utils/auth');
 const { User, Spot, SpotImage, Review, sequelize, ReviewImage, Booking } = require('../../db/models');
-const { Op } = require("sequelize");
+const { Op, NUMBER } = require("sequelize");
 sequelize.Sequelize.DataTypes.postgres.DECIMAL.parse = parseFloat;
 
 const router = express.Router();
 
-async function getSpotsWithRatingPreview(ownerId){
-
-    const whereObj = {};
-
-    if(ownerId){
-
-        whereObj.ownerId = ownerId;
-    }
+async function getSpotsWithRatingPreview(queryOptions = {}){
 
     const spots = await Spot.findAll({
         include: {
@@ -26,7 +19,7 @@ async function getSpotsWithRatingPreview(ownerId){
             attributes: ['url'],
             limit: 1
         },
-        where: whereObj,
+        ...queryOptions,
         order: [['id']]
     });
 
@@ -59,7 +52,13 @@ async function getSpotsWithRatingPreview(ownerId){
 
 router.get('/current', requireAuth, async (req, res, next) => {
 
-    const userSpots = await getSpotsWithRatingPreview(req.user.id);
+    const queryOptions = {
+        where: {
+            ownerId: req.user.id
+        }
+    };
+
+    const userSpots = await getSpotsWithRatingPreview(queryOptions);
 
     return res.json({
         Spots: userSpots
@@ -181,12 +180,132 @@ router.get('/:id', async (req, res, next) => {
     }
 });
 
+function isNumberBetween(num, low, high = Number.MAX_SAFE_INTEGER){
+
+    return !Number.isNaN(num) && num >= low && num <= high;
+}
+
 router.get('/', async (req, res, next) => {
 
-    const allSpots = await getSpotsWithRatingPreview();
+    let   { page, size, minLat, 
+              maxLat, minLng, maxLng, 
+              minPrice, maxPrice } = req.query;
+
+    if(page === undefined){
+        page = 1;
+    }else{
+        page = parseInt(page);
+    }
+    if(size === undefined){
+        size = 20;
+    }else{
+        size = parseInt(size);
+    }
+
+    const errorObj = {};
+
+    const queryOptions = {
+        where: {
+            lat: {
+
+            },
+            lng: {
+
+            },
+            price: {
+
+            }
+        }
+    };
+
+    if(!Number.isInteger(size) || !isNumberBetween(size, 1, 20)){
+        errorObj.size = "Size must be greater than or equal to 1"
+    }else{
+        queryOptions.limit = size;
+    }
+
+    if(!Number.isInteger(page) || !isNumberBetween(page, 1, 20)){
+        errorObj.page = "Page must be greater than or equal to 1"
+    }else{
+        queryOptions.offset = (page - 1) * size;
+    }
+
+    if(minLat !== undefined){
+        minLat = parseFloat(minLat);
+
+        if(!isNumberBetween(minLat, -90, 90)){
+            errorObj.minLat = "Minimum latitude is invalid"
+        }else{
+            queryOptions.where.lat[Op.gte] = minLat;
+        }
+    }
+
+    if(maxLat !== undefined){
+        maxLat = parseFloat(maxLat);
+
+        if(!isNumberBetween(maxLat, -90, 90)){
+            errorObj.maxLat = "Maximum latitude is invalid"
+        }else{
+            queryOptions.where.lat[Op.lte] = maxLat;
+        }
+    }
+
+    if(minLng !== undefined){
+        minLng = parseFloat(minLng);
+
+        if(!isNumberBetween(minLng, -180, 180)){
+            errorObj.minLng = "Minimum longitude is invalid"
+        }else{
+            queryOptions.where.lng[Op.gte] = minLng;
+        }
+    }
+
+    if(maxLng !== undefined){
+        maxLng = parseFloat(maxLng);
+        if(!isNumberBetween(maxLng, -180, 180)){
+            errorObj.maxLng = "Maximum longitude is invalid"
+        }else{
+            queryOptions.where.lng[Op.lte] = maxLng;
+        }
+    }
+
+    if(minPrice !== undefined){
+        minPrice = parseFloat(minPrice);
+
+        if(!isNumberBetween(minPrice, 0)){
+            errorObj.minPrice = "Minimum price must be greater than or equal to 0"
+        }else{
+            queryOptions.where.price[Op.gte] = minPrice;
+        }
+    }
+
+    if(maxPrice !== undefined){
+        maxPrice = parseFloat(maxPrice);
+        if(!isNumberBetween(maxPrice, 0)){
+            errorObj.maxPrice = "Maximum price must be greater than or equal to 0"
+        }else{
+            queryOptions.where.price[Op.lte] = maxPrice;
+        }
+    }
+
+    if(Object.keys(errorObj).length){
+
+        res.status(400);
+        return res.json({
+            "message": "Validation Error",
+            "statusCode": 400,
+            "errors": errorObj
+        });
+    }
+
+    console.log(queryOptions);
+
+    const allSpots = await getSpotsWithRatingPreview(queryOptions);
     
     res.json({
-        Spots: allSpots
+        Spots: allSpots,
+        page,
+        size
     });
 });
 
