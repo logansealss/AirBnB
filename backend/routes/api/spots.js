@@ -272,6 +272,8 @@ router.get('/', async (req, res, next) => {
     if(minPrice !== undefined){
         minPrice = parseFloat(minPrice);
 
+        console.log(minPrice);
+
         if(!isNumberBetween(minPrice, 0)){
             errorObj.minPrice = "Minimum price must be greater than or equal to 0"
         }else{
@@ -296,6 +298,23 @@ router.get('/', async (req, res, next) => {
             "statusCode": 400,
             "errors": errorObj
         });
+    }
+
+    console.log(queryOptions);
+
+    if(minLat === undefined && maxLat === undefined){
+
+        delete queryOptions.where.lat;
+    }
+
+    if(minLng === undefined && maxLng === undefined){
+
+        delete queryOptions.where.lng;
+    }
+
+    if(minPrice === undefined && maxPrice === undefined){
+
+        delete queryOptions.where.price;
     }
 
     console.log(queryOptions);
