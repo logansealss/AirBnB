@@ -190,11 +190,11 @@ router.get('/', async (req, res, next) => {
     });
 });
 
-async function getConflictingBookings(startDate, endDate){
+async function getConflictingBookings(spotId, startDate, endDate){
 
     const conflictingBookings = await Booking.findOne({
         where: {
-            spotId: spot.id,
+            spotId,
             [Op.or]: [{
                     startDate: {
                         [Op.lte]: endDate,
@@ -258,7 +258,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
                 });
             }
 
-            const conflictingBookings = getConflictingBookings(startDate, endDate);
+            const conflictingBookings = await getConflictingBookings(spot.id, startDate, endDate);
 
             if(conflictingBookings){
 
