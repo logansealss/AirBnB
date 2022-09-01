@@ -10,19 +10,38 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
     const bookings = await Booking.findAll({
         where: {
-            // userId: req.user.id
+            userId: req.user.id
         },
         include: {
             model: Spot,
             attributes: {
                 exclude: ['createdAt', 'updatedAt', 'description']
+            },
+            include: {
+                model: SpotImage,
+                where: {
+                    preview: true
+                },
+                limit: 1,
+                attributes: ['url']
             }
         },
     });
 
-    const bookingsObj = bookings[0].toJSON();
+    for(let i = 0; i < bookings.length; i++){
 
-    console.log(bookingsObj);
+        const bookingsObj = bookings[i].toJSON();
+        const previewImageUrlObj = bookingsObj.Spot.SpotImages[0];
+
+        if(previewImageUrlObj){
+            bookingsObj.Spot.previewImage = previewImageUrlObj.url;
+        }else{
+            bookingsObj.Spot.previewImage = null;
+        }
+
+        delete bookingsObj.Spot.SpotImages;
+        bookings[i] = bookingsObj;
+    }
 
     return res.json({Bookings: bookings});
 });
