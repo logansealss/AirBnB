@@ -25,42 +25,36 @@ router.get(
 
 const validateLogin = [
     check('credential')
-        .exists({ checkFalsy: true })
+        .custom(credential => {
+            if(typeof credential !== 'string'){
+                throw new Error('Invalid credential')
+            }
+            return true;
+        })
         .notEmpty()
-        .withMessage('Please provide a valid email or username.'),
+        .withMessage('Email or username is required'),
     check('password')
-        .exists({ checkFalsy: true })
-        .withMessage('Please provide a password.'),
+        .custom(password => {
+            if(typeof password !== 'string'){
+                throw new Error('Invalid password')
+            }
+            return true;
+        })
+        .notEmpty()
+        .withMessage('Password is required'),
     handleValidationErrors
 ];
-
-function isStringWithChars(input){
-    return (typeof input === 'string' && input.length > 0);
-}
 
 // Log in
 router.post(
     '/',
+    validateLogin,
     async (req, res, next) => {
         const { credential, password } = req.body;
 
         let user;
 
-        try{
-            user = await User.login({ credential, password });
-        
-        }catch(err){
-            // credential or password not provided
-            res.status(400);
-            return res.json({
-                "message": "Validation error",
-                "statusCode": 400,
-                "errors": {
-                  "credential": "Email or username is required",
-                  "password": "Password is required"
-                }
-            });
-        }
+        user = await User.login({ credential, password });
         
         if (!user) {
             res.status(401);

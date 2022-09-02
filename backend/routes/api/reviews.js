@@ -4,6 +4,27 @@ const express = require('express')
 const { requireAuth } = require('../../utils/auth');
 const { User, Spot, SpotImage, Review, ReviewImage } = require('../../db/models');
 
+const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation');
+
+const validateReview = [
+    check('review')
+        .isLength({min:1,max:255})
+        .withMessage('Review must be between 1 and 255 characters long'),
+    check('review')
+        .custom(review => {
+            if(typeof review !== 'string'){
+                throw new Error('Invalid Review')
+            }
+            return true;
+        })
+        .notEmpty()
+        .withMessage("Review text is required"),
+    check('stars')
+        .isInt({ min: 1, max: 5 }),
+    handleValidationErrors
+];
+
 const router = express.Router();
 
 router.get('/current', requireAuth, async (req, res, next) => {

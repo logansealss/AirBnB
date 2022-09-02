@@ -3,8 +3,117 @@ const express = require('express')
 
 const { requireAuth } = require('../../utils/auth');
 const { User, Spot, SpotImage, Review, sequelize, ReviewImage, Booking } = require('../../db/models');
-const { Op, NUMBER } = require("sequelize");
+const { Op } = require("sequelize");
 sequelize.Sequelize.DataTypes.postgres.DECIMAL.parse = parseFloat;
+
+const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation');
+
+const validateSpot = [
+    check('address')
+        .isLength({min:1,max:255})
+        .withMessage('Address must be between 1 and 255 characters long'),
+    check('address')
+        .custom(address => {
+            if(typeof address !== 'string'){
+                throw new Error('Invalid Address')
+            }
+            return true;
+        })
+        .notEmpty()
+        .withMessage('Street address is required'),
+    check('city')
+        .isLength({min:1,max:255})
+        .withMessage('City must be between 1 and 255 characters long'),
+    check('city')
+        .custom(city => {
+            if(typeof city !== 'string'){
+                throw new Error('Invalid City')
+            }
+            return true;
+        })
+        .notEmpty()
+        .withMessage('City is required'),
+    check('state')
+        .isLength({min:1,max:255})
+        .withMessage('State must be between 1 and 255 characters long'),
+    check('state')
+        .custom(state => {
+            if(typeof state !== 'string'){
+                throw new Error('Invalid State')
+            }
+            return true;
+        })
+        .notEmpty()
+        .withMessage('State is required'),
+    check('country')
+        .isLength({min:1,max:255})
+        .withMessage('Country must be between 1 and 255 characters long'),
+    check('country')
+        .custom(country => {
+            if(typeof country !== 'string'){
+                throw new Error('Invalid Country')
+            }
+            return true;
+        })
+        .notEmpty()
+        .withMessage('Country is required'),
+    check('name')
+        .isLength({min:1,max:49})
+        .withMessage('Name must be between 1 and 49 characters long'),
+    check('name')
+        .custom(name => {
+            if(typeof name !== 'string'){
+                throw new Error('Invalid Name')
+            }
+            return true;
+        })
+        .notEmpty()
+        .withMessage('Name is required'),
+    check('description')
+        .isLength({min:1,max:255})
+        .withMessage('Description must be between 1 and 255 characters long'),
+    check('description')
+        .custom(description => {
+            if(typeof description !== 'string'){
+                throw new Error('Invalid Description')
+            }
+            return true;
+        })
+        .notEmpty()
+        .withMessage('Description is required'),
+    check('lat')
+        .isDecimal()
+        .custom(lat => {
+            if(lat < -90 || lat > 90){
+                throw new Error('Latitude is not valid')
+            }
+            return true;
+        })
+        .notEmpty()
+        .withMessage('Latitude is not valid'),
+    check('lng')
+        .isDecimal()
+        .custom(lng => {
+            if(lng < -180 || lng > 180){
+                throw new Error('Longitude is not valid')
+            }
+            return true;
+        })
+        .notEmpty()
+        .withMessage('Longitude is not valid'),
+    check('price')
+        .isDecimal()
+        .custom(price => {
+            if(price < 0){
+                throw new Error('Price must be greater than or equal to 0')
+            }
+            return true;
+        })
+        .notEmpty()
+        .withMessage("Price per day is required"),
+    handleValidationErrors
+];
 
 const router = express.Router();
 
@@ -300,8 +409,6 @@ router.get('/', async (req, res, next) => {
         });
     }
 
-    console.log(queryOptions);
-
     if(minLat === undefined && maxLat === undefined){
 
         delete queryOptions.where.lat;
@@ -316,8 +423,6 @@ router.get('/', async (req, res, next) => {
 
         delete queryOptions.where.price;
     }
-
-    console.log(queryOptions);
 
     const allSpots = await getSpotsWithRatingPreview(queryOptions);
     
@@ -538,7 +643,7 @@ router.post('/:id/images', requireAuth, async (req, res, next) => {
     }
 });
 
-router.post('/', requireAuth, async (req, res, next) => {
+router.post('/', requireAuth, validateSpot, async (req, res, next) => {
 
     const   {address, city, state, 
             country, lat, lng, name, 
@@ -581,7 +686,7 @@ router.post('/', requireAuth, async (req, res, next) => {
     res.json(newSpot);
 }); 
 
-router.put('/:id', requireAuth, async (req, res, next) => {
+router.put('/:id', requireAuth, validateSpot, async (req, res, next) => {
 
     const   {address, city, state, 
             country, lat, lng, name, 
