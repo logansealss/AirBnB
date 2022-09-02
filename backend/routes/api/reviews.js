@@ -3,27 +3,7 @@ const express = require('express')
 
 const { requireAuth } = require('../../utils/auth');
 const { User, Spot, SpotImage, Review, ReviewImage } = require('../../db/models');
-
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
-
-const validateReview = [
-    check('review')
-        .isLength({min:1,max:255})
-        .withMessage('Review must be between 1 and 255 characters long'),
-    check('review')
-        .custom(review => {
-            if(typeof review !== 'string'){
-                throw new Error('Invalid Review')
-            }
-            return true;
-        })
-        .notEmpty()
-        .withMessage("Review text is required"),
-    check('stars')
-        .isInt({ min: 1, max: 5 }),
-    handleValidationErrors
-];
+const { validateReview, validateImage } = require('../../utils/inputValidators');
 
 const router = express.Router();
 
@@ -77,7 +57,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     return res.json({Reviews: reviews});
 });
 
-router.post('/:id/images', requireAuth, async (req, res, next) => {
+router.post('/:id/images', requireAuth, validateImage, async (req, res, next) => {
 
     const review = await Review.findByPk(req.params.id);
     const {url} = req.body;
@@ -131,7 +111,7 @@ router.post('/:id/images', requireAuth, async (req, res, next) => {
     }
 });
 
-router.put('/:reviewId', requireAuth, async (req, res, next) => {
+router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => {
 
     const {review, stars} = req.body;
     const userReview = await Review.findByPk(req.params.reviewId);
@@ -146,36 +126,8 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
             });
         }
 
-        if(!review || !stars){
-            res.status(400);
-            return res.json({
-                "message": "Validation error",
-                "statusCode": 400,
-                "errors": {
-                  "review": "Review text is required",
-                  "stars": "Stars must be an integer from 1 to 5",
-                }
-            });
-        }
-
-        try{
-
-            await userReview.update({review, stars});
-
-            return res.json(userReview);
-        }catch(err){
-            res.status(400);
-            return res.json({
-                "message": "Validation error",
-                "statusCode": 400,
-                "errors": {
-                  "review": "Review text is required",
-                  "stars": "Stars must be an integer from 1 to 5",
-                }
-            });
-        }
-
-
+        await userReview.update({review, stars});
+        return res.json(userReview);
     }else{
 
         res.status(404);

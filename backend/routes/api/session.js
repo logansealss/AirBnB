@@ -3,9 +3,8 @@ const express = require('express')
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
+const { validateLogin } = require('../../utils/inputValidators');
 
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
@@ -22,28 +21,6 @@ router.get(
         } else return res.json({});
     }
 );
-
-const validateLogin = [
-    check('credential')
-        .custom(credential => {
-            if(typeof credential !== 'string'){
-                throw new Error('Invalid credential')
-            }
-            return true;
-        })
-        .notEmpty()
-        .withMessage('Email or username is required'),
-    check('password')
-        .custom(password => {
-            if(typeof password !== 'string'){
-                throw new Error('Invalid password')
-            }
-            return true;
-        })
-        .notEmpty()
-        .withMessage('Password is required'),
-    handleValidationErrors
-];
 
 // Log in
 router.post(

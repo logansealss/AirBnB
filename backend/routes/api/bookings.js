@@ -4,6 +4,7 @@ const express = require('express')
 const { requireAuth } = require('../../utils/auth');
 const { Spot, SpotImage, Booking} = require('../../db/models');
 const { Op } = require("sequelize");
+const { validateBooking, validateBookingEndDate } = require('../../utils/inputValidators');
 
 const router = express.Router();
 
@@ -84,7 +85,7 @@ async function getConflictingBookings(spotId, startDate, endDate){
     return conflictingBookings;
 }
 
-router.put('/:bookingId', requireAuth, async (req, res, next) => {
+router.put('/:bookingId', requireAuth, validateBooking, validateBookingEndDate, async (req, res, next) => {
 
     const booking = await Booking.findByPk(req.params.bookingId);
 
@@ -114,18 +115,26 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 
         const {startDate, endDate} = req.body;
 
-        const conflictingBookings = await getConflictingBookings(booking.spotId, startDate, endDate);
+        const conflictingBooking = await getConflictingBookings(booking.spotId, startDate, endDate);
 
-        if(conflictingBookings){
+        if(conflictingBooking){
+
+            const errorObj = {};
+
+            if((conflictingBooking.startDate <= startDate && conflictingBooking.endDate >= startDate) || 
+               (startDate <= conflictingBooking.endDate && endDate >= conflictingBooking.endDate)){
+                errorObj.startDate = "Start date conflicts with an existing booking";
+            }
+            if((conflictingBooking.startDate <= endDate && conflictingBooking.endDate >= endDate) || 
+               (startDate <= conflictingBooking.startDate && endDate >= conflictingBooking.startDate)){
+                errorObj.endDate = "End date conflicts with an existing booking";
+            }
 
             res.status(403);
             return res.json({
                 "message": "Sorry, this spot is already booked for the specified dates",
                 "statusCode": 403,
-                "errors": {
-                  "startDate": "Start date conflicts with an existing booking",
-                  "endDate": "End date conflicts with an existing booking"
-                }
+                "errors": errorObj
             });
         }
 
