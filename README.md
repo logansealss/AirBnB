@@ -7,9 +7,10 @@ LairBnB is a website clone inspired by [AirBnB](https://www.airbnb.com/). It is 
 
 ## Wiki Link
 
- - API Routes
- - Database Schema
- - Feature List
+ - [API Documentation](https://github.com/logansealss/AirBnB/wiki/API-Documentation)
+ - [Database Schema](https://github.com/logansealss/AirBnB/wiki/Database-Schema)
+ - [Features](https://github.com/logansealss/AirBnB/wiki/Features)
+ - [Redux Store Shape](https://github.com/logansealss/AirBnB/wiki/Redux-Store-Shape)
  
 ## Tech Stack
 
