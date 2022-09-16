@@ -272,8 +272,6 @@ router.get('/', async (req, res, next) => {
     if(minPrice !== undefined){
         minPrice = parseFloat(minPrice);
 
-        console.log(minPrice);
-
         if(!isNumberBetween(minPrice, 0)){
             errorObj.minPrice = "Minimum price must be greater than or equal to 0"
         }else{
@@ -300,8 +298,6 @@ router.get('/', async (req, res, next) => {
         });
     }
 
-    console.log(queryOptions);
-
     if(minLat === undefined && maxLat === undefined){
 
         delete queryOptions.where.lat;
@@ -316,8 +312,6 @@ router.get('/', async (req, res, next) => {
 
         delete queryOptions.where.price;
     }
-
-    console.log(queryOptions);
 
     const allSpots = await getSpotsWithRatingPreview(queryOptions);
     
