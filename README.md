@@ -28,4 +28,11 @@ Heroku
 
 ## Get Started
 
+1. Download the project folder.
+2. Navigate into the backend folder and install dependencies using npm install.
+3. Start the backend server by running npm start.
+4. In another terminal, navigate to the frontend folder and install dependencies using npm install.
+5. Start the frontend server by running npm start.
+6. Go to localhost:3000 in your browser to view the site.
+
 ## Contact Information
