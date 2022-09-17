@@ -26,7 +26,7 @@ const spotReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case READ_ALL_SPOTS:
-        newState = { ...state, singleSpot: { ...state.singleSpot } };
+        newState = { ...state };
         const normalizedSpots = action.spots.Spots.reduce((obj, curSpot) => {
             obj[curSpot.id] = curSpot;
             return obj;
