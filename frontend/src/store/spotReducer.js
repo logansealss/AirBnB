@@ -2,10 +2,10 @@ import { csrfFetch } from './csrf';
 
 const READ_ALL_SPOTS = "spots/READ_ALL_SPOTS";
 
-const loadSpots = (arrOfSpots) => {
+const loadSpots = (spots) => {
     return {
-        action: READ_ALL_SPOTS,
-        arrOfSpots
+        type: READ_ALL_SPOTS,
+        spots
     }
 }
 
@@ -14,8 +14,8 @@ export function fetchSpots(){
         const res = await csrfFetch('/api/spots');
 
         if(res.ok){
-            const arrOfSpots = await res.json();
-            dispatch(loadSpots(arrOfSpots));
+            const spots = await res.json();
+            dispatch(loadSpots(spots));
         }
     }
 }
@@ -27,8 +27,9 @@ const spotReducer = (state = initialState, action) => {
   switch (action.type) {
     case READ_ALL_SPOTS:
         newState = { ...state, singleSpot: { ...state.singleSpot } };
-        const normalizedSpots = action.arrOfSpots.reduce((obj, spot) => {
-            obj[spot.id] = spot;
+        const normalizedSpots = action.spots.Spots.reduce((obj, curSpot) => {
+            obj[curSpot.id] = curSpot;
+            return obj;
         }, {});
         newState.allSpots = normalizedSpots;
         return newState;
