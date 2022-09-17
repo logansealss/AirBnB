@@ -3,31 +3,20 @@ const express = require('express')
 
 const { setTokenCookie } = require('../../utils/auth');
 const { User } = require('../../db/models');
-
 const { Op } = require("sequelize");
+const { validateSignup } = require('../../utils/inputValidators');
+
+
 
 const router = express.Router();
 
 // Sign up
 router.post(
     '/',
+    validateSignup,
     async (req, res) => {
 
         const { email, password, username, firstName, lastName } = req.body;
-
-        if(!username || !email){
-            res.status(400);
-            return res.json({
-                "message": "Validation error",
-                "statusCode": 400,
-                "errors": {
-                  "email": "Invalid email",
-                  "username": "Username is required",
-                  "firstName": "First Name is required",
-                  "lastName": "Last Name is required"
-                }
-            })
-        }
 
         let userWithUsernameOrEmail = await User.findOne({
             where: {
@@ -65,22 +54,7 @@ router.post(
         }else{
 
 
-            let user;
-            try{
-                user = await User.signup({ email, username, password, firstName, lastName });
-            }catch(err){
-                res.status(400);
-                return res.json({
-                    "message": "Validation error",
-                    "statusCode": 400,
-                    "errors": {
-                      "email": "Invalid email",
-                      "username": "Username is required",
-                      "firstName": "First Name is required",
-                      "lastName": "Last Name is required"
-                    }
-                });
-            }
+            let user = await User.signup({ email, username, password, firstName, lastName });
     
             const token = await setTokenCookie(res, user);
             
