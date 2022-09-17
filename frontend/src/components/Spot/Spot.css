@@ -1,0 +1,16 @@
+.area-rating{
+    display: flex;
+    justify-content: space-between;
+}
+
+.spot-link{
+    text-decoration: none;
+    color: black;
+    width: 25%;
+    height: 25%;
+}
+
+.spot-image{
+    width: 75px;
+    height: 75px;
+}
