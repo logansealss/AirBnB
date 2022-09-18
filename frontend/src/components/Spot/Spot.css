@@ -1,6 +1,7 @@
 .area-rating{
     display: flex;
     justify-content: space-between;
+    padding-top: 10px;
 }
 
 .spot-link{
@@ -8,9 +9,31 @@
     color: black;
     width: 25%;
     height: 25%;
+    font-size: 15px;
 }
 
 .spot-image{
-    width: 75px;
-    height: 75px;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: 15px;
+}
+
+.image-container{
+    height: 300px;
+    width: 300px;
+}
+
+.spot-text-bold{
+    font-weight: 500;
+}
+
+.no-preview-image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.price-per-night{
+    margin-top: 6px;
 }

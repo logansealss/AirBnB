@@ -15,7 +15,7 @@ function SpotsPage(){
     }, [dispatch]);
 
     return (
-        <div>
+        <div className="centering-spot-container">
             <div className="spot-container">
                 {Object.values(spots).map(spot => (
                     <Spot key={spot.id} spot={spot}></Spot>
