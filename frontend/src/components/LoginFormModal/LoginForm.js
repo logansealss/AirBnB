@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 
-function LoginForm() {
+function LoginForm({onLogin}) {
   const dispatch = useDispatch();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
@@ -11,12 +11,16 @@ function LoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.login({ credential, password })).catch(
-      async (res) => {
-        const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
-      }
-    );
+    const response = dispatch(sessionActions.login({ credential, password }))
+      .then(() => {
+        onLogin()
+      })
+      .catch(
+        async (res) => {
+          const data = await res.json();
+          if (data && data.message) setErrors([data.message]);
+        }
+      );
   };
 
   return (

@@ -1,11 +1,13 @@
-import React from 'react';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
+import NavigationButton from './NavigationButton';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
+
   const sessionUser = useSelector(state => state.session.user);
 
   let sessionLinks;
@@ -24,13 +26,16 @@ function Navigation({ isLoaded }){
 
   return (
     <div className='nav-container'>
-      <NavLink exact to="/">
-        <div>
-          LairBnB
-        </div>
-      </NavLink>
-      <div></div>
-      {isLoaded && sessionLinks}
+      <div className='nav'>
+        <NavLink exact to="/">
+          <div>
+            LairBnB
+          </div>
+        </NavLink>
+        <div></div>
+        {/* {isLoaded && sessionLinks} */}
+        <NavigationButton />
+      </div>
     </div>
   );
 }
