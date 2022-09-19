@@ -6,12 +6,14 @@
 }
 
 .nav-container{
+    background-color: #FFF;
     border-bottom: 1px #DDD solid;
     position: sticky;
     top: 0;
     width: 100%;
     height: 80px;
     padding: 0 80px;
+    margin-bottom: 20px;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
@@ -20,6 +22,7 @@
 
 .menu-button-container{
     position: relative;
+    
 }
 
 .menu-button{
@@ -28,6 +31,7 @@
     border: solid 1px #DDD;
     background-color: #FFF;
     border-radius: 25px;
+    cursor: pointer;
 }
 
 .menu-button:hover{
@@ -64,8 +68,10 @@
 .popup-menu-option{
     padding: 10px;
     font-weight: 500;
+    box-sizing: border-box;
 }
 
 .popup-menu-option:hover{
     background-color: lightgray;
+    cursor: pointer;
 }

@@ -22,11 +22,7 @@
     margin: 5px;
 }
 
-.submit-button:hover{
-    cursor: pointer;
-}
-
-.login-form{
+.signup-form{
     margin: 10px;
 }
 

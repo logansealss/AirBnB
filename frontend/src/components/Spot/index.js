@@ -14,7 +14,7 @@ function Spot({ spot }) {
                         )
                     :   (   
                             <div className="image-container no-preview-image">
-                                <i class="fa-regular fa-image fa-2xl"></i>
+                                <i className="fa-regular fa-image fa-2xl"></i>
                             </div>
                         )
                 }
@@ -24,7 +24,7 @@ function Spot({ spot }) {
                 <div className="area-rating" >
                     <div>{spot.city}, {spot.state}</div>
                     <div>
-                        <i class="fa-solid fa-star fa-2xs"></i>
+                        <i className="fa-solid fa-star fa-2xs"></i>
                         <span>{spot.avgRating ? ` ${spot.avgRating}` : ` New`}</span>
                     </div>
                 </div>
