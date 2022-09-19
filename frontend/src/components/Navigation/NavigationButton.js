@@ -18,19 +18,15 @@ function NavigationButton() {
         toggleMenuOpen(false);
     }
 
-    // useEffect(() => {
-
-    //     if (!menuOpen) return;
-
-    //     document.addEventListener('click', removeMenu);
-
-    //     return () => document.removeEventListener("click", removeMenu);
-
-    // }, [menuOpen]);
+    const popupMenuClass = menuOpen ? "popup-menu popup-menu-visible" : "popup-menu popup-menu-hidden"
 
     return (
         <div
             className="menu-button-container"
+            onBlur={() => {
+                toggleMenuOpen(false)
+                console.log("onLBur for menu")
+            }}
         >
             <div>
                 <button
@@ -42,38 +38,29 @@ function NavigationButton() {
                         <i className="fa-solid fa-user fa-2x"></i>
                     </div>
                 </button>
-                {menuOpen && (
-                    <div
-                        className="popup-menu"
-                        onBlur={(e) => { 
-                            console.log("popup blur happened") 
-                            if(e.currentTarget === e.target){
-                                console.log("popup blur target !== popup blur current target")
-                                removeMenu();
-                            }
-                            }}
-                        onClick={(e) => {console.log("clicked popup-menu")}}
-                    >
-                        {user ? (
+                <div
+                    className={popupMenuClass}
+                    id="popup"
+                >
+                    {user ? (
+                        <>
+                            <div
+                                className="popup-menu-option"
+                                onClick={logout}
+                            >Log Out
+                            </div>
+                        </>
+                    )
+                        : (
                             <>
-                                <div
-                                    className="popup-menu-option"
-                                    onClick={logout}
-                                >Log Out
+                                <div className="popup-menu-option">
+                                    <LoginFormModal afterSubmission={removeMenu} />
                                 </div>
+                                <div className="popup-menu-option">Sign Up</div>
                             </>
                         )
-                            : (
-                                <>
-                                    <div className="popup-menu-option">
-                                        <LoginFormModal afterSubmission={removeMenu} />
-                                    </div>
-                                    <div className="popup-menu-option">Sign Up</div>
-                                </>
-                            )
-                        }
-                    </div>
-                )}
+                    }
+                </div>
             </div>
         </div>
     )

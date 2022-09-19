@@ -50,6 +50,15 @@
     width: 200px;
     right: 0;
     top: 50px;
+    z-index: 5;
+}
+
+.popup-menu-hidden{
+    visibility: hidden;
+}
+
+.popup-menu-visible{
+    visibility: visible;
 }
 
 .popup-menu-option{
