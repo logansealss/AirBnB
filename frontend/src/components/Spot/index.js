@@ -18,11 +18,8 @@ function Spot({ spot }) {
                             </div>
                         )
                 }
-                <div className="name spot-text-bold">
-                    {spot.name}
-                </div>
                 <div className="area-rating" >
-                    <div>{spot.city}, {spot.state}</div>
+                    <div className="spot-text-bold">{spot.city}, {spot.state}</div>
                     <div>
                         <i className="fa-solid fa-star fa-2xs"></i>
                         <span>{spot.avgRating ? ` ${spot.avgRating}` : ` New`}</span>
