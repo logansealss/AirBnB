@@ -4,7 +4,9 @@ import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-import {fetchSpots} from "./store/spotReducer";
+import SpotPage from "./components/SpotPage";
+import SpotsPage from "./components/SpotsPage";
+import SpotForm from "./components/SpotForm";
 
 function App() {
 
@@ -13,7 +15,6 @@ function App() {
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
-    dispatch(fetchSpots());
   }, [dispatch]);
 
   return (
@@ -21,8 +22,17 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route path="/" exact>
+            <SpotsPage></SpotsPage>
+          </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path="/spots/:spotId">
+            <SpotPage />
+          </Route>
+          <Route path="/addspot">
+            <SpotForm></SpotForm>
           </Route>
         </Switch>
       )}
