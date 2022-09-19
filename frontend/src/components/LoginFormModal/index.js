@@ -16,7 +16,7 @@ function LoginFormModal({afterSubmission, className}) {
         onClick={() => setShowModal(true)}
         className={className}
       >
-        Log In
+        Log in
       </div>
       {showModal && (
         <Modal 

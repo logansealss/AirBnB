@@ -15,13 +15,30 @@ function SpotsPage(){
     }, [dispatch]);
 
     return (
-        <div className="centering-spot-container">
-            <div className="spot-container">
-                {Object.values(spots).map(spot => (
-                    <Spot key={spot.id} spot={spot}></Spot>
-                ))}
+        <>
+            <div className="centering-spot-container">
+                <div className="spot-container">
+                    {Object.values(spots).map(spot => (
+                        <Spot key={spot.id} spot={spot}></Spot>
+                    ))}
+                </div>
             </div>
-        </div>
+            <div className="footer-container"> 
+                <div className="footer">
+                    <div>
+                        An Airbnb clone by Logan Seals
+                    </div>
+                    <div>
+                        <a 
+                            href="https://github.com/logansealss"
+                            target="_blank"
+                        >
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </>
     )
 }
 

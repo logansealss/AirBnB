@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import * as sessionActions from '../../store/session';
 import LoginFormModal from "../LoginFormModal";
@@ -7,6 +8,7 @@ import SignupFormModal from "../SignupFormModal";
 
 function NavigationButton() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const [menuOpen, toggleMenuOpen] = useState(false);
     const user = useSelector(state => state.session.user);
 
@@ -55,8 +57,14 @@ function NavigationButton() {
                 <>
                     <div
                         className="popup-menu-option"
+                        onClick={() => history.push("/addspot")}
+                    >
+                        Create spot
+                    </div>
+                    <div
+                        className="popup-menu-option"
                         onClick={logout}
-                    >Log Out
+                    >Log out
                     </div>
                 </>
             )

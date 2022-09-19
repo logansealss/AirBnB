@@ -29,7 +29,7 @@ function Navigation({ isLoaded }){
       <div className='nav'>
         <NavLink exact to="/">
           <div>
-            LairBnB
+            Lairbnb
           </div>
         </NavLink>
         <div></div>

@@ -29,11 +29,15 @@ function UpdateSpotForm() {
 
     useEffect(() => {
         if(user){
-            setErrors([]);
+            if(user.id !== spot.ownerId){
+                setErrors(["You must own the spot to update it."]);
+            }else{
+                setErrors([]);
+            }
         }else{
             setErrors(["You must be logged in to update a spot."]);
         }
-    }, [user]);
+    }, [user, spot]);
 
     useEffect(() => {
         dispatch(fetchSingleSpot(spotId));
@@ -161,7 +165,7 @@ function UpdateSpotForm() {
                     />
                 </label>
             </div> */}
-            <button type="submit" disabled={user === null}>Update spot</button>
+            <button type="submit" disabled={errors.length > 0}>Update spot</button>
         </form>
     );
 }

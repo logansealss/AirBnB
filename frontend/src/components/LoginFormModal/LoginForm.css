@@ -1,10 +1,36 @@
 .form-container{
     border-radius: 10px;
     background-color: #FFF;
+    width: 100%;
+    max-width: 568px;
 }
 
 .header-div{
+    display: flex;
+    justify-content: center;
     text-align: center;
+    align-items: center;
+    font-size: 1em;
+    width: 100%;
+    height: 62px;
+    font-weight: 600;
+    border-bottom: 1px #DDD solid;
+}
+
+.content-div{
+    padding: 24px;
+}
+
+.content-header{
+    font-weight: 600;
+    font-size: 22px;
+    margin-left: 10px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.input{
+    border-radius: 6px;
 }
 
 .button-container{
@@ -16,10 +42,12 @@
     border: none;
     background-color: #db0d64;
     color: #fff;
-    width: 100%;
     border: default;
-    border-radius: 5px;
+    border-radius: 12px;
+    width: 100%;
+    height: 48px;
     margin: 5px;
+    font-weight: 600;
 }
 
 .submit-button:hover{
@@ -31,7 +59,13 @@
 }
 
 .input-container{
+    box-sizing: border-box;
     display: flex;
-    justify-content: space-between;
-    margin: 5px;
+    width: 100%;
+    height: 48px;
+    margin: 5px 0;
+}
+
+.input-container input{
+    height: 48px;
 }

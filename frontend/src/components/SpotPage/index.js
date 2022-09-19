@@ -19,6 +19,11 @@ function SpotPage(){
         loggedInUserIsSpotOwner = true;
     }
 
+    let spotLoaded = false;
+    if(spotId === spot.id){
+        spotLoaded = true;
+    }
+
     useEffect(() => {
         dispatch(fetchSingleSpot(spotId));
     }, [dispatch, spotId]);
@@ -38,6 +43,10 @@ function SpotPage(){
     }else{
         previewImage = spotImages[previewImageIndex];
         spotImages.splice(previewImageIndex, 1);
+    }
+
+    if(!spotLoaded){
+        return null;
     }
 
     return (
