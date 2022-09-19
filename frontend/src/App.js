@@ -5,7 +5,8 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotPage from "./components/SpotPage";
 import SpotsPage from "./components/SpotsPage";
-import SpotForm from "./components/SpotForm";
+import SpotForm from "./components/CreateSpotForm";
+import SpotFormPage from "./components/SpotFormPage";
 
 function App() {
 
@@ -24,14 +25,14 @@ function App() {
           <Route path="/" exact>
             <SpotsPage></SpotsPage>
           </Route>
-          {/* <Route path="/signup">
-            <SignupFormPage />
-          </Route> */}
           <Route path="/spots/:spotId">
             <SpotPage />
           </Route>
           <Route path="/addspot">
             <SpotForm></SpotForm>
+          </Route>
+          <Route path="/updatespot/:spotId">
+            <SpotFormPage></SpotFormPage>
           </Route>
         </Switch>
       )}

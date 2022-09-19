@@ -1,20 +1,32 @@
-import {useParams} from "react-router-dom";
+import {useParams, useHistory} from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSingleSpot } from "../../store/spotReducer";
+import { fetchSingleSpot, deleteSpot } from "../../store/spotReducer";
 
 import "./SpotPage.css"
 
 function SpotPage(){
 
     const params = useParams();
+    const history = useHistory();
     const dispatch = useDispatch();
     const [spotId, setSpotId] = useState(+(params.spotId));
     const spot = useSelector(state => state.spots.singleSpot);
+    const user = useSelector(state => state.session.user);
+
+    let loggedInUserIsSpotOwner = false;
+    if(user && user.id === spot.ownerId){
+        loggedInUserIsSpotOwner = true;
+    }
 
     useEffect(() => {
         dispatch(fetchSingleSpot(spotId));
     }, [dispatch, spotId]);
+
+    function deleteSpotClickEvent(){
+        dispatch(deleteSpot(spot.id));
+        history.push("/");
+    }
 
     if(Object.keys(spot).length === 0) return null;
 
@@ -27,10 +39,6 @@ function SpotPage(){
         previewImage = spotImages[previewImageIndex];
         spotImages.splice(previewImageIndex, 1);
     }
-
-    console.log(previewImage)
-    console.log(spotImages);
-
 
     return (
         <div>
@@ -64,6 +72,7 @@ function SpotPage(){
                     <div>
                         {spot.price}
                     </div>
+                    {loggedInUserIsSpotOwner && <button onClick={deleteSpotClickEvent}>Delete spot</button>}
                 </div>
         </div>
     );

@@ -2,25 +2,24 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { createNewSpot } from "../../store/spotReducer";
-import "./SpotForm.css"
+import "./CreateSpotForm.css"
 
-function SpotForm(props) {
+function CreateSpotForm() {
 
-    const spot = props.spot || {};
-
-    const [address, setAddress] = useState(spot.address || "");
-    const [city, setCity] = useState(spot.city || "");
-    const [state, setState] = useState(spot.state || "");
-    const [country, setCountry] = useState(spot.country || "");
-    const [lat, setLat] = useState(spot.lat || 0);
-    const [long, setLong] = useState(spot.lng || 0);
-    const [name, setName] = useState(spot.name || "");
-    const [description, setDescription] = useState(spot.description || "");
-    const [price, setPrice] = useState(spot.price || 0);
-    const [errors, setErrors] = useState([]);
+    const dispatch = useDispatch();
 
     const user = useSelector(state => state.session.user);
-    const dispatch = useDispatch();
+
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
+    const [country, setCountry] = useState("");
+    const [lat, setLat] = useState(0);
+    const [long, setLong] = useState(0);
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const [price, setPrice] = useState(0);
+    const [errors, setErrors] = useState([]);
 
     useEffect(() => {
         if(user){
@@ -45,10 +44,7 @@ function SpotForm(props) {
             price
         }
 
-        console.log(newSpot);
         const result = await dispatch(createNewSpot(newSpot));
-
-        console.log(result);
     };
 
     return (
@@ -159,4 +155,4 @@ function SpotForm(props) {
     );
 }
 
-export default SpotForm;
+export default CreateSpotForm;

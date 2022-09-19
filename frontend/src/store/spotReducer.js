@@ -4,6 +4,7 @@ const READ_ALL_SPOTS = "spots/READ_ALL_SPOTS";
 const READ_SINGLE_SPOT = "spots/READ_SINGLE_SPOT";
 const CREATE_SPOT = "spots/CREATE_SPOT";
 const UPDATE_SPOT = "spots/UPDATE_SPOT";
+const DELETE_SPOT = 'spots/DELETE_SPOT';
 
 const loadSpotsActionCreator = (spots) => {
     return {
@@ -19,11 +20,10 @@ const loadSingleSpotActionCreator = (spot) => {
     }
 }
 
-const createSpotActionCreator = (spot, owner) => {
+const createSpotActionCreator = (spot) => {
     return {
         type: CREATE_SPOT,
-        spot,
-        owner
+        spot
     }
 }
 
@@ -31,6 +31,13 @@ const updateSpotActionCreator = (spot) => {
     return {
         type: UPDATE_SPOT,
         spot
+    }
+}
+
+const deleteSpotActionCreator = (spotId) => {
+    return {
+        type: DELETE_SPOT,
+        spotId
     }
 }
 
@@ -97,6 +104,18 @@ export function updateSpot(updatedSpot){
     }
 }
 
+export function deleteSpot(spotId){
+    return async (dispatch) => {
+        const res = await csrfFetch(`/api/spots/${spotId}`, {
+            method: "DELETE"
+        });
+
+        if(res.ok){
+            dispatch(deleteSpotActionCreator(spotId));
+        }
+    }
+}
+
 const initialState = {  allSpots: {}, singleSpot: {}  };
 
 const spotReducer = (state = initialState, action) => {
@@ -115,7 +134,6 @@ const spotReducer = (state = initialState, action) => {
         newState.singleSpot = action.spot;
         return newState;
     case CREATE_SPOT:
-        // TO-DO: add logic to update the state
         const newSpot = action.spot;
         newSpot.avgRating = null;
         newSpot.previewImage= null;
@@ -129,6 +147,13 @@ const spotReducer = (state = initialState, action) => {
                 [action.spot.id]: {...state.allSpots[action.spot.id], ...action.spot.id}
             }
         };
+        return newState;
+    case DELETE_SPOT:
+        newState = { allSpots: {...state.allSpots}, singleSpot: {...state.singleSpot}};
+        delete newState.allSpots[action.spotId];
+        if(newState.singleSpot.id === action.spotId){
+            newState.singleSpot = {};
+        }
         return newState;
     default:
       return state;
