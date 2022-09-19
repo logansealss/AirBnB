@@ -84,9 +84,9 @@ export function createNewSpot(newSpot, user){
     }
 }
 
-export function updateSpot(updatedSpot){
+export function updateSpot(updatedSpot, spotId){
     return async (dispatch) => {
-        const res = await csrfFetch(`/api/spots/`, {
+        const res = await csrfFetch(`/api/spots/${spotId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -96,6 +96,7 @@ export function updateSpot(updatedSpot){
 
         if(res.ok){
             const spot = await res.json();
+            console.log(spot);
             dispatch(updateSpotActionCreator(spot));
         }else{
             const result = await res.json();
@@ -140,13 +141,13 @@ const spotReducer = (state = initialState, action) => {
         newState = {...state, allSpots: {...state.allSpots, [action.spot.id]: newSpot}};
         return newState
     case UPDATE_SPOT:
-        newState = {
-            ...state, 
-            allSpots: {
-                ...state.allSpots, 
-                [action.spot.id]: {...state.allSpots[action.spot.id], ...action.spot.id}
-            }
-        };
+        newState = { allSpots: {...state.allSpots}, singleSpot: {...state.singleSpot, ...action.spot}};
+        console.log("new state after copy", newState);
+        if(newState.allSpots[action.spot.id]){
+            const updatedSpot = {...newState.allSpots[action.spot.id], ...action.spot};
+            newState.allSpots[action.spot.id] = updatedSpot;
+            console.log("new state after updating allSPots", newState);
+        }
         return newState;
     case DELETE_SPOT:
         newState = { allSpots: {...state.allSpots}, singleSpot: {...state.singleSpot}};

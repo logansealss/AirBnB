@@ -72,7 +72,12 @@ function SpotPage(){
                     <div>
                         {spot.price}
                     </div>
-                    {loggedInUserIsSpotOwner && <button onClick={deleteSpotClickEvent}>Delete spot</button>}
+                    {loggedInUserIsSpotOwner && (
+                        <>
+                            <button onClick={deleteSpotClickEvent}>Delete spot</button>
+                            <button onClick={() => history.push(`/updatespot/${spot.id}`)}>Update spot</button>
+                        </>
+                    )}
                 </div>
         </div>
     );

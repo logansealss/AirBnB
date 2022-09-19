@@ -1,35 +1,43 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
-import { createNewSpot } from "../../store/spotReducer";
-import "./CreateSpotForm.css"
+import { fetchSingleSpot } from "../../store/spotReducer";
+import { updateSpot } from "../../store/spotReducer";
+import "./UpdateSpotForm.css";
 
-function CreateSpotForm() {
+function UpdateSpotForm() {
 
+    const params = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
 
     const user = useSelector(state => state.session.user);
+    const spot = useSelector(state => state.spots.singleSpot);
 
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [country, setCountry] = useState("");
-    const [lat, setLat] = useState(0);
-    const [long, setLong] = useState(0);
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState(0);
+    const [spotId, setSpotId] = useState(+(params.spotId));
+    const [address, setAddress] = useState(spot.address);
+    const [city, setCity] = useState(spot.city);
+    const [state, setState] = useState(spot.state);
+    const [country, setCountry] = useState(spot.country);
+    const [lat, setLat] = useState(spot.lat);
+    const [long, setLong] = useState(spot.lng);
+    const [name, setName] = useState(spot.name);
+    const [description, setDescription] = useState(spot.description);
+    const [price, setPrice] = useState(spot.price);
     const [errors, setErrors] = useState([]);
 
     useEffect(() => {
         if(user){
             setErrors([]);
         }else{
-            setErrors(["You must be logged in to create a spot"])
+            setErrors(["You must be logged in to update a spot."]);
         }
     }, [user]);
+
+    useEffect(() => {
+        dispatch(fetchSingleSpot(spotId));
+    }, [dispatch, spotId]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -46,8 +54,8 @@ function CreateSpotForm() {
             price
         }
 
-        dispatch(createNewSpot(newSpot));
-        history.push("/");
+        dispatch(updateSpot(newSpot, spot.id));
+        history.push(`/spots/${spot.id}`);
     };
 
     return (
@@ -153,9 +161,9 @@ function CreateSpotForm() {
                     />
                 </label>
             </div> */}
-            <button type="submit" disabled={user === null}>Create Spot</button>
+            <button type="submit" disabled={user === null}>Update spot</button>
         </form>
     );
 }
 
-export default CreateSpotForm;
+export default UpdateSpotForm;
