@@ -19,9 +19,15 @@ function SpotPage(){
     if(Object.keys(spot).length === 0) return null;
 
     let spotImages = [...spot.SpotImages];
-    const previewImageIndex = spotImages.findIndex(image => image.preview === true);
-    const previewImage = spotImages[previewImageIndex];
-    spotImages.splice(previewImageIndex, 1);
+    let previewImageIndex = spotImages.findIndex(image => image.preview === true);
+    let previewImage;
+    if(previewImageIndex < 0){
+        previewImage = spotImages[0];
+    }else{
+        previewImage = spotImages[previewImageIndex];
+        spotImages.splice(previewImageIndex, 1);
+    }
+
 
     return (
         <div>
@@ -40,7 +46,11 @@ function SpotPage(){
                     </div>
                     <div className="picture-container">
                         <div className="preview-image">
-                            <img src={previewImage.url}/>
+                            {previewImage !== undefined ? 
+                                (<img src={previewImage}/>) : 
+                                (<i className="fa-solid fa-image"></i>)
+                            }
+                            <img src={previewImage}/>
                         </div>
                         <div>
 
