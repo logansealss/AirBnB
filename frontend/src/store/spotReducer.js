@@ -19,10 +19,11 @@ const loadSingleSpotActionCreator = (spot) => {
     }
 }
 
-const createSpotActionCreator = (spot) => {
+const createSpotActionCreator = (spot, owner) => {
     return {
         type: CREATE_SPOT,
-        spot
+        spot,
+        owner
     }
 }
 
@@ -55,7 +56,7 @@ export function fetchSingleSpot(spotId){
     }
 }
 
-export function createNewSpot(newSpot){
+export function createNewSpot(newSpot, user){
     return async (dispatch) => {
         const res = await csrfFetch(`/api/spots/`, {
             method: "POST",
@@ -68,7 +69,7 @@ export function createNewSpot(newSpot){
 
         if(res.ok){
             const spot = await res.json();
-            dispatch(createSpotActionCreator(spot));
+            dispatch(createSpotActionCreator(spot, user));
         }else{
             const result = await res.json();
             return result;
