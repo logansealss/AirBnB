@@ -28,6 +28,9 @@ function SpotPage(){
         spotImages.splice(previewImageIndex, 1);
     }
 
+    console.log(previewImage)
+    console.log(spotImages);
+
 
     return (
         <div>
@@ -45,12 +48,11 @@ function SpotPage(){
                         </div>
                     </div>
                     <div className="picture-container">
-                        <div className="preview-image">
+                        <div className="preview-image"> 
                             {previewImage !== undefined ? 
-                                (<img src={previewImage}/>) : 
+                                (<img src={previewImage.url}/>) : 
                                 (<i className="fa-solid fa-image"></i>)
                             }
-                            <img src={previewImage}/>
                         </div>
                         <div>
 
