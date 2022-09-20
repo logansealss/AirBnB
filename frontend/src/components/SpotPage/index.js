@@ -2,6 +2,7 @@ import {useParams, useHistory} from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleSpot, deleteSpot } from "../../store/spotReducer";
+import { fetchReviewsForSpot } from "../../store/reviewsReducer";
 
 import "./SpotPage.css"
 
@@ -12,6 +13,7 @@ function SpotPage(){
     const dispatch = useDispatch();
     const [spotId, setSpotId] = useState(+(params.spotId));
     const spot = useSelector(state => state.spots.singleSpot);
+    const reviews = useSelector(state => state.reviews.spot);
     const user = useSelector(state => state.session.user);
 
     let loggedInUserIsSpotOwner = false;
@@ -26,6 +28,7 @@ function SpotPage(){
 
     useEffect(() => {
         dispatch(fetchSingleSpot(spotId));
+        dispatch(fetchReviewsForSpot(spotId));
     }, [dispatch, spotId]);
 
     async function deleteSpotClickEvent(){
@@ -47,6 +50,12 @@ function SpotPage(){
 
     if(!spotLoaded){
         return null;
+    }
+
+    const reviewValues = Object.values(reviews);
+    let reviewsLoaded = false;
+    if(reviewValues.length === 0 || reviewValues[0].spotId === spot.id){
+        reviewsLoaded = true;
     }
 
     return (
@@ -87,6 +96,16 @@ function SpotPage(){
                             <button onClick={() => history.push(`/updatespot/${spot.id}`)}>Update spot</button>
                         </>
                     )}
+                    {reviewsLoaded && (
+                        <>
+                            {reviewValues.map(review => (
+                                <div>
+                                    {review.review}
+                                </div>
+                            ))}
+                        </>
+                    )
+                    }
                 </div>
         </div>
     );
