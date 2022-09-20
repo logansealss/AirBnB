@@ -1,8 +1,10 @@
 import { useParams, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { fetchSingleSpot, deleteSpot } from "../../store/spotReducer";
 import { fetchReviewsForSpot } from "../../store/reviewsReducer";
+import { deleteReview } from "../../store/reviewsReducer";
 
 import "./SpotPage.css"
 
@@ -12,6 +14,7 @@ function SpotPage() {
     const history = useHistory();
     const dispatch = useDispatch();
     const [spotId, setSpotId] = useState(+(params.spotId));
+    
     const spot = useSelector(state => state.spots.singleSpot);
     const reviews = useSelector(state => state.reviews.spot);
     const user = useSelector(state => state.session.user);
@@ -91,35 +94,62 @@ function SpotPage() {
                             }
                         </div>
                         <div className="image-column-2">
-
+                            {spotImages.slice(0, 2).map(image =>
+                                console.log(image)
+                                // image !== undefined ?
+                                // (<img key={image.id} src={image.url} />) :
+                                // (<i key={image.id} className="fa-solid fa-image"></i>)
+                            )}
                         </div>
                         <div className="image-column-3">
-
+                            {spotImages.slice(2, 4).map(image =>
+                                console.log(image)
+                                // image !== undefined ?
+                                // (<img key={image.id} src={image.url} />) :
+                                // (<i key={image.id} className="fa-solid fa-image"></i>)
+                            )}
                         </div>
                     </div>
                 </div>
                 <div>
+                    {`$${spot.price} night`}
+                </div>
+                <div className="spot-description-container">
                     {spot.description}
                 </div>
-                <div>
-                    {spot.price}
+                <div className="spot-stats">
+                    <div>
+                        <i className="fa-solid fa-star"></i>
+                    </div>
+                    <div>
+                        {spot.avgStarRating === null ? "New" : `${spot.avgStarRating}`}
+                    </div>
+                    <div>·</div>
+                    <div>{reviewValues.length} {reviewValues.length === 1 ? "review" : "reviews"}</div>
+                    {!loggedInUserIsSpotOwner && <button>Create review</button>}
                 </div>
+                {reviewsLoaded && (
+                    <>
+                        {reviewValues.map(review => (
+                            <>
+                                <div>{review.User.firstName}</div>
+                                <div>
+                                    {review.review}
+                                </div>
+                                {console.log("the session user", user)}
+                                {user && (user.id === review.userId) && (
+                                    <button onClick={() => dispatch(deleteReview(review.id))}>Delete review</button>
+                                )}
+                            </>
+                        ))}
+                    </>)
+                }
                 {loggedInUserIsSpotOwner && (
                     <>
                         <button onClick={deleteSpotClickEvent}>Delete spot</button>
                         <button onClick={() => history.push(`/updatespot/${spot.id}`)}>Update spot</button>
                     </>
                 )}
-                {reviewsLoaded && (
-                    <>
-                        {reviewValues.map(review => (
-                            <div>
-                                {review.review}
-                            </div>
-                        ))}
-                    </>
-                )
-                }
             </div>
         </div>
     );

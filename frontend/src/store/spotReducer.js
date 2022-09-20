@@ -76,11 +76,10 @@ export function createNewSpot(newSpot, user){
 
         if(res.ok){
             const spot = await res.json();
-            dispatch(createSpotActionCreator(spot, user));
+            dispatch(createSpotActionCreator(spot));
             return spot;
         }else{
             const result = await res.json();
-            console.log("error in create spot thunk", result);
             return result;
         }
     }
@@ -98,7 +97,6 @@ export function updateSpot(updatedSpot, spotId){
 
         if(res.ok){
             const spot = await res.json();
-            console.log(spot);
             dispatch(updateSpotActionCreator(spot));
         }else{
             const result = await res.json();
@@ -144,11 +142,9 @@ const spotReducer = (state = initialState, action) => {
         return newState
     case UPDATE_SPOT:
         newState = { allSpots: {...state.allSpots}, singleSpot: {...state.singleSpot, ...action.spot}};
-        console.log("new state after copy", newState);
         if(newState.allSpots[action.spot.id]){
             const updatedSpot = {...newState.allSpots[action.spot.id], ...action.spot};
             newState.allSpots[action.spot.id] = updatedSpot;
-            console.log("new state after updating allSPots", newState);
         }
         return newState;
     case DELETE_SPOT:

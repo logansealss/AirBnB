@@ -19,8 +19,6 @@ function SpotFormPage(){
 
     if(!currentSpot) return null;
 
-    console.log(currentSpot);
-
 
     return (
         <>

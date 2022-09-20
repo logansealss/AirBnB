@@ -2,11 +2,27 @@ import { csrfFetch } from './csrf';
 
 const READ_ALL_REVIEWS = "reviews/READ_ALL_REVIEWS";
 const READ_REVIEWS_SPOT = "reviews/READ_REVIEWS_SPOT";
+const DELETE_REVIEW = "reviews/DELETE_REVIEW";
+const CREATE_REVIEW = "reviews/CREATE_REVIEW";
 
 const loadReviewsForSpotActionCreator = (reviews) => {
     return {
         type: READ_REVIEWS_SPOT,
         reviews
+    }
+}
+
+const deleteReviewActionCreator = (reviewId) => {
+    return {
+        type: DELETE_REVIEW,
+        reviewId
+    }
+}
+
+const createReviewActionCreator = (review) => {
+    return {
+        type: DELETE_REVIEW,
+        review
     }
 }
 
@@ -17,6 +33,39 @@ export function fetchReviewsForSpot(spotId){
         if(res.ok){
             const reviews = await res.json();
             dispatch(loadReviewsForSpotActionCreator(reviews));
+        }
+    }
+}
+
+export function deleteReview(reviewId){
+    return async (dispatch) => {
+        const res = await csrfFetch(`/api/reviews/${reviewId}`, {
+            method: "DELETE"
+        });
+
+        if(res.ok){
+            dispatch(deleteReviewActionCreator(reviewId));
+        }
+    }
+}
+
+export function createNewReview(newReview, spotId){
+    return async (dispatch) => {
+        const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newReview)
+        }).catch(res => res)
+
+        if(res.ok){
+            const review = await res.json();
+            dispatch(createReviewActionCreator(review));
+            return review;
+        }else{
+            const result = await res.json();
+            return result;
         }
     }
 }
@@ -32,6 +81,15 @@ const reviewReducer = (state = initialState, action) => {
                 return accum;
             }, {})
             newState = { ...state, spot: normalizedReviews };
+            return newState;
+        case DELETE_REVIEW:
+            newState = {spot: {...state.spot}, user: {...state.user}};
+            delete newState.spot[action.reviewId];
+            delete newState.user[action.reviewId];
+            return newState;
+        case CREATE_REVIEW:
+            newState = { ...state, spot: {...state.spot}};
+            newState.spot[action.review.id] = action.review;
             return newState;
         default:
             return state;

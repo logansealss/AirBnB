@@ -1,5 +1,5 @@
 .spot-body-container{
-    width: 100%;
+    width: 925px;
     padding: 0 40px;
     display: flex;
     flex-direction: column;
@@ -17,6 +17,11 @@
     font-weight: 500;
     font-size: 1.5em;
     margin: 0
+}
+
+.spot-description-container{
+    width: 100%;
+    margin: 32px 0;
 }
 
 .spot-stats{
