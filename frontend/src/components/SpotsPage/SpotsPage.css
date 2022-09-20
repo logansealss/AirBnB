@@ -9,6 +9,10 @@
     justify-content: center;
 }
 
+.push-for-footer{
+    height: 48px;
+}
+
 .footer-container{
     position: fixed;
     display: flex;

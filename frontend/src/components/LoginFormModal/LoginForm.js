@@ -55,12 +55,10 @@ function LoginForm({ onLogin }) {
           </div>
           <div className="input-container">
             <label
-              for="credential"
             >
               Username or Email
             </label>
             <input
-              id="credential"
               type="text"
               value={credential}
               onChange={(e) => setCredential(e.target.value)}

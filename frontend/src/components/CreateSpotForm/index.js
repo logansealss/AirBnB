@@ -31,6 +31,12 @@ function CreateSpotForm() {
         }
     }, [user]);
 
+    // useEffect(() => {
+
+    //     if()
+
+    // }, [address, city, state, country, lat, long, name, description, price])
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -46,12 +52,21 @@ function CreateSpotForm() {
             price
         }
 
-        dispatch(createNewSpot(newSpot));
-        history.push("/");
+        const response = dispatch(createNewSpot(newSpot))
+            .then((res) => {
+                if(res.errors){
+                    setErrors(Object.values(res.errors));
+                }else{
+                    history.push("/");
+                }
+            })
     };
 
     return (
         <div className="body-container">
+            <div className="body-header">
+                Create a spot
+            </div>
             <div className="spot-form-container">
                 <form 
                     onSubmit={handleSubmit}

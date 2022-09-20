@@ -23,6 +23,7 @@ function SpotsPage(){
                     ))}
                 </div>
             </div>
+            <div className="push-for-footer"></div>
             <div className="footer-container"> 
                 <div className="footer">
                     <div>

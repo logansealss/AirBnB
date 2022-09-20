@@ -77,8 +77,10 @@ export function createNewSpot(newSpot, user){
         if(res.ok){
             const spot = await res.json();
             dispatch(createSpotActionCreator(spot, user));
+            return spot;
         }else{
             const result = await res.json();
+            console.log("error in create spot thunk", result);
             return result;
         }
     }
