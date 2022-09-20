@@ -31,14 +31,10 @@ function CreateSpotForm() {
         }
     }, [user]);
 
-    // useEffect(() => {
-
-    //     if()
-
-    // }, [address, city, state, country, lat, long, name, description, price])
-
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+
 
         const newSpot = {
             name,
@@ -83,6 +79,7 @@ function CreateSpotForm() {
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
+                            className="input"
                             required
                         />
                     </div>
@@ -94,6 +91,7 @@ function CreateSpotForm() {
                             type="text"
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
+                            className="input"
                             required
                         />
                     </div>
@@ -105,6 +103,7 @@ function CreateSpotForm() {
                             type="text"
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
+                            className="input"
                             required
                         />
                     </div>
@@ -116,6 +115,7 @@ function CreateSpotForm() {
                             type="text"
                             value={state}
                             onChange={(e) => setState(e.target.value)}
+                            className="input"
                             required
                         />
                     </div>
@@ -127,6 +127,7 @@ function CreateSpotForm() {
                             type="text"
                             value={country}
                             onChange={(e) => setCountry(e.target.value)}
+                            className="input"
                             required
                         />
                     </div>
@@ -138,6 +139,8 @@ function CreateSpotForm() {
                             type="number"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
+                            className="input"
+                            min="0"
                             required
                         />
                     </div>
@@ -149,7 +152,7 @@ function CreateSpotForm() {
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             required
-                            className="spot-textarea spot-input-container"
+                            className="spot-textarea spot-input-container input"
                         />
                     </div>
 
@@ -163,6 +166,8 @@ function CreateSpotForm() {
                         type="number"
                         value={lat}
                         onChange={(e) => setLat(e.target.value)}
+                        min="-90"
+                        max="90"
                         required
                     />
                 </label>
@@ -174,6 +179,8 @@ function CreateSpotForm() {
                         type="number"
                         value={long}
                         onChange={(e) => setLong(e.target.value)}
+                        min="-180"
+                        max="180"
                         required
                     />
                 </label>

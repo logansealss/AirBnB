@@ -28,7 +28,7 @@ function App() {
           <Route path="/spots/:spotId">
             <SpotPage />
           </Route>
-          <Route path="/addspot">
+          <Route path="/createspot">
             <CreateSpotForm></CreateSpotForm>
           </Route>
           <Route path="/updatespot/:spotId">

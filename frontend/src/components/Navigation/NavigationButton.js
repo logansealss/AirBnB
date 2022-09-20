@@ -57,7 +57,7 @@ function NavigationButton() {
                 <>
                     <div
                         className="popup-menu-option"
-                        onClick={() => history.push("/addspot")}
+                        onClick={() => history.push("/createspot")}
                     >
                         Create spot
                     </div>

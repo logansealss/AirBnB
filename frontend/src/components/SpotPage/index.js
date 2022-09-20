@@ -28,8 +28,8 @@ function SpotPage(){
         dispatch(fetchSingleSpot(spotId));
     }, [dispatch, spotId]);
 
-    function deleteSpotClickEvent(){
-        dispatch(deleteSpot(spot.id));
+    async function deleteSpotClickEvent(){
+        await dispatch(deleteSpot(spot.id));
         history.push("/");
     }
 
