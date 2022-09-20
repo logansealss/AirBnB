@@ -31,6 +31,11 @@
 
 .input{
     border-radius: 5px;
+    border: 1px rgb(138, 138, 138) solid;
+}
+
+.input:focus{
+    outline-color: rgb(110, 110, 110);
 }
 
 .button-container{

@@ -1,23 +1,32 @@
-import { Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import "./Spot.css"
 
 function Spot({ spot }) {
 
+    const history = useHistory();
+
+    function onClick(){
+        history.push(`/spots/${spot.id}`)
+    }
+
     return (
-        <div>
+        <div 
+            className="individual-spot-container"
+            // onClick={onClick}   
+        >
             <Link to={`/spots/${spot.id}`} className="spot-link">
                 {spot.previewImage
                     ?   (
-                            <div className="image-container">
+                        <div className="image-container">
                                 <img src={spot.previewImage} className="spot-image" />
                             </div>
                         )
-                    :   (   
+                        :   (   
                             <div className="image-container no-preview-image">
                                 <i className="fa-regular fa-image fa-2xl"></i>
                             </div>
                         )
-                }
+                    }
                 <div className="area-rating" >
                     <div className="spot-text-bold">{spot.city}, {spot.state}</div>
                     <div>
