@@ -3,11 +3,6 @@ import "./Spot.css"
 
 function Spot({ spot }) {
 
-    const history = useHistory();
-
-    function onClick(){
-        history.push(`/spots/${spot.id}`)
-    }
 
     return (
         <div 
