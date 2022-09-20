@@ -24,9 +24,9 @@ function CreateSpotForm() {
     const [errors, setErrors] = useState([]);
 
     useEffect(() => {
-        if(user){
+        if (user) {
             setErrors([]);
-        }else{
+        } else {
             setErrors(["You must be logged in to create a spot"])
         }
     }, [user]);
@@ -51,87 +51,97 @@ function CreateSpotForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                {errors.map((error, idx) => <div key={idx}>{error}</div>)}
-            </div>
-            <div>
-                <label>
-                    Name
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
-                </label>
-            </div>
-            <div>
-                <label>
-                    Description
-                    <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        required
-                    />
-                </label>
-            </div>
-            <div>
-                <label>
-                    Address
-                    <input
-                        type="text"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        required
-                    />
-                </label>
-            </div>
-            <div>
-                <label>
-                    City
-                    <input
-                        type="text"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                        required
-                    />
-                </label>
-            </div>
-            <div>
-                <label>
-                    State
-                    <input
-                        type="text"
-                        value={state}
-                        onChange={(e) => setState(e.target.value)}
-                        required
-                    />
-                </label>
-            </div>
-            <div>
-                <label>
-                    Country
-                    <input
-                        type="text"
-                        value={country}
-                        onChange={(e) => setCountry(e.target.value)}
-                        required
-                    />
-                </label>
-            </div>
-            <div>
-                <label>
-                    Price
-                    <input
-                        type="number"
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
-                        required
-                    />
-                </label>
-            </div>
-            {/* <div>
+        <div className="body-container">
+            <div className="spot-form-container">
+                <form 
+                    onSubmit={handleSubmit}
+                    className="spot-form"
+                >
+                    <div className="errors">
+                        {errors.map((error, idx) => <div key={idx}>{error}</div>)}
+                    </div>
+                    <div className="spot-input-container">
+                        <label>
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="spot-input-container">
+                        <label>
+                            Address
+                        </label>
+                        <input
+                            type="text"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="spot-input-container">
+                        <label>
+                            City
+                        </label>
+                        <input
+                            type="text"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="spot-input-container">
+                        <label>
+                            State
+                        </label>
+                        <input
+                            type="text"
+                            value={state}
+                            onChange={(e) => setState(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="spot-input-container">
+                        <label>
+                            Country
+                        </label>
+                        <input
+                            type="text"
+                            value={country}
+                            onChange={(e) => setCountry(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="spot-input-container">
+                        <label>
+                            Price
+                        </label>
+                        <input
+                            type="number"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="spot-input-container spot-textarea-container">
+                        <label>
+                            Description
+                        </label>
+                        <textarea
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            required
+                            className="spot-textarea spot-input-container"
+                        />
+                    </div>
+
+                    {/* removed lat and long requirements for adding a spot */}
+                    {/* add in later when necessary */}
+
+                    {/* <div>
                 <label>
                     Latitude
                     <input
@@ -153,8 +163,16 @@ function CreateSpotForm() {
                     />
                 </label>
             </div> */}
-            <button type="submit" disabled={user === null}>Create Spot</button>
-        </form>
+                    <div>
+                        <button
+                            type="submit"
+                            disabled={user === null}
+                            className="spot-submit-button"
+                        >Create Spot</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     );
 }
 

@@ -1,0 +1,51 @@
+/* .body-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+} */
+
+.spot-form-container{
+    display: flex;
+    justify-content: center;
+}
+
+.spot-form{
+    width: 400px;
+}
+
+.spot-form textarea{
+    resize: none;
+    width: 400px;
+    height: 200px;
+}
+
+.spot-submit-button{
+    border: none;
+    background-color: #db0d64;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    width: 100%;
+    height: 48px;
+    margin: 5px 0;
+    font-weight: 600;
+}
+
+.spot-submit-button{
+    cursor: pointer;
+}
+
+.spot-input-container{
+    height: 48px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction:column;
+}
+
+.spot-textarea-container{
+    height: 100px;
+}
+
+.spot-textarea-container textarea{
+    height: 100px;
+}
