@@ -28,8 +28,7 @@ function Navigation({ isLoaded }){
     <div className='nav-container'>
       <div className='nav'>
         <NavLink exact to="/">
-          <div>
-            Lairbnb
+          <div id="home-button">
           </div>
         </NavLink>
         <div></div>

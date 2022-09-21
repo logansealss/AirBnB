@@ -5,6 +5,14 @@
     width: 100%;
 }
 
+#home-button{
+    background-image: url(../../../public/lairbnb.png);
+    width: 82px;
+    height: 78px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
 .nav-container{
     background-color: #FFF;
     border-bottom: 1px #DDD solid;

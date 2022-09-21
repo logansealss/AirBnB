@@ -7,6 +7,7 @@ import SpotPage from "./components/SpotPage";
 import SpotsPage from "./components/SpotsPage";
 import UpdateSpotForm from "./components/UpdateSpotForm";
 import CreateSpotForm from "./components/CreateSpotForm";
+import Footer from "./components/Footer";
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
           </Route>
         </Switch>
       )}
+      <Footer></Footer>
     </>
   );
 }

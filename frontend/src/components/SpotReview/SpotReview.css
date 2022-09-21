@@ -1,0 +1,46 @@
+.review-container{
+    /* height: 140px; */
+    margin-bottom: 40px;
+}
+
+.review-container .review-user-info{
+    height: 40px;
+    display: flex;
+    /* justify-content: flex-start; */
+    align-items: center;
+}
+
+.review-user-name{
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.review-user-date{
+    font-size: 14px;
+    color: #717171
+}
+
+.review-header{
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.review-info-container{
+    margin-bottom: 12px;
+}
+
+.delete-review-button{
+    border: none;
+    background-color: #db0d64;
+    color: #fff;
+    border-radius: 12px;
+    height: 36px;
+    margin: 5px 0;
+    font-weight: 600;
+    margin-left: 4rem;
+}
+
+.delete-review-button:hover{
+    cursor: pointer;
+}

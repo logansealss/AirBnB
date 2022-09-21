@@ -6,6 +6,7 @@ import { fetchSingleSpot, deleteSpot } from "../../store/spotReducer";
 import { fetchReviewsForSpot } from "../../store/reviewsReducer";
 import { deleteReview } from "../../store/reviewsReducer";
 import CreateReviewFormModal from "../CreateReviewFormModal";
+import SpotReview from "../SpotReview";
 
 import "./SpotPage.css"
 
@@ -73,6 +74,8 @@ function SpotPage() {
         userHasReview = true;
     }
 
+    console.log(spot);
+
     return (
         <div id="content-container">
             <div className="spot-body-container">
@@ -138,17 +141,53 @@ function SpotPage() {
                             </div>
                         </div>
                     </div>
-                    <div id="spot-price">
-                        <span className="big-spot-info">${spot.price}</span>
-                        <span> night</span>
+                    <div id="spot-info-header">
+                        <div id="spot-info-left">
+                            <div id="spot-info-name-owner">
+                                {`${spot.name} hosted by ${spot.Owner.firstName} ${spot.Owner.lastName}`}
+                            </div>
+                            <div
+                                id="spot-description-container"
+                                className="bottom-containers"
+                            >
+                                {spot.description}
+                            </div>
+                        </div>
+                        <div id="spot-info-right">
+                            <div id="raised-spot-card">
+                                {/* <div>
+
+                                </div> */}
+                                <div
+                                    id="raised-spot-card-header"
+                                    className="spot-stats"
+                                >
+                                    <div id="spot-price">
+                                        <span className="big-spot-info">${spot.price}</span>
+                                        <span> night</span>
+                                    </div>
+                                    <div id="spot-card-review-stats">
+                                        <div id="stats-star-container">
+                                            <i className="fa-solid fa-star"></i>
+                                        </div>
+                                        <div id="spot-raised-card-ratings">
+                                            <div>
+                                                {spot.avgStarRating === null ? "New ·" : `${spot.avgStarRating} ·`}
+                                            </div>
+                                            <div id="stats-num-reviews">{reviewValues.length} {reviewValues.length === 1 ? "review" : "reviews"}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div 
+                    {/* <div
                         id="spot-description-container"
                         className="bottom-containers"
                     >
                         {spot.description}
-                    </div>
-                    <div 
+                    </div> */}
+                    <div
                         id="big-stats"
                         className="bottom-containers spot-stats"
                     >
@@ -159,21 +198,12 @@ function SpotPage() {
                             {spot.avgStarRating === null ? "New ·" : `${spot.avgStarRating} ·`}
                         </div>
                         <div id="big-review-count">{reviewValues.length} {reviewValues.length === 1 ? "review" : "reviews"}</div>
-                        {!loggedInUserIsSpotOwner && !userHasReview && <CreateReviewFormModal spotId={spotId} />}
+                        {!loggedInUserIsSpotOwner && !userHasReview && <CreateReviewFormModal spotId={spotId} className="review-button" />}
                     </div>
                     {reviewsLoaded && (
                         <>
                             {reviewValues.map(review => (
-                                <div key={review.id}>
-                                    <div>{review.User.firstName}</div>
-                                    <div>
-                                        {review.review}
-                                    </div>
-                                    {user && (user.id === review.userId) && (
-                                        <button onClick={() => dispatch(deleteReview(review.id))}>Delete review</button>
-                                    )}
-                                </div>
-
+                                <SpotReview key={review.id} review={review}></SpotReview>
                             ))}
                         </>)
                     }
