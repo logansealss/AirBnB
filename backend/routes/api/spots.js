@@ -35,7 +35,12 @@ async function getSpotsWithRatingPreview(queryOptions = {}){
             attributes: [[sequelize.fn('AVG', sequelize.col("stars")), 'avgRating']],
         });
 
+        
         curSpotObj.avgRating = averageRating[0].toJSON().avgRating;
+
+        if(curSpotObj.avgRating){
+            curSpotObj.avgRating = curSpotObj.avgRating.toFixed(2);
+        }
 
         if(curSpotObj.SpotImages.length > 0){
             curSpotObj.previewImage = curSpotObj.SpotImages[0].url;
@@ -167,8 +172,12 @@ router.get('/:id', async (req, res, next) => {
         });
 
         const spotResult = spot.toJSON();
-        spotResult.numReviews = numReviews;
+        spotResult.numReviews = numReviews; 
         spotResult.avgStarRating = avgRating[0].toJSON().avgRating;
+
+        if(spotResult.avgStarRating){
+            spotResult.avgStarRating = spotResult.avgStarRating.toFixed(2);
+        }
 
         res.json(spotResult);
     }else{

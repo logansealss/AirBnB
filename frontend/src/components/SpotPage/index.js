@@ -106,18 +106,18 @@ function SpotPage() {
                             }
                         </div>
                         <div className="image-column-2">
-                            {spotImages.slice(0, 2).map(image => <></>
-                                // image !== undefined ?
-                                // (<img key={image.id} src={image.url} />) :
-                                // (<i key={image.id} className="fa-solid fa-image"></i>)
-                            )}
+                            {/* {spotImages.slice(0, 2).map(image => <></>
+                                image !== undefined ?
+                                (<img key={image.id} src={image.url} />) :
+                                (<i key={image.id} className="fa-solid fa-image"></i>)
+                            )} */}
                         </div>
                         <div className="image-column-3">
-                            {spotImages.slice(2, 4).map(image => <></>
-                                // image !== undefined ?
-                                // (<img key={image.id} src={image.url} />) :
-                                // (<i key={image.id} className="fa-solid fa-image"></i>)
-                            )}
+                            {/* {spotImages.slice(2, 4).map(image => <></>
+                                image !== undefined ?
+                                (<img key={image.id} src={image.url} />) :
+                                (<i key={image.id} className="fa-solid fa-image"></i>)
+                            )} */}
                         </div>
                     </div>
                 </div>
@@ -141,7 +141,7 @@ function SpotPage() {
                 {reviewsLoaded && (
                     <>
                         {reviewValues.map(review => (
-                            <>
+                            <div key={review.id}>
                                 <div>{review.User.firstName}</div>
                                 <div>
                                     {review.review}
@@ -149,7 +149,8 @@ function SpotPage() {
                                 {user && (user.id === review.userId) && (
                                     <button onClick={() => dispatch(deleteReview(review.id))}>Delete review</button>
                                 )}
-                            </>
+                            </div>
+                            
                         ))}
                     </>)
                 }
