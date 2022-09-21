@@ -21,7 +21,7 @@ const deleteReviewActionCreator = (reviewId) => {
 
 const createReviewActionCreator = (review) => {
     return {
-        type: DELETE_REVIEW,
+        type: CREATE_REVIEW,
         review
     }
 }
@@ -49,7 +49,7 @@ export function deleteReview(reviewId){
     }
 }
 
-export function createNewReview(newReview, spotId){
+export function createNewReview(newReview, spotId, user){
     return async (dispatch) => {
         const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
             method: "POST",
@@ -61,6 +61,12 @@ export function createNewReview(newReview, spotId){
 
         if(res.ok){
             const review = await res.json();
+            const newUser = {};
+            newUser.firstName = user.firstName;
+            newUser.lastName = user.lastName;
+            newUser.id = user.id;
+            review.User = newUser;
+            review.ReviewImages = [];
             dispatch(createReviewActionCreator(review));
             return review;
         }else{

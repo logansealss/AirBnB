@@ -1,0 +1,16 @@
+.review-textarea-container{
+    height: 100px;
+}
+
+.review-textarea-container textarea{
+    height: 100px;
+}
+
+.review-form textarea{
+    resize: none;
+    height: 200px;
+}
+
+.review-form.input{
+    height: 200px;
+}

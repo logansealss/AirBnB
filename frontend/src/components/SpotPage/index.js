@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleSpot, deleteSpot } from "../../store/spotReducer";
 import { fetchReviewsForSpot } from "../../store/reviewsReducer";
 import { deleteReview } from "../../store/reviewsReducer";
+import CreateReviewFormModal from "../CreateReviewFormModal";
 
 import "./SpotPage.css"
 
@@ -126,17 +127,17 @@ function SpotPage() {
                     </div>
                     <div>·</div>
                     <div>{reviewValues.length} {reviewValues.length === 1 ? "review" : "reviews"}</div>
-                    {!loggedInUserIsSpotOwner && <button>Create review</button>}
+                    {!loggedInUserIsSpotOwner && user && <CreateReviewFormModal spotId={spotId}/>}
                 </div>
                 {reviewsLoaded && (
                     <>
                         {reviewValues.map(review => (
                             <>
+                            {console.log("this is the review to show", review)}
                                 <div>{review.User.firstName}</div>
                                 <div>
                                     {review.review}
                                 </div>
-                                {console.log("the session user", user)}
                                 {user && (user.id === review.userId) && (
                                     <button onClick={() => dispatch(deleteReview(review.id))}>Delete review</button>
                                 )}
