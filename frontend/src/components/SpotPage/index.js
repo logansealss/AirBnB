@@ -62,6 +62,17 @@ function SpotPage() {
         reviewsLoaded = true;
     }
 
+    let userHasReview = false;
+    if(user){
+        for(let i = 0; i < reviewValues.length; i++){
+            if(reviewValues[i].userId === user.id){
+                userHasReview = true;
+            }
+        }
+    }else{
+        userHasReview = true;
+    }
+
     return (
         <div className="spot-body-container">
             <div>
@@ -95,16 +106,14 @@ function SpotPage() {
                             }
                         </div>
                         <div className="image-column-2">
-                            {spotImages.slice(0, 2).map(image =>
-                                console.log(image)
+                            {spotImages.slice(0, 2).map(image => <></>
                                 // image !== undefined ?
                                 // (<img key={image.id} src={image.url} />) :
                                 // (<i key={image.id} className="fa-solid fa-image"></i>)
                             )}
                         </div>
                         <div className="image-column-3">
-                            {spotImages.slice(2, 4).map(image =>
-                                console.log(image)
+                            {spotImages.slice(2, 4).map(image => <></>
                                 // image !== undefined ?
                                 // (<img key={image.id} src={image.url} />) :
                                 // (<i key={image.id} className="fa-solid fa-image"></i>)
@@ -127,13 +136,12 @@ function SpotPage() {
                     </div>
                     <div>·</div>
                     <div>{reviewValues.length} {reviewValues.length === 1 ? "review" : "reviews"}</div>
-                    {!loggedInUserIsSpotOwner && user && <CreateReviewFormModal spotId={spotId}/>}
+                    {!loggedInUserIsSpotOwner && !userHasReview && <CreateReviewFormModal spotId={spotId}/>}
                 </div>
                 {reviewsLoaded && (
                     <>
                         {reviewValues.map(review => (
                             <>
-                            {console.log("this is the review to show", review)}
                                 <div>{review.User.firstName}</div>
                                 <div>
                                     {review.review}
