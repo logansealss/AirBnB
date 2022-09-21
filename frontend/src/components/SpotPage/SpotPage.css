@@ -1,10 +1,32 @@
+#content-container{
+    display: flex;
+    justify-content: center;
+    padding: 0 40px;
+    color: #222;
+}
+
 .spot-body-container{
     width: 925px;
-    padding: 0 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+#stats-star-container{
+    margin-right: 4px;
+}
+
+#stats-num-reviews{
+    margin-left: 4px;
+}
+
+#stats-location{
+    margin-left: 4px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 250px;
 }
 
 .spot-name-container{
@@ -19,9 +41,15 @@
     margin: 0
 }
 
-.spot-description-container{
+#spot-description-container{
     width: 100%;
-    margin: 32px 0;
+    margin-top: 24;
+    font-size: 16px;
+}
+
+.bottom-containers{
+    border-top: 1px #DDD solid;
+    padding: 1em 0;
 }
 
 .spot-stats{
@@ -29,6 +57,99 @@
     margin-top: 4px; 
 }
 
-.pictures-container{
+#spot-price{
+    margin: 24px 0;
+}
+
+#picture-container-div{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#spot-pictures-container{
     padding-top: 24px;
+    width: 925px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#single-picture-container{
+    width: 462px;
+    height: 465px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #DDD;
+    border-radius: 15px 0 0 15px;
+}
+
+#single-picture-container img{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: 15px 0 0 15px;
+}
+
+.image-rows img{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+#single-picture-container i{
+    object-fit: cover;
+}
+
+.image-columns{
+    padding-left: 8px;
+    width: 232px;
+}
+
+.image-rows{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.top-row-image{
+    margin-bottom: 8px;
+}
+
+.top-right{
+    border-top-right-radius: 15px;
+}
+
+.bottom-right{
+    border-bottom-right-radius: 15px;
+}
+
+.row-image{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #DDD;
+}
+
+.big-spot-info{
+    font-size: 22px;
+    font-weight: 800;
+}
+
+#big-review-count{
+    padding-left: 6px;
+}
+
+#big-stats{
+    font-size: 22px;
+}
+
+#big-star{
+    margin-right: 8px;
 }

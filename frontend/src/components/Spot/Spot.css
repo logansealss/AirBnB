@@ -40,6 +40,8 @@
 .image-container{
     height: 277px;
     width: 292px;
+    background-color: #DDD;
+    border-radius: 15px;
 }
 
 .spot-text-bold{

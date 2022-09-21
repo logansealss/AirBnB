@@ -15,7 +15,7 @@ function SpotPage() {
     const history = useHistory();
     const dispatch = useDispatch();
     const [spotId, setSpotId] = useState(+(params.spotId));
-    
+
     const spot = useSelector(state => state.spots.singleSpot);
     const reviews = useSelector(state => state.reviews.spot);
     const user = useSelector(state => state.session.user);
@@ -63,103 +63,127 @@ function SpotPage() {
     }
 
     let userHasReview = false;
-    if(user){
-        for(let i = 0; i < reviewValues.length; i++){
-            if(reviewValues[i].userId === user.id){
+    if (user) {
+        for (let i = 0; i < reviewValues.length; i++) {
+            if (reviewValues[i].userId === user.id) {
                 userHasReview = true;
             }
         }
-    }else{
+    } else {
         userHasReview = true;
     }
 
     return (
-        <div className="spot-body-container">
-            <div>
+        <div id="content-container">
+            <div className="spot-body-container">
                 <div>
-                    <div className="spot-name-container">
-                        <span>
-                            <h1>
-                                {spot.name}
-                            </h1>
-                        </span>
+                    <div>
+                        <div className="spot-name-container">
+                            <span>
+                                <h1>
+                                    {spot.name}
+                                </h1>
+                            </span>
+                        </div>
+                        <div className="spot-stats">
+                            <div id="stats-star-container">
+                                <i className="fa-solid fa-star"></i>
+                            </div>
+                            <div>
+                                {spot.avgStarRating === null ? "New ·" : `${spot.avgStarRating} ·`}
+                            </div>
+                            <div id="stats-num-reviews">{reviewValues.length} {reviewValues.length === 1 ? "review ·" : "reviews ·"}</div>
+                            <div id="stats-location">{`${spot.city}, ${spot.state}, ${spot.country}`}</div>
+                        </div>
                     </div>
-                    <div className="spot-stats">
-                        <div>
+                    <div id="spot-pictures-container">
+                        <div id="single-picture-container">
+                            <div id="picture-container-div">
+                                {previewImage !== undefined ?
+                                    (<img src={previewImage.url} />) :
+                                    (<i className="fa-solid fa-image fa-2xl"></i>)
+                                }
+                            </div>
+                        </div>
+                        <div className="image-columns">
+                            <div className="image-rows">
+                                <div className="row-image top-row-image">
+                                    {spotImages[0] !== undefined ?
+                                        (<img src={spotImages[0].url} />) :
+                                        (<i className="fa-solid fa-image fa-2xl"></i>)
+                                    }
+                                </div>
+                                <div className="row-image">
+                                    {spotImages[1] !== undefined ?
+                                        (<img src={spotImages[1].url} />) :
+                                        (<i className="fa-solid fa-image fa-2xl"></i>)
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div className="image-columns">
+                            <div className="image-rows">
+                                <div className="row-image top-row-image top-right">
+                                    {spotImages[2] !== undefined ?
+                                        (<img src={spotImages[2].url} />) :
+                                        (<i className="fa-solid fa-image fa-2xl"></i>)
+                                    }
+                                </div>
+                                <div className="row-image bottom-right">
+                                    {spotImages[3] !== undefined ?
+                                        (<img src={spotImages[3].url} />) :
+                                        (<i className="fa-solid fa-image fa-2xl"></i>)
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="spot-price">
+                        <span className="big-spot-info">${spot.price}</span>
+                        <span> night</span>
+                    </div>
+                    <div 
+                        id="spot-description-container"
+                        className="bottom-containers"
+                    >
+                        {spot.description}
+                    </div>
+                    <div 
+                        id="big-stats"
+                        className="bottom-containers spot-stats"
+                    >
+                        <div id="big-star">
                             <i className="fa-solid fa-star"></i>
                         </div>
                         <div>
-                            {spot.avgStarRating === null ? "New" : `${spot.avgStarRating}`}
+                            {spot.avgStarRating === null ? "New ·" : `${spot.avgStarRating} ·`}
                         </div>
-                        <div>·</div>
-                        <div>{reviewValues.length} {reviewValues.length === 1 ? "review" : "reviews"}</div>
-                        <div>·</div>
-                        <div>{`${spot.city}, ${spot.state}, ${spot.country}`}</div>
+                        <div id="big-review-count">{reviewValues.length} {reviewValues.length === 1 ? "review" : "reviews"}</div>
+                        {!loggedInUserIsSpotOwner && !userHasReview && <CreateReviewFormModal spotId={spotId} />}
                     </div>
-                </div>
-                <div className="pictures-container">
-                    <div className="single-picture-container">
-                        <div className="preview-image">
-                            {previewImage !== undefined ?
-                                (<img src={previewImage.url} />) :
-                                (<i className="fa-solid fa-image"></i>)
-                            }
-                        </div>
-                        <div className="image-column-2">
-                            {/* {spotImages.slice(0, 2).map(image => <></>
-                                image !== undefined ?
-                                (<img key={image.id} src={image.url} />) :
-                                (<i key={image.id} className="fa-solid fa-image"></i>)
-                            )} */}
-                        </div>
-                        <div className="image-column-3">
-                            {/* {spotImages.slice(2, 4).map(image => <></>
-                                image !== undefined ?
-                                (<img key={image.id} src={image.url} />) :
-                                (<i key={image.id} className="fa-solid fa-image"></i>)
-                            )} */}
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    {`$${spot.price} night`}
-                </div>
-                <div className="spot-description-container">
-                    {spot.description}
-                </div>
-                <div className="spot-stats">
-                    <div>
-                        <i className="fa-solid fa-star"></i>
-                    </div>
-                    <div>
-                        {spot.avgStarRating === null ? "New" : `${spot.avgStarRating}`}
-                    </div>
-                    <div>·</div>
-                    <div>{reviewValues.length} {reviewValues.length === 1 ? "review" : "reviews"}</div>
-                    {!loggedInUserIsSpotOwner && !userHasReview && <CreateReviewFormModal spotId={spotId}/>}
-                </div>
-                {reviewsLoaded && (
-                    <>
-                        {reviewValues.map(review => (
-                            <div key={review.id}>
-                                <div>{review.User.firstName}</div>
-                                <div>
-                                    {review.review}
+                    {reviewsLoaded && (
+                        <>
+                            {reviewValues.map(review => (
+                                <div key={review.id}>
+                                    <div>{review.User.firstName}</div>
+                                    <div>
+                                        {review.review}
+                                    </div>
+                                    {user && (user.id === review.userId) && (
+                                        <button onClick={() => dispatch(deleteReview(review.id))}>Delete review</button>
+                                    )}
                                 </div>
-                                {user && (user.id === review.userId) && (
-                                    <button onClick={() => dispatch(deleteReview(review.id))}>Delete review</button>
-                                )}
-                            </div>
-                            
-                        ))}
-                    </>)
-                }
-                {loggedInUserIsSpotOwner && (
-                    <>
-                        <button onClick={deleteSpotClickEvent}>Delete spot</button>
-                        <button onClick={() => history.push(`/updatespot/${spot.id}`)}>Update spot</button>
-                    </>
-                )}
+
+                            ))}
+                        </>)
+                    }
+                    {loggedInUserIsSpotOwner && (
+                        <>
+                            <button onClick={deleteSpotClickEvent}>Delete spot</button>
+                            <button onClick={() => history.push(`/updatespot/${spot.id}`)}>Update spot</button>
+                        </>
+                    )}
+                </div>
             </div>
         </div>
     );
