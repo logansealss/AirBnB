@@ -3,7 +3,7 @@ import { deleteReview } from "../../store/reviewsReducer";
 
 import "./SpotReview.css"
 
-var MONTH = ["January","February","March","April","May","June","July",
+const MONTH = ["January","February","March","April","May","June","July",
             "August","September","October","November","December"];
 
 function SpotReview({ review }) {
@@ -24,14 +24,6 @@ function SpotReview({ review }) {
                     </div>
                     <div className="review-user-date">{`${month} ${year}`}</div>
                 </div>
-                {user && (user.id === review.userId) && (
-                    <div>
-                        <button
-                            onClick={() => dispatch(deleteReview(review.id))}
-                            className="delete-review-button"
-                        >Delete review</button>
-                    </div>
-                )}
             </div>
             <div>
                 {review.review}

@@ -165,6 +165,9 @@
 
 .review-button:hover{
     cursor: pointer;
+    color: #db0d64;
+    background-color: #FFF;
+    border: 1px solid #db0d64;
 }
 
 #big-stats{

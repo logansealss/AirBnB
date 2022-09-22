@@ -1,0 +1,24 @@
+#user-reviews-header-container{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#user-reviews-header{
+    padding: 0 40px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#review-page-content{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 0 40px;
+}
+
+#review-page-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+}

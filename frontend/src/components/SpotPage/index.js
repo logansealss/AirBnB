@@ -69,8 +69,6 @@ function SpotPage() {
         userHasReview = true;
     }
 
-    console.log(spot);
-
     return (
         <div id="content-container">
             <div className="spot-body-container">

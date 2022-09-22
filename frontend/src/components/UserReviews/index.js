@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
 import { fetchReviewsForUser } from "../../store/reviewsReducer";
+import UserReview from "../UserReview";
+import "./UserReviews.css";
 
 function UserReviews() {
 
@@ -14,32 +16,24 @@ function UserReviews() {
         dispatch(fetchReviewsForUser());
     }, [dispatch]);
 
-    if(!user){
-        <Redirect to="/"></Redirect>
+    if (!user) {
+        return <Redirect to="/"></Redirect>
     }
 
     return (
         <>
-            <div>
-                User's reviews
+            <div id="user-reviews-header-container">
+                <div id="user-reviews-header">
+                    {Object.values(reviews).length > 0 ? `${user.username}'s reviews` : "You don't have any reviews"}
+                </div>
             </div>
-
-            {reviews && Object.values(reviews).map(review => (
-                <>
-                    <div>
-                        {review.id}
-                    </div>
-                    <div>
-                        {review.review}
-                    </div>
-                    <div>
-                        {review.User.firstName}
-                    </div>
-                    <div>
-                        {review.User.lastName}
-                    </div>
-                </>
-            ))}
+            <div id="review-page-content">
+                <div id="review-page-container">
+                    {reviews && Object.values(reviews).map(review => (
+                        <UserReview key={review.id} review={review}></UserReview>
+                    ))}
+                </div>
+            </div>
         </>
     )
 }
