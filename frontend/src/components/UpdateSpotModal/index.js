@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Modal } from '../../context/Modal';
 import UpdateSpotForm from './UpdateSpotForm';
 
-function UpdateSpotModal({ afterSubmission, className }) {
+function UpdateSpotModal({ afterSubmission, className, spot }) {
     const [showModal, setShowModal] = useState(false);
 
-    function onSignup() {
+    function onUpdate() {
         setShowModal(false);
         if (afterSubmission) {
             afterSubmission();
@@ -25,7 +25,7 @@ function UpdateSpotModal({ afterSubmission, className }) {
                     onClose={() => setShowModal(false)}
                     className="form-container"
                 >
-                    <UpdateSpotForm></UpdateSpotForm>
+                    <UpdateSpotForm spot={spot} onUpdate={onUpdate}></UpdateSpotForm>
                 </Modal>
             )}
         </>

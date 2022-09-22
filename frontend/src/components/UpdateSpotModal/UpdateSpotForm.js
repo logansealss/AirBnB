@@ -6,16 +6,12 @@ import { fetchSingleSpot } from "../../store/spotReducer";
 import { updateSpot } from "../../store/spotReducer";
 import "./UpdateSpotForm.css";
 
-function UpdateSpotForm() {
+function UpdateSpotForm({spot, onUpdate}) {
 
-    const params = useParams();
     const dispatch = useDispatch();
-    const history = useHistory();
-
     const user = useSelector(state => state.session.user);
-    const spot = useSelector(state => state.spots.singleSpot);
 
-    const [spotId, setSpotId] = useState(+(params.spotId));
+    const [spotId, setSpotId] = useState(spot.id);
     const [address, setAddress] = useState(spot.address);
     const [city, setCity] = useState(spot.city);
     const [state, setState] = useState(spot.state);
@@ -59,7 +55,10 @@ function UpdateSpotForm() {
         }
 
         await dispatch(updateSpot(newSpot, spot.id));
-        history.push(`/spots/${spot.id}`);
+
+        if(onUpdate){
+            onUpdate();
+        }
     };
 
     return (
