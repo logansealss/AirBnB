@@ -6,9 +6,16 @@ const READ_SINGLE_SPOT = "spots/READ_SINGLE_SPOT";
 const CREATE_SPOT = "spots/CREATE_SPOT";
 const UPDATE_SPOT = "spots/UPDATE_SPOT";
 const DELETE_SPOT = 'spots/DELETE_SPOT';
+const RESET_ALL_SPOTS = "spots/RESET_ALL_SPOTS"
+
+
+export const resetAllSpotsActionCreator = () => {
+    return {
+        type: RESET_ALL_SPOTS
+    }
+}
 
 const loadUserSpotsActionCreator = (spots) => {
-    console.log("spots in action creator", spots);
     return {
         type: READ_USER_SPOTS,
         spots
@@ -203,6 +210,10 @@ const spotReducer = (state = initialState, action) => {
         if(newState.singleSpot.id === action.spotId){
             newState.singleSpot = {};
         }
+        return newState;
+    case RESET_ALL_SPOTS:
+        newState = { ...state };
+        newState.allSpots = {};
         return newState;
     default:
       return state;

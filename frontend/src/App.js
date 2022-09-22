@@ -33,9 +33,6 @@ function App() {
           <Route path="/createspot">
             <CreateSpotForm></CreateSpotForm>
           </Route>
-          {/* <Route path="/updatespot/:spotId">
-            <UpdateSpotForm></UpdateSpotForm>
-          </Route> */}
           <Route path="/myreviews">
             <UserReviews></UserReviews>
           </Route>

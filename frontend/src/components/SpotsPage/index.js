@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { fetchSpots } from "../../store/spotReducer";
+import { fetchSpots, resetAllSpotsActionCreator } from "../../store/spotReducer";
 import Spot from "../Spot";
 
 import "./SpotsPage.css"
@@ -14,6 +14,7 @@ function SpotsPage() {
 
     useEffect(() => {
         dispatch(fetchSpots());
+        return (() => dispatch(resetAllSpotsActionCreator()));
     }, [dispatch]);
 
     return (
@@ -22,9 +23,7 @@ function SpotsPage() {
                 <div>
                     <div className="spot-container">
                         {Object.values(spots).map(spot => (
-                            // <div key={spot.id}>
                             <Spot key={spot.id} spot={spot}></Spot>
-                            // </div>
                         ))}
                     </div>
                 </div>
