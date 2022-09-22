@@ -28,13 +28,13 @@ function UpdateSpotForm() {
     const [errors, setErrors] = useState([]);
 
     useEffect(() => {
-        if(user){
-            if(user.id !== spot.ownerId){
+        if (user) {
+            if (user.id !== spot.ownerId) {
                 setErrors(["You must own the spot to update it."]);
-            }else{
+            } else {
                 setErrors([]);
             }
-        }else{
+        } else {
             setErrors(["You must be logged in to update a spot."]);
         }
     }, [user, spot]);
@@ -63,14 +63,15 @@ function UpdateSpotForm() {
     };
 
     return (
-        <div className="body-container">
-            <div className="body-header">
-                Update a spot
+        <>
+            <div className="header-div">
+                Update Spot
             </div>
-            <div className="spot-form-container">
-                <form 
+            <div className="content-div">
+
+                <form
                     onSubmit={handleSubmit}
-                    className="spot-form"
+                    className="signup-form"
                 >
                     <div className="errors">
                         {errors.map((error, idx) => <div key={idx}>{error}</div>)}
@@ -198,112 +199,7 @@ function UpdateSpotForm() {
                     </div>
                 </form>
             </div>
-        </div>
-
-        // <form onSubmit={handleSubmit}>
-        //     <div>
-        //         {errors.map((error, idx) => <div key={idx}>{error}</div>)}
-        //     </div>
-        //     <div>
-        //         <label>
-        //             Name
-        //             <input
-        //                 type="text"
-        //                 value={name}
-        //                 onChange={(e) => setName(e.target.value)}
-        //                 required
-        //             />
-        //         </label>
-        //     </div>
-        //     <div>
-        //         <label>
-        //             Description
-        //             <textarea
-        //                 value={description}
-        //                 onChange={(e) => setDescription(e.target.value)}
-        //                 required
-        //             />
-        //         </label>
-        //     </div>
-        //     <div>
-        //         <label>
-        //             Address
-        //             <input
-        //                 type="text"
-        //                 value={address}
-        //                 onChange={(e) => setAddress(e.target.value)}
-        //                 required
-        //             />
-        //         </label>
-        //     </div>
-        //     <div>
-        //         <label>
-        //             City
-        //             <input
-        //                 type="text"
-        //                 value={city}
-        //                 onChange={(e) => setCity(e.target.value)}
-        //                 required
-        //             />
-        //         </label>
-        //     </div>
-        //     <div>
-        //         <label>
-        //             State
-        //             <input
-        //                 type="text"
-        //                 value={state}
-        //                 onChange={(e) => setState(e.target.value)}
-        //                 required
-        //             />
-        //         </label>
-        //     </div>
-        //     <div>
-        //         <label>
-        //             Country
-        //             <input
-        //                 type="text"
-        //                 value={country}
-        //                 onChange={(e) => setCountry(e.target.value)}
-        //                 required
-        //             />
-        //         </label>
-        //     </div>
-        //     <div>
-        //         <label>
-        //             Price
-        //             <input
-        //                 type="number"
-        //                 value={price}
-        //                 onChange={(e) => setPrice(e.target.value)}
-        //                 required
-        //             />
-        //         </label>
-        //     </div>
-        //     {/* <div>
-        //         <label>
-        //             Latitude
-        //             <input
-        //                 type="number"
-        //                 value={lat}
-        //                 onChange={(e) => setLat(e.target.value)}
-        //                 required
-        //             />
-        //         </label>
-        //     </div>
-        //     <div>
-        //         <label>
-        //             Longitude
-        //             <input
-        //                 type="number"
-        //                 value={long}
-        //                 onChange={(e) => setLong(e.target.value)}
-        //                 required
-        //             />
-        //         </label>
-        //     </div> */}
-        //     <button type="submit" disabled={errors.length > 0}>Update spot</button>
-        // </form>
+        </>
     );
 }
 

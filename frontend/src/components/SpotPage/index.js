@@ -36,11 +36,6 @@ function SpotPage() {
         dispatch(fetchReviewsForSpot(spotId));
     }, [dispatch, spotId]);
 
-    async function deleteSpotClickEvent() {
-        await dispatch(deleteSpot(spot.id));
-        history.push("/");
-    }
-
     if (Object.keys(spot).length === 0) return null;
 
     let spotImages = [...spot.SpotImages];
@@ -155,9 +150,6 @@ function SpotPage() {
                         </div>
                         <div id="spot-info-right">
                             <div id="raised-spot-card">
-                                {/* <div>
-
-                                </div> */}
                                 <div
                                     id="raised-spot-card-header"
                                     className="spot-stats"
@@ -181,12 +173,6 @@ function SpotPage() {
                             </div>
                         </div>
                     </div>
-                    {/* <div
-                        id="spot-description-container"
-                        className="bottom-containers"
-                    >
-                        {spot.description}
-                    </div> */}
                     <div
                         id="big-stats"
                         className="bottom-containers spot-stats"
@@ -207,12 +193,6 @@ function SpotPage() {
                             ))}
                         </>)
                     }
-                    {loggedInUserIsSpotOwner && (
-                        <>
-                            <button onClick={deleteSpotClickEvent}>Delete spot</button>
-                            <button onClick={() => history.push(`/updatespot/${spot.id}`)}>Update spot</button>
-                        </>
-                    )}
                 </div>
             </div>
         </div>

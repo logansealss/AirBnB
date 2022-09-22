@@ -23,7 +23,7 @@ function SpotsPage() {
                     <div className="spot-container">
                         {Object.values(spots).map(spot => (
                             // <div key={spot.id}>
-                            <Spot spot={spot}></Spot>
+                            <Spot key={spot.id} spot={spot}></Spot>
                             // </div>
                         ))}
                     </div>

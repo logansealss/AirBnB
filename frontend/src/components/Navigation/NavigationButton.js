@@ -27,6 +27,7 @@ function NavigationButton() {
     const logout = () => {
         dispatch(sessionActions.logout());
         toggleMenuOpen(false);
+        history.push("/");
     };
 
     function removeMenu() {

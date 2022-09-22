@@ -5,7 +5,6 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotPage from "./components/SpotPage";
 import SpotsPage from "./components/SpotsPage";
-import UpdateSpotForm from "./components/UpdateSpotForm";
 import CreateSpotForm from "./components/CreateSpotForm";
 import Footer from "./components/Footer";
 import UserSpots from "./components/UserSpots";
@@ -34,9 +33,9 @@ function App() {
           <Route path="/createspot">
             <CreateSpotForm></CreateSpotForm>
           </Route>
-          <Route path="/updatespot/:spotId">
+          {/* <Route path="/updatespot/:spotId">
             <UpdateSpotForm></UpdateSpotForm>
-          </Route>
+          </Route> */}
           <Route path="/myreviews">
             <UserReviews></UserReviews>
           </Route>
