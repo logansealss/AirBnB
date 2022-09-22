@@ -8,6 +8,8 @@ import SpotsPage from "./components/SpotsPage";
 import UpdateSpotForm from "./components/UpdateSpotForm";
 import CreateSpotForm from "./components/CreateSpotForm";
 import Footer from "./components/Footer";
+import UserSpots from "./components/UserSpots";
+import UserReviews from "./components/UserReviews";
 
 function App() {
 
@@ -34,6 +36,12 @@ function App() {
           </Route>
           <Route path="/updatespot/:spotId">
             <UpdateSpotForm></UpdateSpotForm>
+          </Route>
+          <Route path="/myreviews">
+            <UserReviews></UserReviews>
+          </Route>
+          <Route path="/myspots">
+            <UserSpots></UserSpots>
           </Route>
         </Switch>
       )}

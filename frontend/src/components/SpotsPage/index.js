@@ -1,7 +1,9 @@
 import { useEffect } from "react";
-import { useSelector, useDispatch, createDispatchHook } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
 import { fetchSpots } from "../../store/spotReducer";
 import Spot from "../Spot";
+
 import "./SpotsPage.css"
 
 

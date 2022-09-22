@@ -20,6 +20,7 @@ function CreateSpotForm() {
     const [long, setLong] = useState(0);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const [imageURL, setImageURL] = useState("");
     const [price, setPrice] = useState(0);
     const [errors, setErrors] = useState([]);
 
@@ -84,12 +85,18 @@ function CreateSpotForm() {
             newErrors.push("Price must be greater than 0");
         }
 
+        if(imageURL.length > 255){
+            newErrors.push("Image URL must be less than 256 characters");
+        }
+
         if(newErrors.length > 0){
             setErrors(newErrors);
             return;
         }
 
         setErrors([]);
+
+        console.log("image URL on submission: ", imageURL);
 
         const newSpot = {
             name,
@@ -100,7 +107,8 @@ function CreateSpotForm() {
             country,
             lat,
             lng: long,
-            price
+            price,
+            imageURL
         }
 
         const response = dispatch(createNewSpot(newSpot))
@@ -184,6 +192,17 @@ function CreateSpotForm() {
                             onChange={(e) => setCountry(e.target.value)}
                             className="input"
                             required
+                        />
+                    </div>
+                    <div className="spot-input-container">
+                        <label>
+                            Image URL
+                        </label>
+                        <input
+                            type="text"
+                            value={imageURL}
+                            onChange={(e) => setImageURL(e.target.value)}
+                            className="input"
                         />
                     </div>
                     <div className="spot-input-container">

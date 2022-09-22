@@ -1,9 +1,16 @@
 import { csrfFetch } from './csrf';
 
-const READ_ALL_REVIEWS = "reviews/READ_ALL_REVIEWS";
+const READ_REVIEWS_USER = "reviews/READ_REVIEWS_USER";
 const READ_REVIEWS_SPOT = "reviews/READ_REVIEWS_SPOT";
 const DELETE_REVIEW = "reviews/DELETE_REVIEW";
 const CREATE_REVIEW = "reviews/CREATE_REVIEW";
+
+const loadReviewsForUserActionCreator = (reviews) => {
+    return {
+        type: READ_REVIEWS_USER,
+        reviews
+    }
+}
 
 const loadReviewsForSpotActionCreator = (reviews) => {
     return {
@@ -23,6 +30,17 @@ const createReviewActionCreator = (review) => {
     return {
         type: CREATE_REVIEW,
         review
+    }
+}
+
+export function fetchReviewsForUser(userId){
+    return async (dispatch) => {
+        const res = await csrfFetch(`/api/reviews/current`);
+
+        if(res.ok){
+            const reviews = await res.json();
+            dispatch(loadReviewsForUserActionCreator(reviews));
+        }
     }
 }
 
@@ -81,6 +99,14 @@ const initialState = {  spot: {}, user: {}  };
 const reviewReducer = (state = initialState, action) => {
     let newState;
     switch (action.type){
+        case READ_REVIEWS_USER:
+            newState = {...state};
+            const userReviews = action.reviews.Reviews.reduce((accum, review) => {
+                accum[review.id] = review;
+                return accum;
+            }, {});
+            newState.user = userReviews;
+            return newState;
         case READ_REVIEWS_SPOT:
             const normalizedReviews = action.reviews.Reviews.reduce((accum, review) => {
                 accum[review.id] = review;
