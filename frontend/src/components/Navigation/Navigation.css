@@ -79,6 +79,16 @@
     box-sizing: border-box;
 }
 
+.popup-menu-option-no-pointer{
+    padding: 10px;
+    font-weight: 500;
+    box-sizing: border-box;
+}
+
+.popup-menu-option-no-pointer:hover{
+    background-color: lightgray;
+}
+
 .popup-menu-option:hover{
     background-color: lightgray;
     cursor: pointer;

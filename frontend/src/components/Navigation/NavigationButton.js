@@ -14,15 +14,15 @@ function NavigationButton() {
 
     useEffect(() => {
         if (!menuOpen) return;
-    
+
         const closeMenu = () => {
-          toggleMenuOpen(false);
+            toggleMenuOpen(false);
         };
-    
+
         document.addEventListener('click', closeMenu);
-      
+
         return () => document.removeEventListener("click", closeMenu);
-      }, [menuOpen]);
+    }, [menuOpen]);
 
     const logout = () => {
         dispatch(sessionActions.logout());
@@ -39,44 +39,61 @@ function NavigationButton() {
         <div
             className="menu-button-container"
         >
-    <div>
-        <button
-            className='menu-button'
-            onClick={() => toggleMenuOpen(!menuOpen)}
-        >
-            <div className='icon-container'>
-                <i className="fa-solid fa-bars fa-1x"></i>
-                <i className="fa-solid fa-user fa-2x"></i>
+            <div>
+                <button
+                    className='menu-button'
+                    onClick={() => toggleMenuOpen(!menuOpen)}
+                >
+                    <div className='icon-container'>
+                        <i className="fa-solid fa-bars fa-1x"></i>
+                        <i className="fa-solid fa-user fa-2x"></i>
+                    </div>
+                </button>
+                <div
+                    className={popupMenuClass}
+                    id="popup"
+                >
+                    {user ? (
+                        <>
+                            <div
+                                className="popup-menu-option-no-pointer"
+                            >
+                                {user.email}
+                            </div>
+                            <div
+                                className="popup-menu-option"
+                                onClick={() => history.push("/myspots")}
+                            >
+                                My spots
+                            </div>
+                            <div
+                                className="popup-menu-option"
+                                onClick={() => history.push("/myreviews")}
+                            >
+                                My reviews
+                            </div>
+                            <div
+                                className="popup-menu-option"
+                                onClick={() => history.push("/createspot")}
+                            >
+                                Create spot
+                            </div>
+                            <div
+                                className="popup-menu-option"
+                                onClick={logout}
+                            >Log out
+                            </div>
+                        </>
+                    )
+                        : (
+                            <>
+                                <LoginFormModal afterSubmission={removeMenu} className="popup-menu-option" />
+                                <SignupFormModal afterSubmission={removeMenu} className="popup-menu-option" />
+                            </>
+                        )
+                    }
+                </div>
             </div>
-        </button>
-        <div
-            className={popupMenuClass}
-            id="popup"
-        >
-            {user ? (
-                <>
-                    <div
-                        className="popup-menu-option"
-                        onClick={() => history.push("/createspot")}
-                    >
-                        Create spot
-                    </div>
-                    <div
-                        className="popup-menu-option"
-                        onClick={logout}
-                    >Log out
-                    </div>
-                </>
-            )
-                : (
-                    <>
-                        <LoginFormModal afterSubmission={removeMenu} className="popup-menu-option"/>
-                        <SignupFormModal afterSubmission={removeMenu} className="popup-menu-option" />
-                    </>
-                )
-            }
-        </div>
-    </div>
         </div >
     )
 
