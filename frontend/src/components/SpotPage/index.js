@@ -34,11 +34,12 @@ function SpotPage() {
         async function getSpotAndReviews() {
 
             const spotExists = await dispatch(fetchSingleSpot(spotId))
+                .catch(() => false)
 
-            if (!spotExists) {
-                history.push("/pagenotfound")
-            }else{
+            if (spotExists) {
                 dispatch(fetchReviewsForSpot(spotId));
+            }else{
+                history.push("/pagenotfound")
             }
         }
 
