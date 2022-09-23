@@ -2,7 +2,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 924px;
+    margin: auto;
 }
 
 #home-button{
@@ -23,9 +24,9 @@
     padding: 0 40px;
     margin-bottom: 20px;
     box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
 }
 
 .menu-button-container{
