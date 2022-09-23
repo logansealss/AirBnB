@@ -50,6 +50,8 @@ async function getSpotsWithRatingPreview(queryOptions = {}){
             delete curSpotObj.SpotImages;
         }
 
+        curSpotObj.price = curSpotObj.price.toFixed(0);
+
         spots[i] = curSpotObj;
     }
 
@@ -178,6 +180,8 @@ router.get('/:id', async (req, res, next) => {
         if(spotResult.avgStarRating){
             spotResult.avgStarRating = spotResult.avgStarRating.toFixed(2);
         }
+
+        spotResult.price = spotResult.price.toFixed(0);
 
         res.json(spotResult);
     }else{
