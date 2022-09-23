@@ -63,7 +63,6 @@ export function fetchUserSpots(){
 
         if(res.ok){
             const spots = await res.json();
-            console.log("spots in thunk", spots)
             dispatch(loadUserSpotsActionCreator(spots));
         }
     }
@@ -184,7 +183,6 @@ const spotReducer = (state = initialState, action) => {
         return newState;
     case READ_USER_SPOTS:
         newState = { ...state };
-        console.log("spots in reducer", action.spots);
         const normalizedUserSpots = action.spots.Spots.reduce((obj, curSpot) => {
             obj[curSpot.id] = curSpot;
             return obj;
