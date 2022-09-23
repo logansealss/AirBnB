@@ -9,6 +9,7 @@ import CreateSpotForm from "./components/CreateSpotForm";
 import Footer from "./components/Footer";
 import UserSpots from "./components/UserSpots";
 import UserReviews from "./components/UserReviews";
+import PageNotFound from "./components/PageNotFound";
 
 function App() {
 
@@ -38,6 +39,9 @@ function App() {
           </Route>
           <Route path="/myspots">
             <UserSpots></UserSpots>
+          </Route>
+          <Route>
+            <PageNotFound></PageNotFound>
           </Route>
         </Switch>
       )}

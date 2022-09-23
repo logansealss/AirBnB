@@ -23,9 +23,9 @@ function UserReviews() {
     return (
         <>
             <div id="user-reviews-header-container">
-                <div id="user-reviews-header">
+                <h1 id="user-reviews-header">
                     {Object.values(reviews).length > 0 ? `${user.username}'s reviews` : "You don't have any reviews"}
-                </div>
+                </h1>
             </div>
             <div id="review-page-content">
                 <div id="review-page-container">

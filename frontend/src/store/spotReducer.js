@@ -87,6 +87,9 @@ export function fetchSingleSpot(spotId){
         if(res.ok){
             const spot = await res.json();
             dispatch(loadSingleSpotActionCreator(spot));
+            return true;
+        }else{
+            return false;
         }
     }
 }

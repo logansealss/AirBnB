@@ -25,9 +25,9 @@ function UserSpots() {
     return (
         <>
             <div id="user-spots-header-container">
-                <div id="user-spots-header">
+                <h1 id="user-spots-header">
                     {Object.values(spots).length > 0 ? `${user.username}'s spots` : "You don't have any spots"}
-                </div>
+                </h1>
             </div>
             <div className="centering-spot-container">
                 <div>

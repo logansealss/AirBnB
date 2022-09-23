@@ -2,9 +2,8 @@ import { useParams, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchSingleSpot, deleteSpot } from "../../store/spotReducer";
+import { fetchSingleSpot } from "../../store/spotReducer";
 import { fetchReviewsForSpot } from "../../store/reviewsReducer";
-import { deleteReview } from "../../store/reviewsReducer";
 import CreateReviewFormModal from "../CreateReviewFormModal";
 import SpotReview from "../SpotReview";
 
@@ -32,8 +31,19 @@ function SpotPage() {
     }
 
     useEffect(() => {
-        dispatch(fetchSingleSpot(spotId));
-        dispatch(fetchReviewsForSpot(spotId));
+        async function getSpotAndReviews() {
+
+            const spotExists = await dispatch(fetchSingleSpot(spotId))
+                .catch(res => console.log("failed response", res))
+
+            if (!spotExists) {
+                history.push("/pagenotfound")
+            }else{
+                dispatch(fetchReviewsForSpot(spotId));
+            }
+        }
+
+        getSpotAndReviews();
     }, [dispatch, spotId]);
 
     if (Object.keys(spot).length === 0) return null;
