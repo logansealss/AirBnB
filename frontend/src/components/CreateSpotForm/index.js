@@ -51,26 +51,26 @@ function CreateSpotForm() {
 
         if(address.length === 0){
             newErrors.push("Address is required");
-        }else if(address.length > 255){
-            newErrors.push("Address must be less than 256 characters");
+        }else if(address.length > 40){
+            newErrors.push("Address must be less than 41 characters");
         }
 
         if(city.length === 0){
             newErrors.push("City is required");
-        }else if(city.length > 255){
-            newErrors.push("City must be less than 256 characters");
+        }else if(city.length > 40){
+            newErrors.push("City must be less than 41 characters");
         }
 
         if(state.length === 0){
             newErrors.push("State is required");
-        }else if(state.length > 255){
-            newErrors.push("State must be less than 256 characters");
+        }else if(state.length > 40){
+            newErrors.push("State must be less than 41 characters");
         }
 
         if(country.length === 0){
             newErrors.push("Country is required");
-        }else if(country.length > 255){
-            newErrors.push("Country must be less than 256 characters");
+        }else if(country.length > 40){
+            newErrors.push("Country must be less than 41 characters");
         }
 
         if(lat < -90 || lat > 90){

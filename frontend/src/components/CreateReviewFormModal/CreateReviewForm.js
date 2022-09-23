@@ -18,8 +18,8 @@ function CreateReviewForm({ onCreation, spotId }) {
 
     const newErrors = [];
 
-    if(review.length > 255){
-      newErrors.push("Review must be less than 256 characters");
+    if(review.length > 255 || review.length < 10){
+      newErrors.push("Review must be between 10 and 256 characters");
     }
 
     setErrors(newErrors);
