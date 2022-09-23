@@ -85,11 +85,11 @@
     box-sizing: border-box;
 }
 
-.popup-menu-option-no-pointer:hover{
-    background-color: lightgray;
-}
-
 .popup-menu-option:hover{
     background-color: lightgray;
     cursor: pointer;
+}
+
+#bottom-border{
+    border-bottom: 1px solid #DDD;
 }

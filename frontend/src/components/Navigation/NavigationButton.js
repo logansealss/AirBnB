@@ -58,6 +58,12 @@ function NavigationButton() {
                             <div
                                 className="popup-menu-option-no-pointer"
                             >
+                                {user.username}
+                            </div>
+                            <div
+                                id="bottom-border"
+                                className="popup-menu-option-no-pointer"
+                            >
                                 {user.email}
                             </div>
                             <div
