@@ -34,7 +34,6 @@ function SpotPage() {
         async function getSpotAndReviews() {
 
             const spotExists = await dispatch(fetchSingleSpot(spotId))
-                .catch(res => console.log("failed response", res))
 
             if (!spotExists) {
                 history.push("/pagenotfound")
