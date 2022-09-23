@@ -16,30 +16,35 @@ function UserReview({ review }) {
 
     return (
         <div className="individual-review-container">
-            <div className="individual-review-header">
-                <span>For </span>
-                <Link
-                    to={`/spots/${review.Spot.id}`}
-                    className="link-to-spot"
-                >
-                    <span>{review.Spot.name}</span>
-                </Link>
-            </div>
-            <div id="review-stats">
-                <div id="review-rating">
-                    <div>
-                        <i className="fa-solid fa-star"></i>
-                    </div>
-                    <div className="individual-review-rating">
-                        {review.stars}
-                    </div>
-                </div>
+            <div>
+
                 <div>
-                    {`${month} ${year}`}
+                    <div className="individual-review-header">
+                        <span>For </span>
+                        <Link
+                            to={`/spots/${review.Spot.id}`}
+                            className="link-to-spot"
+                        >
+                            <span>{review.Spot.name}</span>
+                        </Link>
+                    </div>
+                    <div id="review-stats">
+                        <div id="review-rating">
+                            <div>
+                                <i className="fa-solid fa-star"></i>
+                            </div>
+                            <div className="individual-review-rating">
+                                {review.stars}
+                            </div>
+                        </div>
+                        <div>
+                            {`${month} ${year}`}
+                        </div>
+                    </div>
+                    <div className="review-review">
+                        {review.review}
+                    </div>
                 </div>
-            </div>
-            <div className="review-review">
-                {review.review}
             </div>
             <button
                 className="review-buttons"

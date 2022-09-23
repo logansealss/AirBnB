@@ -96,8 +96,6 @@ function CreateSpotForm() {
 
         setErrors([]);
 
-        console.log("image URL on submission: ", imageURL);
-
         const newSpot = {
             name,
             description,
@@ -111,12 +109,12 @@ function CreateSpotForm() {
             imageURL
         }
 
-        const response = dispatch(createNewSpot(newSpot))
-            .then((res) => {
+        const response = await dispatch(createNewSpot(newSpot))
+            .then(async (res) => {
                 if(res.errors){
                     setErrors(Object.values(res.errors));
                 }else{
-                    history.push("/");
+                    history.push(`/spots/${res.id}`);
                 }
             })
     };

@@ -42,6 +42,62 @@ function UpdateSpotForm({spot, onUpdate}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const newErrors = [];
+
+        if(name.length === 0){
+            newErrors.push("Name is required");
+        }else if(name.length > 49){
+            newErrors.push("Name must be less than 50 characters");
+        }
+
+        if(description.length === 0){
+            newErrors.push("Description is required");
+        }else if(description.length > 255){
+            newErrors.push("Description must be less than 256 characters");
+        }
+
+        if(address.length === 0){
+            newErrors.push("Address is required");
+        }else if(address.length > 255){
+            newErrors.push("Address must be less than 256 characters");
+        }
+
+        if(city.length === 0){
+            newErrors.push("City is required");
+        }else if(city.length > 255){
+            newErrors.push("City must be less than 256 characters");
+        }
+
+        if(state.length === 0){
+            newErrors.push("State is required");
+        }else if(state.length > 255){
+            newErrors.push("State must be less than 256 characters");
+        }
+
+        if(country.length === 0){
+            newErrors.push("Country is required");
+        }else if(country.length > 255){
+            newErrors.push("Country must be less than 256 characters");
+        }
+
+        if(lat < -90 || lat > 90){
+            newErrors.push("Latitude must be between -90 and 90");
+        }
+
+        if(long < -180 || long > 180){
+            newErrors.push("Longitude must be between -180 and 180");
+        }
+
+        if(price < 0){
+            newErrors.push("Price must be greater than 0");
+        }
+
+        setErrors(newErrors);
+
+        if(newErrors.length > 0){
+            return;
+        }
+
         const newSpot = {
             name,
             description,

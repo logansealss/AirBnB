@@ -16,12 +16,24 @@ function CreateReviewForm({ onCreation, spotId }) {
     e.preventDefault();
     setErrors([]);
 
+    const newErrors = [];
+
+    if(review.length > 255){
+      newErrors.push("Review must be less than 256 characters");
+    }
+
+    setErrors(newErrors);
+
+    if(newErrors.length){
+      return;
+    }
+
     const newReview = {
         review,
         stars
     };
 
-    dispatch(createNewReview(newReview, spotId, user))
+    dispatch(createNewReview(newReview, spotId, user));
   };
 
   return (
