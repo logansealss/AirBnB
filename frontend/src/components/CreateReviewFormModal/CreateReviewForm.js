@@ -73,7 +73,7 @@ function CreateReviewForm({ onCreation, spotId }) {
               required
             />
           </div>
-          <div className="button-container">
+          <div id="form-button-container" className="button-container">
             <button type="submit" className="submit-button">Create review</button>
           </div>
         </form>

@@ -120,7 +120,7 @@ function SignupForm() {
               required
             />
           </div>
-          <div className="button-container">
+          <div className="button-container" id="form-button-container">
             <button type="submit" className="submit-button">Sign up</button>
           </div>
         </form>

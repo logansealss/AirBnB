@@ -78,11 +78,13 @@ function LoginForm({ onLogin }) {
               required
             />
           </div>
-          <div className="button-container">
-            <button type="submit" className="submit-button">Log in</button>
-          </div>
-          <div className="button-container">
-            <button onClick={loginDemoUser} className="submit-button">Log in as demo user</button>
+          <div id="form-button-container">
+            <div className="button-container">
+              <button type="submit" className="submit-button">Log in</button>
+            </div>
+            <div id="demo-user-login-button" className="button-container">
+              <button onClick={loginDemoUser} className="submit-button">Log in as demo user</button>
+            </div>
           </div>
         </form>
       </div>

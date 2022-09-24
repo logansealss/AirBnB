@@ -245,7 +245,7 @@ function UpdateSpotForm({spot, onUpdate}) {
                     />
                 </label>
             </div> */}
-                    <div>
+                    <div id="form-button-container">
                         <button
                             type="submit"
                             disabled={user === null}
