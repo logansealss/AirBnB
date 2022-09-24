@@ -58,7 +58,52 @@ function CreateReviewForm({ onCreation, spotId }) {
               required
             />
           </div>
-          <div className="input-container">
+          <div>
+            Stars
+          </div>
+          <div id="rating-container">
+            <div
+              onClick={() => setStars(1)}
+            >
+              {stars >= 1 ? 
+                <i className="fa-solid fa-star fa-2xl"></i> :
+                <i className="fa-regular fa-star  fa-2xl"></i>
+              }
+            </div>
+            <div
+              onClick={() => setStars(2)}
+            >
+              {stars >= 2 ? 
+                <i className="fa-solid fa-star fa-2xl"></i> :
+                <i className="fa-regular fa-star  fa-2xl"></i>
+              }
+            </div>
+            <div
+              onClick={() => setStars(3)}
+            >
+              {stars >= 3 ? 
+                <i className="fa-solid fa-star fa-2xl"></i> :
+                <i className="fa-regular fa-star  fa-2xl"></i>
+              }
+            </div>
+            <div
+              onClick={() => setStars(4)}
+            >
+              {stars >= 4 ? 
+                <i className="fa-solid fa-star fa-2xl"></i> :
+                <i className="fa-regular fa-star  fa-2xl"></i>
+              }
+            </div>
+            <div
+              onClick={() => setStars(5)}
+            >
+              {stars >= 5 ? 
+                <i className="fa-solid fa-star fa-2xl"></i> :
+                <i className="fa-regular fa-star  fa-2xl"></i>
+              }
+            </div>
+          </div>
+          {/* <div className="input-container">
             <label>
               Stars
             </label>
@@ -72,7 +117,7 @@ function CreateReviewForm({ onCreation, spotId }) {
               step="1"
               required
             />
-          </div>
+          </div> */}
           <div id="form-button-container" className="button-container">
             <button type="submit" className="submit-button">Create review</button>
           </div>
