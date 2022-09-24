@@ -103,21 +103,6 @@ function CreateReviewForm({ onCreation, spotId }) {
               }
             </div>
           </div>
-          {/* <div className="input-container">
-            <label>
-              Stars
-            </label>
-            <input
-              type="number"
-              value={stars}
-              onChange={(e) => setStars(e.target.value)}
-              className="input"
-              min="1"
-              max="5"
-              step="1"
-              required
-            />
-          </div> */}
           <div id="form-button-container" className="button-container">
             <button type="submit" className="submit-button">Create review</button>
           </div>
