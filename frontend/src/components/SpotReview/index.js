@@ -25,7 +25,7 @@ function SpotReview({ review }) {
                     <div className="review-user-date">{`${month} ${year}`}</div>
                 </div>
             </div>
-            <div>
+            <div className="users-review">
                 {review.review}
             </div>
         </div>

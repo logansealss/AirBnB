@@ -195,6 +195,9 @@
 
 #spot-info-left{
     width: 540px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
 }
 
 #spot-info-right{
