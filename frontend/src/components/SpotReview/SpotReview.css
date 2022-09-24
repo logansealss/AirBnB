@@ -44,3 +44,10 @@
 .delete-review-button:hover{
     cursor: pointer;
 }
+
+.users-review{
+    width: 540px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+}

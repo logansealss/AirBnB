@@ -78,12 +78,18 @@
     padding: 10px;
     font-weight: 500;
     box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .popup-menu-option-no-pointer{
     padding: 10px;
     font-weight: 500;
     box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .popup-menu-option:hover{
