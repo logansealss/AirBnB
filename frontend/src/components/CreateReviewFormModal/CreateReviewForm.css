@@ -14,3 +14,13 @@
 .review-form.input{
     height: 200px;
 }
+
+#rating-container{
+    display: flex;
+    margin-top: 15px;
+}
+
+#rating-container div{
+    margin: 0 5px;
+    color: #db0d64;
+}
