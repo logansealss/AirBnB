@@ -36,3 +36,7 @@ Heroku
 6. Go to localhost:3000 in your browser to view the site.
 
 ## Contact Information
+
+https://www.linkedin.com/in/logan-seals-b91454251/
+
+https://github.com/logansealss
