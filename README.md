@@ -12,7 +12,7 @@ LairBnB is a website clone inspired by [AirBnB](https://www.airbnb.com/). It is 
  - [Features](https://github.com/logansealss/AirBnB/wiki/Features)
  - [Redux Store Shape](https://github.com/logansealss/AirBnB/wiki/Redux-Store-Shape)
  
-## Tech Stack
+## Technologies Used
 
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
@@ -26,33 +26,34 @@ LairBnB is a website clone inspired by [AirBnB](https://www.airbnb.com/). It is 
 
 ## Features
 
-Landing Page
-- View all of the spots
+### Landing Page
+
+Users are able to view spot information and click on a spot to see more details.
 
 ![image](https://user-images.githubusercontent.com/106628994/192161288-041f1c22-b275-4c6e-8866-bc618b51a40c.png)
 
-Dropdown Menu
-- See who is logged in
-- View the user's spots and reviews
-- Create a new spot
-- Log out
+### Dropdown Menu
+
+The dropdown menu allows a user that is not signed in to sign up or log in to the site. Logged in users are able to view their spots and reviews, as well as create a spot.
 
 ![image](https://user-images.githubusercontent.com/106628994/192161731-c2be44f2-0db8-4691-a2ef-e5b76c44aa51.png)
 
-Spot Page
-- See the details of a spot
-- Add a review if you are not the owner and do not have a review already
+### Spot Details Page
+
+This page provides more details about the spot to the user. A user can add a review to a spot from this page.
 
 ![image](https://user-images.githubusercontent.com/106628994/192161296-5790bd80-2d29-4b23-a183-7c0201003754.png)
 ![image](https://user-images.githubusercontent.com/106628994/192161305-b318bc2f-3430-44bd-b8aa-71219d565651.png)
 
-View Your Spots
-- View, update, and delete your spots
+### View Your Spots
+
+A logged in user is able to view all of their spots as well as update and delete spots.
 
 ![image](https://user-images.githubusercontent.com/106628994/192161668-1ea9486c-e779-4e9d-9eec-354fa968ec2a.png)
 
-View Your Reviews
-- View and delete your reviews
+### View Your Reviews
+
+A logged in user is able to view and delete their reviews.
 
 ![image](https://user-images.githubusercontent.com/106628994/192161685-033e4ef4-9616-4954-ac6b-0c15016d9796.png)
 
