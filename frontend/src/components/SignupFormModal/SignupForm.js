@@ -21,6 +21,30 @@ function SignupForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const newErrors = [];
+
+    if(email.length < 3 || email.length > 255){
+      newErrors.push("Email must be between 3 and 255 characters long")
+    }
+
+    if(username.length < 4 || username.length > 30){
+      newErrors.push("Username must be between 4 and 30 characters long")
+    }
+
+    if(firstName.length < 4 || firstName.length > 30){
+      newErrors.push("First name must be between 4 and 30 characters long")
+    }
+
+    if(lastName.length < 4 || lastName.length > 30){
+      newErrors.push("Last name must be between 4 and 30 characters long")
+    }
+
+    if(newErrors.length){
+      setErrors(newErrors);
+      return;
+    }
+
     if (password === confirmPassword) {
       setErrors([]);
       return dispatch(sessionActions.signup({ email, username, password, firstName, lastName }))

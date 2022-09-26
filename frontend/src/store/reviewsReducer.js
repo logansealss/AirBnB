@@ -120,7 +120,7 @@ const reviewReducer = (state = initialState, action) => {
             delete newState.user[action.reviewId];
             return newState;
         case CREATE_REVIEW:
-            newState = { ...state, spot: {...state.spot}};
+            newState = { user: {...state.user}, spot: {...state.spot}};
             newState.spot[action.review.id] = action.review;
             return newState;
         default:

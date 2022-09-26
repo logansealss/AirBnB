@@ -44,40 +44,24 @@ function UpdateSpotForm({spot, onUpdate}) {
 
         const newErrors = [];
 
-        if(name.length === 0){
-            newErrors.push("Name is required");
-        }else if(name.length > 49){
-            newErrors.push("Name must be less than 50 characters");
+        if(name.length < 4 || name.length > 49){
+            newErrors.push("Name must be between 4 and 49 characters");
         }
 
-        if(description.length === 0){
-            newErrors.push("Description is required");
-        }else if(description.length > 255){
-            newErrors.push("Description must be less than 256 characters");
+        if(address.length < 4 || address.length > 40){
+            newErrors.push("Address must be between 4 and 40 characters");
         }
 
-        if(address.length === 0){
-            newErrors.push("Address is required");
-        }else if(address.length > 40){
-            newErrors.push("Address must be less than 41 characters");
+        if(city.length < 4 || city.length > 40){
+            newErrors.push("City must be between 4 and 40 characters");
         }
 
-        if(city.length === 0){
-            newErrors.push("City is required");
-        }else if(city.length > 40){
-            newErrors.push("City must be less than 41 characters");
+        if(state.length < 4 || state.length > 40){
+            newErrors.push("State must be between 4 and 40 characters");
         }
 
-        if(state.length === 0){
-            newErrors.push("State is required");
-        }else if(state.length > 40){
-            newErrors.push("State must be less than 41 characters");
-        }
-
-        if(country.length === 0){
-            newErrors.push("Country is required");
-        }else if(country.length > 40){
-            newErrors.push("Country must be less than 41 characters");
+        if(country.length < 4 || country.length > 40){
+            newErrors.push("Country must be between 4 and 40 characters");
         }
 
         if(lat < -90 || lat > 90){
@@ -89,7 +73,11 @@ function UpdateSpotForm({spot, onUpdate}) {
         }
 
         if(price < 0){
-            newErrors.push("Price must be greater than 0");
+            newErrors.push("Price must be greater than or equal to 0");
+        }
+
+        if(description.length < 10 || description.length > 255){
+            newErrors.push("Description must be between 10 and 255 characters");
         }
 
         setErrors(newErrors);
