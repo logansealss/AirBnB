@@ -210,6 +210,47 @@ function SpotPage() {
                                         className="reserve-button"
                                     >Reserve</button>
                                 </form>
+                                <div
+                                    className="booking-data-flex"
+                                >
+                                    <div>
+                                        You won't be charged yet.
+                                    </div>
+                                </div>
+                                <div
+                                    className="booking-prices-container"
+                                >
+                                    <div
+                                        className="booking-prices-flex"
+                                    >
+                                        <div>
+                                            $99 x 3 nights
+                                        </div>
+                                        <div>
+                                            $297
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="booking-prices-flex"
+                                    >
+                                        <div>
+                                            Service Fee
+                                        </div>
+                                        <div>
+                                            $300
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="booking-prices-total"
+                                    >
+                                        <div>
+                                            Total before taxes
+                                        </div>
+                                        <div>
+                                            $2161
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

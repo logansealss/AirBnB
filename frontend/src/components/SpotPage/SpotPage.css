@@ -296,3 +296,32 @@
     border: 1px solid #db0d64;
 }
 
+.booking-prices-container{
+    padding-top: 24px;
+}
+
+.booking-prices-flex:first-child{
+    padding-top: 0;
+}
+
+.booking-prices-total{
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+}
+
+.booking-data-flex{
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+}
+
+.booking-prices-flex{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+}
+
