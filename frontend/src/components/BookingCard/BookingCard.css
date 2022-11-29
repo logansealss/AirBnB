@@ -24,8 +24,6 @@
     display: flex;
 }
 
-/* Reservation form */
-
 .reservation-form-container{
     margin-bottom: 16px;
     display: flex;
@@ -114,6 +112,9 @@
     display: flex;
     justify-content: center;
     padding-top: 8px;
+    font-size: 14px;
+    line-height: 18px;
+    color: rgb(34, 34, 34)
 }
 
 .booking-prices-flex{

@@ -4,19 +4,38 @@ import "./BookingCard.css"
 
 export default function ({ spot, reviewValues }) {
 
-    const [startDate, setStartDate] = useState()
-    const [endDate, setEndDate] = useState()
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
     const [dateErr, setDateErr] = useState()
 
     useEffect(() => {
         if (endDate && startDate) {
             if (endDate <= startDate) {
-                setDateErr('End date must be after start date.')
-            } else {
-                setDateErr()
+                setEndDate('')
             }
         }
     }, [startDate, endDate])
+
+
+    function getMinEndDate() {
+        if (!startDate) {
+            return new Date(Date.now()).toJSON().slice(0, 10)
+        }
+        const nextDay = new Date(startDate)
+        nextDay.setDate(nextDay.getDate() + 1)
+        return nextDay.toJSON().slice(0, 10)
+    }
+
+    let numDays
+    let cost
+    let serviceFee
+    let total
+    if(startDate && endDate){
+        numDays = (new Date(endDate).getTime() - new Date(startDate).getTime())/ (1000 * 3600 * 24)
+        cost = Math.round(spot.price * numDays)
+        serviceFee = Math.round(cost * .05)
+        total = cost + serviceFee
+    }   
 
     return (
 
@@ -62,7 +81,7 @@ export default function ({ spot, reviewValues }) {
                                 className="reservation-form-date-right"
                                 value={endDate}
                                 onChange={e => setEndDate(e.target.value)}
-                                min={new Date(Date.now()).toJSON().slice(0, 10)}
+                                min={getMinEndDate()}
                                 type="date"
                             />
                         </div>
@@ -80,49 +99,51 @@ export default function ({ spot, reviewValues }) {
                         className="reserve-button"
                     >Reserve</button>
                 </form>
-                <div
-                    className="booking-data-flex"
-                >
-                    <div>
-                        You won't be charged yet.
-                    </div>
-                </div>
-                {endDate && startDate && !dateErr &&
+                {endDate && startDate &&
+                    <>
+                        <div
+                            className="booking-data-flex"
+                        >
+                            <div>
+                                You won't be charged yet.
+                            </div>
+                        </div>
 
-                    <div
-                        className="booking-prices-container"
-                    >
                         <div
-                            className="booking-prices-flex"
+                            className="booking-prices-container"
                         >
-                            <div>
-                                $99 x 3 nights
+                            <div
+                                className="booking-prices-flex"
+                            >
+                                <div>
+                                    {`$${spot.price} x ${numDays} ${numDays === 1 ? 'night' : 'nights'}`}
+                                </div>
+                                <div>
+                                    {`$${cost}`}
+                                </div>
                             </div>
-                            <div>
-                                $297
+                            <div
+                                className="booking-prices-flex"
+                            >
+                                <div>
+                                    Service Fee
+                                </div>
+                                <div>
+                                    {`$${serviceFee}`}
+                                </div>
+                            </div>
+                            <div
+                                className="booking-prices-total"
+                            >
+                                <div>
+                                    Total before taxes
+                                </div>
+                                <div>
+                                    {`$${total}`}
+                                </div>
                             </div>
                         </div>
-                        <div
-                            className="booking-prices-flex"
-                        >
-                            <div>
-                                Service Fee
-                            </div>
-                            <div>
-                                $300
-                            </div>
-                        </div>
-                        <div
-                            className="booking-prices-total"
-                        >
-                            <div>
-                                Total before taxes
-                            </div>
-                            <div>
-                                $2161
-                            </div>
-                        </div>
-                    </div>
+                    </>
                 }
             </div>
         </div>
