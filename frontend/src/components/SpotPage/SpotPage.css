@@ -201,15 +201,16 @@
 }
 
 #spot-info-right{
-    height: 175px;
+    /* height: 175px; */
 }
 
 #raised-spot-card{
-    width: 307px;
+    width: 275px;
     height: 100%;
     border: 1px solid #DDD;
     box-shadow: 0px 0px 10px #DDD;
     border-radius: 15px;
+    padding: 24px;
 }
 
 #spot-raised-card-ratings{
@@ -219,9 +220,79 @@
 #raised-spot-card-header{
     display: flex;
     justify-content: space-between;
-    padding: 24px;
+    padding-bottom: 24px;
 }
 
 #spot-card-review-stats{
     display: flex;
 }
+
+/* Reservation form */
+
+.reservation-form-container{
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.reservation-form-dates{
+    display: flex;
+}
+
+.reservation-dates-error{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 5px;
+}
+
+.reservation-form-date-left{
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 1px solid #ddd;
+    outline: none;
+    border-right-color: transparent;
+}
+
+.reservation-form-date-left:focus, .reservation-form-date-right:focus{
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.reservation-form-date-left:focus + .reservation-form-date-right{
+    border-left-color: transparent;
+}
+
+.reservation-form-date-right{
+    border: 1px solid #ddd;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    outline: none;
+}
+
+.reservation-form input{
+    width: 50%;
+    box-sizing: border-box;
+    height: 36px;
+    font-family: 'Roboto', sans-serif;
+    padding: 0 5px;
+}
+
+.reserve-button{
+    border: none;
+    background-color: #db0d64;
+    color: #fff;
+    border-radius: 12px;
+    height: 36px;
+    font-weight: 600;
+    width: 100%;
+}
+
+.reserve-button:hover{
+    cursor: pointer;
+    color: #db0d64;
+    background-color: #FFF;
+    border: 1px solid #db0d64;
+}
+

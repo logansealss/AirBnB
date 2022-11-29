@@ -38,7 +38,7 @@ function SpotPage() {
 
             if (spotExists) {
                 dispatch(fetchReviewsForSpot(spotId));
-            }else{
+            } else {
                 history.push("/pagenotfound")
             }
         }
@@ -178,6 +178,38 @@ function SpotPage() {
                                         </div>
                                     </div>
                                 </div>
+                                <form
+                                    className="reservation-form"
+                                >
+                                    <div
+                                        className="reservation-form-container"
+                                    >
+                                        <div
+                                            className="reservation-form-dates"
+                                        >
+                                            <input
+                                                className="reservation-form-date-left"
+                                                min={new Date(Date.now()).toJSON().slice(0, 10)}
+                                                type="date"
+                                            />
+                                            <input
+                                                className="reservation-form-date-right"
+                                                min={new Date(Date.now()).toJSON().slice(0, 10)}
+                                                type="date"
+                                            />
+                                        </div>
+                                        <div
+                                            className="reservation-dates-error"
+                                        >
+                                            <div>
+                                                Those dates are not available.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button
+                                        className="reserve-button"
+                                    >Reserve</button>
+                                </form>
                             </div>
                         </div>
                     </div>
