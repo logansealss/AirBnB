@@ -200,9 +200,9 @@
     word-wrap: break-word;
 }
 
-#spot-info-right{
-    /* height: 175px; */
-}
+/* #spot-info-right{
+
+} 
 
 #raised-spot-card{
     width: 275px;
@@ -226,8 +226,6 @@
 #spot-card-review-stats{
     display: flex;
 }
-
-/* Reservation form */
 
 .reservation-form-container{
     margin-bottom: 16px;
@@ -324,4 +322,4 @@
     justify-content: space-between;
     padding-top: 16px;
 }
-
+ */

@@ -2,6 +2,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import BookingCard from "../BookingCard/BookingCard";
 import { fetchSingleSpot } from "../../store/spotReducer";
 import { fetchReviewsForSpot } from "../../store/reviewsReducer";
 import CreateReviewFormModal from "../CreateReviewFormModal";
@@ -156,103 +157,10 @@ function SpotPage() {
                                 {spot.description}
                             </div>
                         </div>
-                        <div id="spot-info-right">
-                            <div id="raised-spot-card">
-                                <div
-                                    id="raised-spot-card-header"
-                                    className="spot-stats"
-                                >
-                                    <div id="spot-price">
-                                        <span className="big-spot-info">${spot.price}</span>
-                                        <span> night</span>
-                                    </div>
-                                    <div id="spot-card-review-stats">
-                                        <div id="stats-star-container">
-                                            <i className="fa-solid fa-star"></i>
-                                        </div>
-                                        <div id="spot-raised-card-ratings">
-                                            <div>
-                                                {spot.avgStarRating === null ? "New ·" : `${spot.avgStarRating} ·`}
-                                            </div>
-                                            <div id="stats-num-reviews">{reviewValues.length} {reviewValues.length === 1 ? "review" : "reviews"}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <form
-                                    className="reservation-form"
-                                >
-                                    <div
-                                        className="reservation-form-container"
-                                    >
-                                        <div
-                                            className="reservation-form-dates"
-                                        >
-                                            <input
-                                                className="reservation-form-date-left"
-                                                min={new Date(Date.now()).toJSON().slice(0, 10)}
-                                                type="date"
-                                            />
-                                            <input
-                                                className="reservation-form-date-right"
-                                                min={new Date(Date.now()).toJSON().slice(0, 10)}
-                                                type="date"
-                                            />
-                                        </div>
-                                        <div
-                                            className="reservation-dates-error"
-                                        >
-                                            <div>
-                                                Those dates are not available.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button
-                                        className="reserve-button"
-                                    >Reserve</button>
-                                </form>
-                                <div
-                                    className="booking-data-flex"
-                                >
-                                    <div>
-                                        You won't be charged yet.
-                                    </div>
-                                </div>
-                                <div
-                                    className="booking-prices-container"
-                                >
-                                    <div
-                                        className="booking-prices-flex"
-                                    >
-                                        <div>
-                                            $99 x 3 nights
-                                        </div>
-                                        <div>
-                                            $297
-                                        </div>
-                                    </div>
-                                    <div
-                                        className="booking-prices-flex"
-                                    >
-                                        <div>
-                                            Service Fee
-                                        </div>
-                                        <div>
-                                            $300
-                                        </div>
-                                    </div>
-                                    <div
-                                        className="booking-prices-total"
-                                    >
-                                        <div>
-                                            Total before taxes
-                                        </div>
-                                        <div>
-                                            $2161
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <BookingCard
+                            spot={spot}
+                            reviewValues={reviewValues}
+                        ></BookingCard>
                     </div>
                     <div
                         id="big-stats"
