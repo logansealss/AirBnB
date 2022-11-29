@@ -184,7 +184,6 @@
 #spot-info-header{
     display: flex;
     justify-content: space-between;
-    align-items: center;
 }
 
 #spot-info-name-owner{
