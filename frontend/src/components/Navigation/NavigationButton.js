@@ -101,8 +101,14 @@ function NavigationButton() {
                     )
                         : (
                             <>
-                                <LoginFormModal afterSubmission={removeMenu} className="popup-menu-option" />
-                                <SignupFormModal afterSubmission={removeMenu} className="popup-menu-option" />
+                                <LoginFormModal 
+                                    afterClicked={() => toggleMenuOpen(false)} 
+                                    className="popup-menu-option" />
+                                <SignupFormModal 
+                                    afterSubmission={removeMenu} 
+                                    afterClicked={() => toggleMenuOpen(false)}
+                                    className="popup-menu-option" 
+                                />
                             </>
                         )
                     }
