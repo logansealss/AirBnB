@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import UpdateSpotModal from "../UpdateSpotModal";
 import DeleteModal from "../DeleteModal";
@@ -10,12 +10,20 @@ import "./UpdateDropdown.css"
 export default function OwnerDropdown({ spot, review }) {
 
     const [menuOpen, toggleMenuOpen] = useState(false);
+    const ref = useRef()
+
+    function closeMenu(){
+        toggleMenuOpen(false);
+    }
 
     useEffect(() => {
         if (!menuOpen) return;
 
-        const closeMenu = () => {
-            toggleMenuOpen(false);
+        const closeMenu = (e) => {
+
+            if (ref.current && !ref.current.contains(e.target) && ref.current !== e.target) {
+                toggleMenuOpen(cur => !cur);
+            }
         };
 
         document.addEventListener('click', closeMenu);
@@ -41,17 +49,20 @@ export default function OwnerDropdown({ spot, review }) {
                 <div
                     className={popupMenuClass}
                     id="popup"
+                    ref={ref}
                 >{spot && (
                     <>
                         <UpdateSpotModal
                             className={'popup-menu-option'}
                             spot={spot}
                             isDiv={true}
+                            whenClicked={closeMenu}
                         />
                         <DeleteModal
                             className={'popup-menu-option'}
                             spot={spot}
                             isDiv={true}
+                            whenClicked={closeMenu}
                         />
                     </>
                 )}
@@ -61,11 +72,13 @@ export default function OwnerDropdown({ spot, review }) {
                                 className={'popup-menu-option'}
                                 isDiv={true}
                                 review={review}
+                                whenClicked={closeMenu}
                             />
                             <DeleteModal
                                 className={'popup-menu-option'}
                                 isDiv={true}
                                 review={review}
+                                whenClicked={closeMenu}
                             />
                         </>
                     )}

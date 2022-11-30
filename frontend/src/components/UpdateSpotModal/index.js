@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from '../../context/Modal';
 import UpdateSpotForm from './UpdateSpotForm';
 
-function UpdateSpotModal({ afterSubmission, className, spot, isDiv }) {
+function UpdateSpotModal({ whenClicked, afterSubmission, className, spot, isDiv }) {
     const [showModal, setShowModal] = useState(false);
 
     function onCompletion() {
@@ -12,11 +12,16 @@ function UpdateSpotModal({ afterSubmission, className, spot, isDiv }) {
         }
     }
 
+    function onClick(){
+        setShowModal(true)
+        whenClicked()
+    }
+
     return (
         <>
             {isDiv ?
                 <div
-                    onClick={() => setShowModal(true)}
+                    onClick={onClick}
                     className={className ? className : ""}
                 >
                     Update spot

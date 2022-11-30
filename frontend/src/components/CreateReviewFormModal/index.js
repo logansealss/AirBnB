@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from '../../context/Modal';
 import CreateReviewForm from './CreateReviewForm'
 
-function CreateReviewFormModal({ afterSubmission, className, spotId, review, isDiv }) {
+function CreateReviewFormModal({ whenClicked, afterSubmission, className, spotId, review, isDiv }) {
   const [showModal, setShowModal] = useState(false);
 
   function onCompletion() {
@@ -12,11 +12,18 @@ function CreateReviewFormModal({ afterSubmission, className, spotId, review, isD
     }
   }
 
+  function onClick(){
+    setShowModal(true)
+    if(whenClicked){
+      whenClicked()
+    }
+  }
+
   return (
     <>
       {isDiv ?
         <div
-          onClick={() => setShowModal(true)}
+          onClick={onClick}
           className={className ? className : ""}
         >
           {!review ? 'Create review' : 'Update review'}
