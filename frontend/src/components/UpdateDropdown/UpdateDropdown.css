@@ -1,0 +1,10 @@
+.update-dropdown-container{
+    position: relative;
+    display: flex;
+    align-items: center;
+    z-index: 0;
+}
+
+.update-dropdown-button:hover{
+    cursor: pointer;
+}

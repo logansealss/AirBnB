@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 
 import UpdateSpotModal from "../UpdateSpotModal";
 import DeleteModal from "../DeleteModal";
-
 import CreateReviewFormModal from "../CreateReviewFormModal";
+import dots from "../../images/dots.svg"
+
+import "./UpdateDropdown.css"
 
 export default function OwnerDropdown({ spot, review }) {
-    const dispatch = useDispatch();
-    const history = useHistory();
+
     const [menuOpen, toggleMenuOpen] = useState(false);
 
     useEffect(() => {
@@ -32,87 +31,48 @@ export default function OwnerDropdown({ spot, review }) {
 
     return (
         <div
-            className="menu-button-container"
+            className="update-dropdown-container"
         >
             <div>
-                <button
-                    className='menu-button'
+                <div
+                    className="update-dropdown-button"
                     onClick={() => toggleMenuOpen(!menuOpen)}
                 >
-                    <div className='icon-container'>
-                        <i className="fa-solid fa-bars fa-1x"></i>
-                        <i className="fa-solid fa-user fa-2x"></i>
-                    </div>
-                </button>
+                    <img
+                        src={dots}
+                    />
+                </div>
                 <div
                     className={popupMenuClass}
                     id="popup"
                 >{spot && (
                     <>
-                        <UpdateSpotModal 
+                        <UpdateSpotModal
+                            className={'popup-menu-option'}
                             spot={spot}
+                            isDiv={true}
                         />
-                        <DeleteModal 
+                        <DeleteModal
+                            className={'popup-menu-option'}
                             spot={spot}
+                            isDiv={true}
                         />
                     </>
                 )}
-                {review && (
-                    <>
-                        <CreateReviewFormModal
-                            review={review}
-                        />
-                        <DeleteModal 
-                            review={review}
-                        />
-                    </>
-                )}
-
-                    {/* {user ? (
+                    {review && (
                         <>
-                            <div
-                                className="popup-menu-option-no-pointer"
-                            >
-                                {user.username}
-                            </div>
-                            <div
-                                id="bottom-border"
-                                className="popup-menu-option-no-pointer"
-                            >
-                                {user.email}
-                            </div>
-                            <div
-                                className="popup-menu-option"
-                                onClick={() => history.push("/myspots")}
-                            >
-                                My spots
-                            </div>
-                            <div
-                                className="popup-menu-option"
-                                onClick={() => history.push("/myreviews")}
-                            >
-                                My reviews
-                            </div>
-                            <div
-                                className="popup-menu-option"
-                                onClick={() => history.push("/createspot")}
-                            >
-                                Create spot
-                            </div>
-                            <div
-                                className="popup-menu-option"
-                                onClick={logout}
-                            >Log out
-                            </div>
+                            <CreateReviewFormModal
+                                className={'popup-menu-option'}
+                                isDiv={true}
+                                review={review}
+                            />
+                            <DeleteModal
+                                className={'popup-menu-option'}
+                                isDiv={true}
+                                review={review}
+                            />
                         </>
-                    )
-                        : (
-                            <>
-                                <LoginFormModal afterSubmission={removeMenu} className="popup-menu-option" />
-                                <SignupFormModal afterSubmission={removeMenu} className="popup-menu-option" />
-                            </>
-                        )
-                    } */}
+                    )}
                 </div>
             </div>
         </div >
