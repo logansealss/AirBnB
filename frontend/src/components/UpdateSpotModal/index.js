@@ -5,7 +5,7 @@ import UpdateSpotForm from './UpdateSpotForm';
 function UpdateSpotModal({ afterSubmission, className, spot }) {
     const [showModal, setShowModal] = useState(false);
 
-    function onUpdate() {
+    function onCompletion() {
         setShowModal(false);
         if (afterSubmission) {
             afterSubmission();
@@ -25,7 +25,7 @@ function UpdateSpotModal({ afterSubmission, className, spot }) {
                     onClose={() => setShowModal(false)}
                     className="form-container"
                 >
-                    <UpdateSpotForm spot={spot} onUpdate={onUpdate}></UpdateSpotForm>
+                    <UpdateSpotForm spot={spot} onCompletion={onCompletion}></UpdateSpotForm>
                 </Modal>
             )}
         </>

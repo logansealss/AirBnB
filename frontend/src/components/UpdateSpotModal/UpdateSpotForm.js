@@ -1,17 +1,14 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
 
-import { fetchSingleSpot } from "../../store/spotReducer";
 import { updateSpot } from "../../store/spotReducer";
 import "./UpdateSpotForm.css";
 
-function UpdateSpotForm({spot, onUpdate}) {
+function UpdateSpotForm({ spot, onCompletion }) {
 
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
 
-    const [spotId, setSpotId] = useState(spot.id);
     const [address, setAddress] = useState(spot.address);
     const [city, setCity] = useState(spot.city);
     const [state, setState] = useState(spot.state);
@@ -35,54 +32,54 @@ function UpdateSpotForm({spot, onUpdate}) {
         }
     }, [user, spot]);
 
-    useEffect(() => {
-        dispatch(fetchSingleSpot(spotId));
-    }, [dispatch, spotId]);
+    // useEffect(() => {
+    //     dispatch(fetchSingleSpot(spotId));
+    // }, [dispatch, spotId]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const newErrors = [];
 
-        if(name.length < 4 || name.length > 49){
+        if (name.length < 4 || name.length > 49) {
             newErrors.push("Name must be between 4 and 49 characters");
         }
 
-        if(address.length < 4 || address.length > 40){
+        if (address.length < 4 || address.length > 40) {
             newErrors.push("Address must be between 4 and 40 characters");
         }
 
-        if(city.length < 4 || city.length > 40){
+        if (city.length < 4 || city.length > 40) {
             newErrors.push("City must be between 4 and 40 characters");
         }
 
-        if(state.length < 4 || state.length > 40){
+        if (state.length < 4 || state.length > 40) {
             newErrors.push("State must be between 4 and 40 characters");
         }
 
-        if(country.length < 4 || country.length > 40){
+        if (country.length < 4 || country.length > 40) {
             newErrors.push("Country must be between 4 and 40 characters");
         }
 
-        if(lat < -90 || lat > 90){
+        if (lat < -90 || lat > 90) {
             newErrors.push("Latitude must be between -90 and 90");
         }
 
-        if(long < -180 || long > 180){
+        if (long < -180 || long > 180) {
             newErrors.push("Longitude must be between -180 and 180");
         }
 
-        if(price < 0){
+        if (price < 0) {
             newErrors.push("Price must be greater than or equal to 0");
         }
 
-        if(description.length < 10 || description.length > 255){
+        if (description.length < 10 || description.length > 255) {
             newErrors.push("Description must be between 10 and 255 characters");
         }
 
         setErrors(newErrors);
 
-        if(newErrors.length > 0){
+        if (newErrors.length > 0) {
             return;
         }
 
@@ -100,8 +97,8 @@ function UpdateSpotForm({spot, onUpdate}) {
 
         await dispatch(updateSpot(newSpot, spot.id));
 
-        if(onUpdate){
-            onUpdate();
+        if (onCompletion) {
+            onCompletion();
         }
     };
 
@@ -233,12 +230,22 @@ function UpdateSpotForm({spot, onUpdate}) {
                     />
                 </label>
             </div> */}
-                    <div id="form-button-container">
+                    <div
+                        id="owner-buttons-container"
+                    >
                         <button
+                            className="spot-owner-buttons"
+                            onClick={onCompletion}
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            className="spot-owner-buttons"
                             type="submit"
                             disabled={user === null}
-                            className="spot-submit-button"
-                        >Update Spot</button>
+                        >
+                            Update Spot
+                        </button>
                     </div>
                 </form>
             </div>

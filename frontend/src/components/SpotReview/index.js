@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteReview } from "../../store/reviewsReducer";
+import OwnerDropdown from "../UpdateDropdown";
 
 import "./SpotReview.css"
 
@@ -28,6 +28,11 @@ function SpotReview({ review }) {
             <div className="users-review">
                 {review.review}
             </div>
+            {user && user.id === review.userId && 
+                <OwnerDropdown 
+                    review={review}
+                />
+            }
         </div>
     )
 }

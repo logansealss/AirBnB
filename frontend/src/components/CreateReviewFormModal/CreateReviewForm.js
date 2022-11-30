@@ -35,14 +35,17 @@ function CreateReviewForm({ spotId, reviewToUpdate, onCompletion }) {
       stars
     };
 
-    if(!reviewToUpdate){
+    if (!reviewToUpdate) {
       const result = await dispatch(createNewReview(newReview, spotId, user));
-      if(result.id){
+      if (result.id) {
         dispatch(fetchSingleSpot(spotId))
       }
       onCompletion()
-    }else{
-      await dispatch(updateReview(newReview, reviewToUpdate.id))
+    } else {
+      const result = await dispatch(updateReview(newReview, reviewToUpdate.id))
+      if (result.id) {
+        dispatch(fetchSingleSpot(reviewToUpdate.spotId))
+      }
       onCompletion()
     }
 
@@ -50,13 +53,13 @@ function CreateReviewForm({ spotId, reviewToUpdate, onCompletion }) {
   };
 
   useEffect(() => {
-    if(!submitted){
+    if (!submitted) {
       return;
     }
 
     if (review.length > 255 || review.length < 1) {
       setErrors(["Review must be between 1 and 256 characters"])
-    }else{
+    } else {
       setErrors([])
     }
   }, [review])
@@ -137,8 +140,20 @@ function CreateReviewForm({ spotId, reviewToUpdate, onCompletion }) {
               }
             </div>
           </div>
-          <div id="form-button-container" className="button-container">
-            <button type="submit" className="submit-button">{!reviewToUpdate ? 'Create review' : 'Update review'}</button>
+          <div
+            id="owner-buttons-container"
+          >
+            <button
+              className="spot-owner-buttons"
+              onClick={onCompletion}
+            >
+              Cancel
+            </button>
+            <button
+              className="spot-owner-buttons"
+            >
+              {!reviewToUpdate ? 'Create review' : 'Update review'}
+            </button>
           </div>
         </form>
       </div>

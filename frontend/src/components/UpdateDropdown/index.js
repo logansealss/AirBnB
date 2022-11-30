@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import * as sessionActions from '../../store/session';
-import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SignupFormModal";
+import UpdateSpotModal from "../UpdateSpotModal";
+import DeleteModal from "../DeleteModal";
 
-function NavigationButton() {
+import CreateReviewFormModal from "../CreateReviewFormModal";
+
+export default function OwnerDropdown({ spot, review }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const [menuOpen, toggleMenuOpen] = useState(false);
-    const user = useSelector(state => state.session.user);
 
     useEffect(() => {
         if (!menuOpen) return;
@@ -23,11 +23,6 @@ function NavigationButton() {
 
         return () => document.removeEventListener("click", closeMenu);
     }, [menuOpen]);
-
-    const logout = () => {
-        dispatch(sessionActions.logout());
-        toggleMenuOpen(false);
-    };
 
     function removeMenu() {
         toggleMenuOpen(false);
@@ -52,8 +47,28 @@ function NavigationButton() {
                 <div
                     className={popupMenuClass}
                     id="popup"
-                >
-                    {user ? (
+                >{spot && (
+                    <>
+                        <UpdateSpotModal 
+                            spot={spot}
+                        />
+                        <DeleteModal 
+                            spot={spot}
+                        />
+                    </>
+                )}
+                {review && (
+                    <>
+                        <CreateReviewFormModal
+                            review={review}
+                        />
+                        <DeleteModal 
+                            review={review}
+                        />
+                    </>
+                )}
+
+                    {/* {user ? (
                         <>
                             <div
                                 className="popup-menu-option-no-pointer"
@@ -97,11 +112,10 @@ function NavigationButton() {
                                 <SignupFormModal afterSubmission={removeMenu} className="popup-menu-option" />
                             </>
                         )
-                    }
+                    } */}
                 </div>
             </div>
         </div >
     )
 
 }
-export default NavigationButton;

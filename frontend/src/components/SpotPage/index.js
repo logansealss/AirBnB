@@ -8,6 +8,7 @@ import { fetchReviewsForSpot } from "../../store/reviewsReducer";
 import CreateReviewFormModal from "../CreateReviewFormModal";
 import SpotReview from "../SpotReview";
 import LoadingIcon from "../LoadingIcon/LoadingIcon";
+import OwnerDropdown from "../UpdateDropdown";
 
 import "./SpotPage.css"
 
@@ -50,7 +51,7 @@ function SpotPage() {
         getSpotAndReviews();
     }, [dispatch, spotId]);
 
-    if(!loaded){
+    if (!loaded) {
         return <LoadingIcon />
     }
 
@@ -89,24 +90,34 @@ function SpotPage() {
         <div id="content-container">
             <div className="spot-body-container">
                 <div>
-                    <div>
-                        <div className="spot-name-container">
-                            <span>
-                                <h1>
-                                    {spot.name}
-                                </h1>
-                            </span>
-                        </div>
-                        <div className="spot-stats">
-                            <div id="stats-star-container">
-                                <i className="fa-solid fa-star"></i>
+                    <div
+                        className="spot-header"
+                    >
+
+                        <div
+                            className="spot-header-info-flex"
+                        >
+                            <div className="spot-name-container">
+                                <span>
+                                    <h1>
+                                        {spot.name}
+                                    </h1>
+                                </span>
                             </div>
-                            <div>
-                                {spot.avgStarRating === null ? "New ·" : `${spot.avgStarRating} ·`}
+                            <div className="spot-stats">
+                                <div id="stats-star-container">
+                                    <i className="fa-solid fa-star"></i>
+                                </div>
+                                <div>
+                                    {spot.avgStarRating === null ? "New ·" : `${spot.avgStarRating} ·`}
+                                </div>
+                                <div id="stats-num-reviews">{reviewValues.length} {reviewValues.length === 1 ? "review ·" : "reviews ·"}</div>
+                                <div id="stats-location">{`${spot.city}, ${spot.state}, ${spot.country}`}</div>
                             </div>
-                            <div id="stats-num-reviews">{reviewValues.length} {reviewValues.length === 1 ? "review ·" : "reviews ·"}</div>
-                            <div id="stats-location">{`${spot.city}, ${spot.state}, ${spot.country}`}</div>
                         </div>
+                        {user && user.id === spot.ownerId && 
+                            <OwnerDropdown spot={spot}/>
+                        }
                     </div>
                     <div id="spot-pictures-container">
                         <div id="single-picture-container">
