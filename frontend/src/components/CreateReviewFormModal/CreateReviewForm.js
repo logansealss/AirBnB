@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { createNewReview } from "../../store/reviewsReducer";
+import { createNewReview, updateReview } from "../../store/reviewsReducer";
 import "./CreateReviewForm.css"
 
-function CreateReviewForm({ spotId, reviewToUpdate }) {
+function CreateReviewForm({ spotId, reviewToUpdate, onCompletion }) {
   const dispatch = useDispatch();
   const [review, setReview] = useState(reviewToUpdate ? reviewToUpdate.review : "");
   const [stars, setStars] = useState(reviewToUpdate ? reviewToUpdate.stars : 3);
   const [hoverStars, setHoverStars] = useState(0)
   const [errors, setErrors] = useState([]);
+  const [submitted, setSubmitted] = useState(false)
   const user = useSelector(state => state.session.user);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors([]);
 
@@ -23,7 +24,7 @@ function CreateReviewForm({ spotId, reviewToUpdate }) {
     }
 
     setErrors(newErrors);
-
+    setSubmitted(true);
     if (newErrors.length) {
       return;
     }
@@ -33,13 +34,33 @@ function CreateReviewForm({ spotId, reviewToUpdate }) {
       stars
     };
 
-    dispatch(createNewReview(newReview, spotId, user));
+    if(!reviewToUpdate){
+      dispatch(createNewReview(newReview, spotId, user));
+      onCompletion()
+    }else{
+      await dispatch(updateReview(newReview, reviewToUpdate.id))
+      onCompletion()
+    }
+
+
   };
+
+  useEffect(() => {
+    if(!submitted){
+      return;
+    }
+
+    if (review.length > 255 || review.length < 1) {
+      setErrors(["Review must be between 1 and 256 characters"])
+    }else{
+      setErrors([])
+    }
+  }, [review])
 
   return (
     <>
       <div className="header-div">
-        Create a review
+        {!reviewToUpdate ? 'Create a review' : 'Update review'}
       </div>
       <div className="content-div">
         <form onSubmit={handleSubmit} className="review-form">
@@ -55,7 +76,6 @@ function CreateReviewForm({ spotId, reviewToUpdate }) {
               value={review}
               onChange={(e) => setReview(e.target.value)}
               className="input"
-              required
             />
           </div>
           <div>

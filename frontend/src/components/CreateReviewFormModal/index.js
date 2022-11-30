@@ -5,14 +5,12 @@ import CreateReviewForm from './CreateReviewForm'
 function CreateReviewFormModal({ afterSubmission, className, spotId, review }) {
   const [showModal, setShowModal] = useState(false);
 
-  function onCreation() {
+  function onCompletion() {
     setShowModal(false);
     if (afterSubmission) {
       afterSubmission();
     }
   }
-
-  console.log("review in modal", review)
 
   return (
     <>
@@ -27,7 +25,7 @@ function CreateReviewFormModal({ afterSubmission, className, spotId, review }) {
           onClose={() => setShowModal(false)}
           className="form-container"
         >
-          <CreateReviewForm onCreation={onCreation} spotId={spotId} reviewToUpdate={review}/>
+          <CreateReviewForm onCompletion={onCompletion} spotId={spotId} reviewToUpdate={review}/>
         </Modal>
       )}
     </>

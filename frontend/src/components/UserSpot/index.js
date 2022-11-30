@@ -60,7 +60,6 @@ function UserSpot({ spot }) {
                 </div>
                 <div id="owner-buttons-container">
                     <UpdateSpotModal className="spot-owner-buttons" spot={spot}></UpdateSpotModal>
-                    {/* <button onClick={() => history.push(`/updatespot/${spot.id}`)} className="spot-owner-buttons">Update spot</button> */}
                     <button onClick={deleteSpotClickEvent} className="spot-owner-buttons">Delete spot</button>
                 </div>
             </div>
