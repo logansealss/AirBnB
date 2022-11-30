@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -11,12 +11,15 @@ function NavigationButton() {
     const history = useHistory();
     const [menuOpen, toggleMenuOpen] = useState(false);
     const user = useSelector(state => state.session.user);
+    const ref = useRef()
 
     useEffect(() => {
         if (!menuOpen) return;
 
-        const closeMenu = () => {
-            toggleMenuOpen(false);
+        const closeMenu = (e) => {
+            if (ref.current && !ref.current.contains(e.target) && ref.current !== e.target) {
+                toggleMenuOpen(cur => !cur);
+            }
         };
 
         document.addEventListener('click', closeMenu);
@@ -29,8 +32,12 @@ function NavigationButton() {
         toggleMenuOpen(false);
     };
 
-    function removeMenu() {
-        toggleMenuOpen(false);
+    function removeMenu(cb) {
+
+        return () => {
+            toggleMenuOpen(false);
+            cb()
+        }
     }
 
     const popupMenuClass = menuOpen ? "popup-menu popup-menu-visible" : "popup-menu popup-menu-hidden"
@@ -52,6 +59,7 @@ function NavigationButton() {
                 <div
                     className={popupMenuClass}
                     id="popup"
+                    ref={ref}
                 >
                     {user ? (
                         <>
@@ -68,19 +76,19 @@ function NavigationButton() {
                             </div>
                             <div
                                 className="popup-menu-option"
-                                onClick={() => history.push("/myspots")}
+                                onClick={removeMenu(() => history.push("/myspots"))}
                             >
                                 My spots
                             </div>
                             <div
                                 className="popup-menu-option"
-                                onClick={() => history.push("/myreviews")}
+                                onClick={removeMenu(() => history.push("/myreviews"))}
                             >
                                 My reviews
                             </div>
                             <div
                                 className="popup-menu-option"
-                                onClick={() => history.push("/createspot")}
+                                onClick={removeMenu(() => history.push("/createspot"))}
                             >
                                 Create spot
                             </div>
