@@ -1,0 +1,10 @@
+.delete-prompt{
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.delete-popup{
+    border-radius: 10px;
+    width: 450px;
+}
