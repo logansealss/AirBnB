@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom"
 
 
 import { deleteReview } from "../../store/reviewsReducer";
-import { deleteSpot } from "../../store/spotReducer";
+import { deleteSpot, fetchSingleSpot } from "../../store/spotReducer";
 
 import "./DeletePopup.css"
 
@@ -21,6 +21,9 @@ export default function DeletePopup({ onCompletion, spot, review }) {
         }
         if (review) {
             await dispatch(deleteReview(review.id))
+            if(history.location.pathname === `/spots/${review.spotId}`){
+                dispatch(fetchSingleSpot(review.spotId))
+            }
         }
     }
 
