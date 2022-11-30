@@ -122,3 +122,9 @@
     justify-content: space-between;
     padding-top: 16px;
 }
+
+.booking-no-user{
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+}

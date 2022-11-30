@@ -1,8 +1,11 @@
-
+import { useSelector } from 'react-redux'
 import { useState, useEffect } from "react"
+
 import "./BookingCard.css"
 
 export default function ({ spot, reviewValues }) {
+
+    const user = useSelector(state => state.session.user)
 
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
@@ -30,12 +33,12 @@ export default function ({ spot, reviewValues }) {
     let cost
     let serviceFee
     let total
-    if(startDate && endDate){
-        numDays = (new Date(endDate).getTime() - new Date(startDate).getTime())/ (1000 * 3600 * 24)
+    if (startDate && endDate) {
+        numDays = (new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 3600 * 24)
         cost = Math.round(spot.price * numDays)
         serviceFee = Math.round(cost * .05)
         total = cost + serviceFee
-    }   
+    }
 
     return (
 
@@ -95,11 +98,21 @@ export default function ({ spot, reviewValues }) {
                             </div>
                         }
                     </div>
-                    <button
-                        className="reserve-button"
-                    >Reserve</button>
+                    {user ?
+                        <button
+                            className="reserve-button"
+                        >Reserve</button>
+                        :
+                        <div
+                            className='booking-no-user'
+                        >
+                            <div>
+                                Log in or sign up to book
+                            </div>
+                        </div>
+                    }
                 </form>
-                {endDate && startDate &&
+                {user && endDate && startDate &&
                     <>
                         <div
                             className="booking-data-flex"
