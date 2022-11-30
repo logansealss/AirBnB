@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { createNewReview, updateReview } from "../../store/reviewsReducer";
+import { fetchSingleSpot } from "../../store/spotReducer";
 import "./CreateReviewForm.css"
 
 function CreateReviewForm({ spotId, reviewToUpdate, onCompletion }) {
@@ -35,7 +36,10 @@ function CreateReviewForm({ spotId, reviewToUpdate, onCompletion }) {
     };
 
     if(!reviewToUpdate){
-      dispatch(createNewReview(newReview, spotId, user));
+      const result = await dispatch(createNewReview(newReview, spotId, user));
+      if(result.id){
+        dispatch(fetchSingleSpot(spotId))
+      }
       onCompletion()
     }else{
       await dispatch(updateReview(newReview, reviewToUpdate.id))
