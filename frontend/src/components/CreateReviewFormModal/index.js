@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from '../../context/Modal';
 import CreateReviewForm from './CreateReviewForm'
 
-function CreateReviewFormModal({ afterSubmission, className, spotId }) {
+function CreateReviewFormModal({ afterSubmission, className, spotId, review }) {
   const [showModal, setShowModal] = useState(false);
 
   function onCreation() {
@@ -12,20 +12,22 @@ function CreateReviewFormModal({ afterSubmission, className, spotId }) {
     }
   }
 
+  console.log("review in modal", review)
+
   return (
     <>
       <button
         onClick={() => setShowModal(true)}
         className={className ? className : ""}
       >
-        Create review
+        {!review ? 'Create review' : 'Update review'}
       </button>
       {showModal && (
         <Modal
           onClose={() => setShowModal(false)}
           className="form-container"
         >
-          <CreateReviewForm onCreation={onCreation} spotId={spotId} />
+          <CreateReviewForm onCreation={onCreation} spotId={spotId} reviewToUpdate={review}/>
         </Modal>
       )}
     </>

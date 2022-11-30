@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { deleteReview } from "../../store/reviewsReducer";
 import "./UserReview.css";
+import CreateReviewFormModal from "../CreateReviewFormModal";
 
 const MONTH = ["January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"];
@@ -46,12 +47,20 @@ function UserReview({ review }) {
                     </div>
                 </div>
             </div>
-            <button
-                className="review-buttons"
-                onClick={() => dispatch(deleteReview(review.id))}
+            <div
+                id="owner-buttons-container"
             >
-                Delete review
-            </button>
+                <CreateReviewFormModal
+                    className="spot-owner-buttons"
+                    review={review}
+                ></CreateReviewFormModal>
+                <button
+                    className="review-buttons"
+                    onClick={() => dispatch(deleteReview(review.id))}
+                >
+                    Delete review
+                </button>
+            </div>
         </div>
     )
 }
