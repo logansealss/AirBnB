@@ -23,11 +23,7 @@ export default function OwnerDropdown({ spot, review }) {
         return () => document.removeEventListener("click", closeMenu);
     }, [menuOpen]);
 
-    function removeMenu() {
-        toggleMenuOpen(false);
-    }
-
-    const popupMenuClass = menuOpen ? "popup-menu popup-menu-visible" : "popup-menu popup-menu-hidden"
+    const popupMenuClass = menuOpen ? "dropdown-menu popup-menu-visible" : "dropdown-menu popup-menu-hidden"
 
     return (
         <div

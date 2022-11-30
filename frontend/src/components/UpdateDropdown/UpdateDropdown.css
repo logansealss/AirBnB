@@ -8,3 +8,14 @@
 .update-dropdown-button:hover{
     cursor: pointer;
 }
+
+.dropdown-menu{
+    position: absolute;
+    border-radius: 6px;
+    padding: 6px 0;
+    box-shadow: 0 0 10px #DDD;
+    background-color: #FFF;
+    width: 200px;
+    right: 0;
+    z-index: 5;
+}
