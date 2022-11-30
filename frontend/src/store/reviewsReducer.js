@@ -128,7 +128,7 @@ const initialState = {  spot: {}, user: {}  };
 const reviewReducer = (state = initialState, action) => {
     let newState;
     let updatedReview;
-    let spot;
+    let updatedSpot;
     switch (action.type){
         case READ_REVIEWS_USER:
             newState = {...state};
@@ -149,15 +149,15 @@ const reviewReducer = (state = initialState, action) => {
             updatedReview = state.user[action.review.id] || state.spot[action.review.id]
             updatedReview.review = action.review.review
             updatedReview.stars = action.review.stars
-            spot = { ...state.spot }
-            if(spot[action.review.id]){
-                spot[action.review.id] = { 
-                    ...updateReview
+            updatedSpot = { ...state.spot }
+            if(updatedSpot[action.review.id]){
+                updatedSpot[action.review.id] = { 
+                    ...updatedReview
                 }
             }
             return { 
                 spot: { 
-                    ...spot
+                    ...updatedSpot
                 }, 
                 user: {
                     ...state.user, 
