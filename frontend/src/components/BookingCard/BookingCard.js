@@ -5,6 +5,8 @@ import "./BookingCard.css"
 
 export default function ({ spot, reviewValues }) {
 
+    console.log("spot", spot)
+
     const user = useSelector(state => state.session.user)
 
     const [startDate, setStartDate] = useState('')
@@ -64,98 +66,102 @@ export default function ({ spot, reviewValues }) {
                         </div>
                     </div>
                 </div>
-                <form
-                    className="reservation-form"
-                >
-                    <div
-                        className="reservation-form-container"
-                    >
-                        <div
-                            className="reservation-form-dates"
-                        >
-                            <input
-                                className="reservation-form-date-left"
-                                value={startDate}
-                                onChange={e => setStartDate(e.target.value)}
-                                min={new Date(Date.now()).toJSON().slice(0, 10)}
-                                type="date"
-                            />
-                            <input
-                                className="reservation-form-date-right"
-                                value={endDate}
-                                onChange={e => setEndDate(e.target.value)}
-                                min={getMinEndDate()}
-                                type="date"
-                            />
-                        </div>
-                        {dateErr &&
-                            <div
-                                className="reservation-dates-error"
-                            >
-                                <div>
-                                    {dateErr}
-                                </div>
-                            </div>
-                        }
-                    </div>
-                    {user ?
-                        <button
-                            className="reserve-button"
-                        >Reserve</button>
-                        :
-                        <div
-                            className='booking-no-user'
-                        >
-                            <div>
-                                Log in or sign up to book
-                            </div>
-                        </div>
-                    }
-                </form>
-                {user && endDate && startDate &&
+                {(!user || (user && user.id !== spot.ownerId)) &&
                     <>
-                        <div
-                            className="booking-data-flex"
+                        <form
+                            className="reservation-form"
                         >
-                            <div>
-                                You won't be charged yet.
+                            <div
+                                className="reservation-form-container"
+                            >
+                                <div
+                                    className="reservation-form-dates"
+                                >
+                                    <input
+                                        className="reservation-form-date-left"
+                                        value={startDate}
+                                        onChange={e => setStartDate(e.target.value)}
+                                        min={new Date(Date.now()).toJSON().slice(0, 10)}
+                                        type="date"
+                                    />
+                                    <input
+                                        className="reservation-form-date-right"
+                                        value={endDate}
+                                        onChange={e => setEndDate(e.target.value)}
+                                        min={getMinEndDate()}
+                                        type="date"
+                                    />
+                                </div>
+                                {dateErr &&
+                                    <div
+                                        className="reservation-dates-error"
+                                    >
+                                        <div>
+                                            {dateErr}
+                                        </div>
+                                    </div>
+                                }
                             </div>
-                        </div>
+                            {user ?
+                                <button
+                                    className="reserve-button"
+                                >Reserve</button>
+                                :
+                                <div
+                                    className='booking-no-user'
+                                >
+                                    <div>
+                                        Log in or sign up to book
+                                    </div>
+                                </div>
+                            }
+                        </form>
+                        {user && endDate && startDate &&
+                            <>
+                                <div
+                                    className="booking-data-flex"
+                                >
+                                    <div>
+                                        You won't be charged yet.
+                                    </div>
+                                </div>
 
-                        <div
-                            className="booking-prices-container"
-                        >
-                            <div
-                                className="booking-prices-flex"
-                            >
-                                <div>
-                                    {`$${spot.price} x ${numDays} ${numDays === 1 ? 'night' : 'nights'}`}
+                                <div
+                                    className="booking-prices-container"
+                                >
+                                    <div
+                                        className="booking-prices-flex"
+                                    >
+                                        <div>
+                                            {`$${spot.price} x ${numDays} ${numDays === 1 ? 'night' : 'nights'}`}
+                                        </div>
+                                        <div>
+                                            {`$${cost}`}
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="booking-prices-flex"
+                                    >
+                                        <div>
+                                            Service Fee
+                                        </div>
+                                        <div>
+                                            {`$${serviceFee}`}
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="booking-prices-total"
+                                    >
+                                        <div>
+                                            Total before taxes
+                                        </div>
+                                        <div>
+                                            {`$${total}`}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    {`$${cost}`}
-                                </div>
-                            </div>
-                            <div
-                                className="booking-prices-flex"
-                            >
-                                <div>
-                                    Service Fee
-                                </div>
-                                <div>
-                                    {`$${serviceFee}`}
-                                </div>
-                            </div>
-                            <div
-                                className="booking-prices-total"
-                            >
-                                <div>
-                                    Total before taxes
-                                </div>
-                                <div>
-                                    {`$${total}`}
-                                </div>
-                            </div>
-                        </div>
+                            </>
+                        }
                     </>
                 }
             </div>
