@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import LoadingIcon from "../LoadingIcon/LoadingIcon"
 import { fetchSpots, resetAllSpotsActionCreator } from "../../store/spotReducer";
 import Spot from "../Spot";
 
@@ -11,11 +12,21 @@ function SpotsPage() {
 
     const dispatch = useDispatch();
     const spots = useSelector(state => state.spots.allSpots);
+    const [loaded, setLoaded] = useState(false)
 
     useEffect(() => {
-        dispatch(fetchSpots());
-        return (() => dispatch(resetAllSpotsActionCreator()));
+
+        (async () => {
+            await dispatch(fetchSpots());
+            setLoaded(true)
+        })()
+
+        // return (() => dispatch(resetAllSpotsActionCreator()));
     }, [dispatch]);
+
+    if(!loaded){
+        return <LoadingIcon />
+    }
 
     return (
         <>

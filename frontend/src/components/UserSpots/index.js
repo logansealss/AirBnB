@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 
 import { fetchUserSpots, resetAllSpotsActionCreator } from "../../store/spotReducer";
 import UserSpot from "../UserSpot";
+import LoadingIcon from "../LoadingIcon/LoadingIcon";
 
 import "./UserSpots.css";
 
@@ -12,14 +13,24 @@ function UserSpots() {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
     const spots = useSelector(state => state.spots.allSpots);
+    const [loaded, setLoaded] = useState(false)
 
     useEffect(() => {
-        dispatch(fetchUserSpots());
-        return (() => dispatch(resetAllSpotsActionCreator()));
+        
+        (async () => {
+            await dispatch(fetchUserSpots());
+            setLoaded(true)
+        })()
+
+        // return (() => dispatch(resetAllSpotsActionCreator()));
     }, [dispatch]);
 
     if (!user) {
         return <Redirect to="/"></Redirect>
+    }
+
+    if(!loaded){
+        return <LoadingIcon />
     }
 
     return (

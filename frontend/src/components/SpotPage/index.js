@@ -7,6 +7,7 @@ import { fetchSingleSpot } from "../../store/spotReducer";
 import { fetchReviewsForSpot } from "../../store/reviewsReducer";
 import CreateReviewFormModal from "../CreateReviewFormModal";
 import SpotReview from "../SpotReview";
+import LoadingIcon from "../LoadingIcon/LoadingIcon";
 
 import "./SpotPage.css"
 
@@ -16,6 +17,7 @@ function SpotPage() {
     const history = useHistory();
     const dispatch = useDispatch();
     const [spotId, setSpotId] = useState(+(params.spotId));
+    const [loaded, setLoaded] = useState(false)
 
     const spot = useSelector(state => state.spots.singleSpot);
     const reviews = useSelector(state => state.reviews.spot);
@@ -38,7 +40,8 @@ function SpotPage() {
                 .catch(() => false)
 
             if (spotExists) {
-                dispatch(fetchReviewsForSpot(spotId));
+                await dispatch(fetchReviewsForSpot(spotId));
+                setLoaded(true)
             } else {
                 history.push("/pagenotfound")
             }
@@ -47,7 +50,9 @@ function SpotPage() {
         getSpotAndReviews();
     }, [dispatch, spotId]);
 
-    if (Object.keys(spot).length === 0) return null;
+    if(!loaded){
+        return <LoadingIcon />
+    }
 
     let spotImages = [...spot.SpotImages];
     let previewImageIndex = spotImages.findIndex(image => image.preview === true);
