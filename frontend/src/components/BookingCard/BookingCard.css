@@ -38,6 +38,18 @@
     display: flex;
 }
 
+.reservation-date-holder{
+    position: relative;
+    width: 50%;
+}
+
+.reservation-date-holder label{
+    position: absolute;
+    left: 5px;
+    top: 7px;
+    font-weight: 500;
+}
+
 .reservation-dates-error{
     display: flex;
     align-items: center;
@@ -51,15 +63,16 @@
     border: 1px solid #ddd;
     outline: none;
     border-right-color: transparent;
+    width: 100%;
+    box-sizing: border-box;
+    height: 56px;
+    font-family: 'Roboto', sans-serif;
+    padding: 0 5px;
+    padding-top: 15px;
 }
 
 .reservation-form-date-left:focus, .reservation-form-date-right:focus{
     border: 1px solid black;
-    border-radius: 5px;
-}
-
-.reservation-form-date-left:focus + .reservation-form-date-right{
-    border-left-color: transparent;
 }
 
 .reservation-form-date-right{
@@ -67,15 +80,22 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     outline: none;
-}
-
-.reservation-form input{
-    width: 50%;
+    width: 100%;
     box-sizing: border-box;
-    height: 36px;
+    height: 56px;
     font-family: 'Roboto', sans-serif;
     padding: 0 5px;
+    padding-top: 15px;
 }
+
+/* .reservation-form input{
+    width: 50%;
+    box-sizing: border-box;
+    height: 56px;
+    font-family: 'Roboto', sans-serif;
+    padding: 0 5px;
+    padding-top: 15px;
+} */
 
 .reserve-button{
     border: none;

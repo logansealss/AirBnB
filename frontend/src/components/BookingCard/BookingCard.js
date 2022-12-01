@@ -77,20 +77,40 @@ export default function ({ spot, reviewValues }) {
                                 <div
                                     className="reservation-form-dates"
                                 >
-                                    <input
-                                        className="reservation-form-date-left"
-                                        value={startDate}
-                                        onChange={e => setStartDate(e.target.value)}
-                                        min={new Date(Date.now()).toJSON().slice(0, 10)}
-                                        type="date"
-                                    />
-                                    <input
-                                        className="reservation-form-date-right"
-                                        value={endDate}
-                                        onChange={e => setEndDate(e.target.value)}
-                                        min={getMinEndDate()}
-                                        type="date"
-                                    />
+                                    <div
+                                        className='reservation-date-holder'
+                                    >
+                                        <label
+                                            htmlFor="reservation-date-left"
+                                        >
+                                            CHECK-IN
+                                        </label>
+                                        <input
+                                            id="reservation-date-left"
+                                            className="reservation-form-date-left"
+                                            value={startDate}
+                                            onChange={e => setStartDate(e.target.value)}
+                                            min={new Date(Date.now()).toJSON().slice(0, 10)}
+                                            type="date"
+                                        />
+                                    </div>
+                                    <div
+                                        className='reservation-date-holder'
+                                    >
+                                        <label
+                                            htmlFor="reservation-date-right"
+                                        >
+                                            CHECKOUT
+                                        </label>
+                                        <input
+                                            id="reservation-date-right"
+                                            className="reservation-form-date-right"
+                                            value={endDate}
+                                            onChange={e => setEndDate(e.target.value)}
+                                            min={getMinEndDate()}
+                                            type="date"
+                                        />
+                                    </div>
                                 </div>
                                 {dateErr &&
                                     <div
