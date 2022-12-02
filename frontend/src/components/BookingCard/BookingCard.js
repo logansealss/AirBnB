@@ -20,12 +20,12 @@ export default function ({ spot, reviewValues }) {
 
     function areDatesFilledIn() {
         if (!startDate) {
-            setDateErr('Select a start date')
+            setDateErr('Select a check-in date')
             return false
         }
 
         if (!endDate) {
-            setDateErr('Select an end date')
+            setDateErr('Select a checkout date')
             return false
         }
 
@@ -36,25 +36,25 @@ export default function ({ spot, reviewValues }) {
 
         if (submitted) {
             if (!startDate) {
-                setDateErr('Select a start date')
+                setDateErr('Select a check-in date')
                 return true
             }
 
             if (!endDate) {
-                setDateErr('Select an end date')
+                setDateErr('Select a checkout date')
                 return true
             }
         }
 
         if (startDate && startDate <= getDateStr(new Date(Date.now()))) {
-            setDateErr('Start date cannot be on or before today')
+            setDateErr('Check-in date cannot be on or before today')
             return true
         }
 
         if (startDate && endDate) {
 
             if (endDate <= startDate) {
-                setDateErr('End date must be after start date')
+                setDateErr('Checkout date must be after check-in date')
                 return true
             }
         }
