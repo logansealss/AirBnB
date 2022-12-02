@@ -3,32 +3,92 @@ import { useState, useEffect } from "react"
 
 import "./BookingCard.css"
 
-export default function ({ spot, reviewValues }) {
+function getDateStr(date) {
+    return date.toJSON().slice(0, 10)
+}
 
-    console.log("spot", spot)
+export default function ({ spot, reviewValues }) {
 
     const user = useSelector(state => state.session.user)
 
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
     const [dateErr, setDateErr] = useState()
+    const [submitted, setSubmitted] = useState(false)
 
-    useEffect(() => {
-        if (endDate && startDate) {
-            if (endDate <= startDate) {
-                setEndDate('')
+    function areDatesFilledIn() {
+        if (!startDate) {
+            setDateErr('Select a start date')
+            return false
+        }
+
+        if (!endDate) {
+            setDateErr('Select an end date')
+            return false
+        }
+
+        return true
+    }
+
+    function isDateError() {
+
+        if (submitted) {
+            if (!startDate) {
+                setDateErr('Select a start date')
+                return true
+            }
+
+            if (!endDate) {
+                setDateErr('Select an end date')
+                return true
             }
         }
+
+        if (startDate && startDate <= getDateStr(new Date(Date.now()))) {
+            setDateErr('Start date cannot be on or before today')
+            return true
+        }
+
+        if (startDate && endDate) {
+
+            if (endDate <= startDate) {
+                setDateErr('End date must be after start date')
+                return true
+            }
+        }
+
+        setDateErr('')
+        return false
+    }
+
+    useEffect(() => {
+
+        isDateError()
+
     }, [startDate, endDate])
+
+    function onSubmit(e) {
+        e.preventDefault()
+        setSubmitted(true)
+
+        if (!dateErr && areDatesFilledIn()) {
+            console.log("no error")
+        }
+    }
+
+    function datePlusDays(days, startDate) {
+        const nextDay = new Date(startDate || Date.now())
+        nextDay.setDate(nextDay.getDate() + days)
+        return getDateStr(nextDay)
+    }
 
 
     function getMinEndDate() {
-        if (!startDate) {
-            return new Date(Date.now()).toJSON().slice(0, 10)
+        if (!startDate || startDate <= datePlusDays(0)) {
+            return datePlusDays(2)
         }
-        const nextDay = new Date(startDate)
-        nextDay.setDate(nextDay.getDate() + 1)
-        return nextDay.toJSON().slice(0, 10)
+
+        return datePlusDays(1, startDate)
     }
 
     let numDays
@@ -69,6 +129,7 @@ export default function ({ spot, reviewValues }) {
                 {(!user || (user && user.id !== spot.ownerId)) &&
                     <>
                         <form
+                            onSubmit={onSubmit}
                             className="reservation-form"
                         >
                             <div
@@ -90,7 +151,7 @@ export default function ({ spot, reviewValues }) {
                                             className="reservation-form-date-left"
                                             value={startDate}
                                             onChange={e => setStartDate(e.target.value)}
-                                            min={new Date(Date.now()).toJSON().slice(0, 10)}
+                                            min={datePlusDays(1)}
                                             type="date"
                                         />
                                     </div>
@@ -136,15 +197,17 @@ export default function ({ spot, reviewValues }) {
                                 </div>
                             }
                         </form>
-                        {user && endDate && startDate &&
+                        {(endDate && startDate && !dateErr) &&
                             <>
-                                <div
-                                    className="booking-data-flex"
-                                >
-                                    <div>
-                                        You won't be charged yet.
+                                {user && (
+                                    <div
+                                        className="booking-data-flex"
+                                    >
+                                        <div>
+                                            You won't be charged yet.
+                                        </div>
                                     </div>
-                                </div>
+                                )}
 
                                 <div
                                     className="booking-prices-container"

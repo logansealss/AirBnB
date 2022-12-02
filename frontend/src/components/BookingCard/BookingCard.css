@@ -55,6 +55,8 @@
     align-items: center;
     flex-direction: column;
     padding-top: 5px;
+    color: #c03515;
+    font-size: 14px;
 }
 
 .reservation-form-date-left{
