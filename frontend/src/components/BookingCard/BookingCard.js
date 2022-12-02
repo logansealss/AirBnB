@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from "react"
 
+import { csrfFetch } from '../../store/csrf'
 import "./BookingCard.css"
 
 function getDateStr(date) {
@@ -10,6 +11,7 @@ function getDateStr(date) {
 export default function ({ spot, reviewValues }) {
 
     const user = useSelector(state => state.session.user)
+    const bookingErr = "This spot is booked for those dates. Please try again."
 
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
@@ -73,6 +75,25 @@ export default function ({ spot, reviewValues }) {
 
         if (!dateErr && areDatesFilledIn()) {
             console.log("no error")
+            csrfFetch(`/api/spots/${spot.id}/bookings`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    startDate,
+                    endDate
+                })
+            }).then(res => {
+                if(res.ok){
+                    console.log("booking created!")
+                    // redirect to user bookings page
+                }
+            }).catch(res => {
+                if(res.status === 403){
+                    setDateErr(bookingErr)
+                }
+            })
         }
     }
 
@@ -197,7 +218,7 @@ export default function ({ spot, reviewValues }) {
                                 </div>
                             }
                         </form>
-                        {(endDate && startDate && !dateErr) &&
+                        {(endDate && startDate && (!dateErr || dateErr === bookingErr)) &&
                             <>
                                 {user && (
                                     <div
