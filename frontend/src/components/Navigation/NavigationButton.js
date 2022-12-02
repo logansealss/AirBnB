@@ -88,6 +88,12 @@ function NavigationButton() {
                             </div>
                             <div
                                 className="popup-menu-option"
+                                onClick={removeMenu(() => history.push("/mybookings"))}
+                            >
+                                My bookings
+                            </div>
+                            <div
+                                className="popup-menu-option"
                                 onClick={removeMenu(() => history.push("/createspot"))}
                             >
                                 Create spot
@@ -101,13 +107,13 @@ function NavigationButton() {
                     )
                         : (
                             <>
-                                <LoginFormModal 
-                                    afterClicked={() => toggleMenuOpen(false)} 
-                                    className="popup-menu-option" />
-                                <SignupFormModal 
-                                    afterSubmission={removeMenu} 
+                                <LoginFormModal
                                     afterClicked={() => toggleMenuOpen(false)}
-                                    className="popup-menu-option" 
+                                    className="popup-menu-option" />
+                                <SignupFormModal
+                                    afterSubmission={removeMenu}
+                                    afterClicked={() => toggleMenuOpen(false)}
+                                    className="popup-menu-option"
                                 />
                             </>
                         )
