@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom"
+import { deleteBooking } from "../../store/bookingsReducer";
 
 
 import { deleteReview } from "../../store/reviewsReducer";
@@ -7,7 +8,7 @@ import { deleteSpot, fetchSingleSpot } from "../../store/spotReducer";
 
 import "./DeletePopup.css"
 
-export default function DeletePopup({ onCompletion, spot, review }) {
+export default function DeletePopup({ onCompletion, spot, review, booking }) {
 
     const history = useHistory()
     const dispatch = useDispatch()
@@ -25,12 +26,29 @@ export default function DeletePopup({ onCompletion, spot, review }) {
                 dispatch(fetchSingleSpot(review.spotId))
             }
         }
+        if (booking) {
+            await dispatch(deleteBooking(booking.id))
+        }
+    }
+
+    let type
+
+    if(booking){
+      type = "booking"
+    }
+  
+    if(spot){
+      type = "spot"
+    }
+  
+    if(review){
+      type = "review"
     }
 
     return (
         <>
             <div className="header-div">
-                {spot ? 'Delete spot' : 'Delete review'}
+                {`Delete ${type}`}
             </div>
             <div className="content-div">
                 <div
@@ -53,7 +71,7 @@ export default function DeletePopup({ onCompletion, spot, review }) {
                         className="spot-owner-buttons"
                         onClick={onDelete}
                     >
-                        {spot ? 'Delete spot' : 'Delete review'}
+                        {`Delete ${type}`}
                     </button>
                 </div>
             </div>

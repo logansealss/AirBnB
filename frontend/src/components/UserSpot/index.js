@@ -1,4 +1,4 @@
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteSpot } from "../../store/spotReducer";
 import UpdateSpotModal from "../UpdateSpotModal";
@@ -9,7 +9,6 @@ import "./UserSpot.css"
 function UserSpot({ spot }) {
 
     const dispatch = useDispatch();
-    const history = useHistory();
 
     function deleteSpotClickEvent() {
         dispatch(deleteSpot(spot.id));
