@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { deleteSpot } from "../../store/spotReducer";
-import UpdateSpotModal from "../UpdateSpotModal";
+
 import DeleteModal from "../DeleteModal";
 
 function UserBooking({ booking }) {

@@ -14,6 +14,7 @@ export default function UserBookings() {
     const user = useSelector(state => state.session.user);
     const bookings = useSelector(state => state.bookings.user);
     const [loaded, setLoaded] = useState(false)
+    const [future, setFuture] = useState(true)
 
     useEffect(() => {
 
@@ -36,8 +37,20 @@ export default function UserBookings() {
         <>
             <div id="user-spots-header-container">
                 <h1 id="user-spots-header">
-                    {Object.values(bookings).length > 0 ? `${user.username}'s bookings` : "You don't have any bookings"}
+                    {`${user.username}'s bookings`}
                 </h1>
+            </div>
+            <div
+                className="header-options-container"
+            >
+                <div
+                    className={future ? 'header-option-active' : 'header-options-inactive'}
+                >
+                    Future
+                </div>
+                <div>
+                    Past
+                </div>
             </div>
             <div className="centering-spot-container">
                 <div>
