@@ -1,0 +1,23 @@
+.booking-date-container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+}
+
+.date-divider{
+    width: 1px;
+    background-color: #DDD;
+}
+
+.booking-date{
+    display: flex;
+    flex-direction: column;
+}
+
+.booking-date-header{
+    font-weight: 500;
+}
+
+.date-right{
+    text-align: end;
+}

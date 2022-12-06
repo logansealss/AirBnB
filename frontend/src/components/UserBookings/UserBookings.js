@@ -14,7 +14,7 @@ export default function UserBookings() {
     const user = useSelector(state => state.session.user);
     const bookings = useSelector(state => state.bookings.user);
     const [loaded, setLoaded] = useState(false)
-    const [future, setFuture] = useState(true)
+    const sortedBookings = Object.values(bookings).sort((a, b) => a.startDate < b.startDate ? -1 : 1)
 
     useEffect(() => {
 
@@ -39,18 +39,6 @@ export default function UserBookings() {
                 <h1 id="user-spots-header">
                     {`${user.username}'s bookings`}
                 </h1>
-            </div>
-            <div
-                className="header-options-container"
-            >
-                <div
-                    className={future ? 'header-option-active' : 'header-options-inactive'}
-                >
-                    Future
-                </div>
-                <div>
-                    Past
-                </div>
             </div>
             <div className="centering-spot-container">
                 <div>

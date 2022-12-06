@@ -48,11 +48,14 @@ router.get('/current', requireAuth, async (req, res, next) => {
     return res.json({Bookings: bookings});
 });
 
-async function getConflictingBookings(spotId, startDate, endDate){
+async function getConflictingBookings(spotId, startDate, endDate, bookingId){
 
     const conflictingBookings = await Booking.findOne({
         where: {
             spotId,
+            id: {
+                [Op.ne]: bookingId
+            }, 
             [Op.or]: [{
                     startDate: {
                         [Op.lte]: endDate,
@@ -115,7 +118,7 @@ router.put('/:bookingId', requireAuth, validateBooking, validateBookingEndDate, 
 
         const {startDate, endDate} = req.body;
 
-        const conflictingBooking = await getConflictingBookings(booking.spotId, startDate, endDate);
+        const conflictingBooking = await getConflictingBookings(booking.spotId, startDate, endDate, booking.id);
 
         if(conflictingBooking){
 

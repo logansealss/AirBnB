@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { csrfFetch } from '../../store/csrf'
 import "./BookingCard.css"
 
-function getDateStr(date) {
+export function getDateStr(date) {
     return date.toJSON().slice(0, 10)
 }
 

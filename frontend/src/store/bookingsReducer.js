@@ -3,6 +3,8 @@ import { csrfFetch } from './csrf';
 const READ_BOOKINGS_USER = "bookings/READ_BOOKINGS_USER";
 const READ_BOOKINGS_SPOT_OWNER = "bookings/READ_BOOKINGS_SPOT_OWNER";
 const DELETE_BOOKING = 'bookings/DELETE_BOOKING'
+const UPDATE_BOOKING = 'bookings/UPDATE_BOOKING'
+
 
 function loadBookingsUser(bookings) {
     return {
@@ -25,6 +27,13 @@ function deleteBookingUser(id) {
     }
 }
 
+function updateBooking(booking) {
+    return {
+        type: UPDATE_BOOKING,
+        booking
+    }
+}
+
 export function fetchBookingsForUser() {
     return async (dispatch) => {
         const res = await csrfFetch(`/api/bookings/current`);
@@ -44,6 +53,22 @@ export function deleteBooking(bookingId) {
 
         if (res.ok) {
             dispatch(deleteBookingUser(bookingId));
+        }
+    }
+}
+
+export function updateBookingThunk(bookingId, newBooking) {
+    return async (dispatch) => {
+        const res = await csrfFetch(`/api/bookings/${bookingId}`, {
+            method: "PUT",
+            body: JSON.stringify(newBooking)
+        }).catch(res => res.json())
+            .catch(res => console.log(res.message))
+
+        if (res.ok) {
+            const updatedBooking = await res.json()
+            dispatch(updateBooking(updatedBooking))
+            return updateBooking
         }
     }
 }
@@ -83,6 +108,16 @@ const bookingReducer = (state = initialState, action) => {
             return {
                 spot: newSpot,
                 user: newUser
+            }
+        case UPDATE_BOOKING:
+            return {
+                spot: {
+                    ...state.spot
+                },
+                user: {
+                    ...state.user,
+                    [action.booking.id]: { ...state.user[action.booking.id], ...action.booking }
+                }
             }
         default:
             return state;
