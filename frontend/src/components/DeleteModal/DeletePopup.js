@@ -55,7 +55,7 @@ export default function DeletePopup({ onCompletion, spot, review, booking }) {
                     className="delete-prompt"
                 >
                     <div>
-                        {`Are you sure that you want to delete this ${spot ? 'spot' : 'review'}?`}
+                        {`Are you sure that you want to delete this ${type}?`}
                     </div>
                 </div>
                 <div

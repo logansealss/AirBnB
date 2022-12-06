@@ -50,7 +50,6 @@ export default function DeleteModal({ whenClicked, className, booking, spot, rev
       {showModal && (
         <Modal
           onClose={() => setShowModal(false)}
-          //   className="form-container"
           className="delete-popup"
         >
           <DeletePopup onCompletion={onCompletion} spot={spot} review={review} booking={booking} />
