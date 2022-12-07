@@ -15,7 +15,8 @@ function UserBooking({ booking }) {
     function getExtendedDateStr(date) {
         const dateStr = new Date(date)
         dateStr.setDate(dateStr.getDate() + 1)
-        return dateStr.toString().slice(4, 15)
+        return dateStr.toLocaleDateString('en-US')
+        // return dateStr.toString().slice(4, 15)
     }
 
     return (
