@@ -1,14 +1,14 @@
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteSpot } from "../../store/spotReducer";
 import UpdateSpotModal from "../UpdateSpotModal";
+import DeleteModal from "../DeleteModal";
 
 import "./UserSpot.css"
 
 function UserSpot({ spot }) {
 
     const dispatch = useDispatch();
-    const history = useHistory();
 
     function deleteSpotClickEvent() {
         dispatch(deleteSpot(spot.id));
@@ -59,9 +59,14 @@ function UserSpot({ spot }) {
                     </Link>
                 </div>
                 <div id="owner-buttons-container">
-                    <UpdateSpotModal className="spot-owner-buttons" spot={spot}></UpdateSpotModal>
-                    {/* <button onClick={() => history.push(`/updatespot/${spot.id}`)} className="spot-owner-buttons">Update spot</button> */}
-                    <button onClick={deleteSpotClickEvent} className="spot-owner-buttons">Delete spot</button>
+                    <UpdateSpotModal 
+                        className="spot-owner-buttons" 
+                        spot={spot}
+                    />
+                    <DeleteModal 
+                        className="spot-owner-buttons"
+                        spot={spot}
+                    />
                 </div>
             </div>
         </div>

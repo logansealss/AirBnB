@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 
 import { fetchReviewsForUser } from "../../store/reviewsReducer";
 import UserReview from "../UserReview";
+import LoadingIcon from "../LoadingIcon/LoadingIcon";
 import "./UserReviews.css";
 
 function UserReviews() {
@@ -11,13 +12,22 @@ function UserReviews() {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
     const reviews = useSelector(state => state.reviews.user);
+    const [loaded, setLoaded] = useState(false)
 
     useEffect(() => {
-        dispatch(fetchReviewsForUser());
+
+        (async () => {
+            await dispatch(fetchReviewsForUser());
+            setLoaded(true)
+        })()
     }, [dispatch]);
 
     if (!user) {
         return <Redirect to="/"></Redirect>
+    }
+
+    if(!loaded){
+        return <LoadingIcon />
     }
 
     return (

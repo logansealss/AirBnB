@@ -17,6 +17,12 @@
     padding: 0 40px;
 }
 
+@media screen and (max-width: 915px) {
+    body #review-page-container{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
 #review-page-container{
     display: grid;
     grid-template-columns: repeat(2, 1fr);

@@ -2,6 +2,7 @@ import { csrfFetch } from './csrf';
 
 const READ_REVIEWS_USER = "reviews/READ_REVIEWS_USER";
 const READ_REVIEWS_SPOT = "reviews/READ_REVIEWS_SPOT";
+const UPDATE_REVIEW = "reviews/UPDATE_REVIEW";
 const DELETE_REVIEW = "reviews/DELETE_REVIEW";
 const CREATE_REVIEW = "reviews/CREATE_REVIEW";
 
@@ -16,6 +17,13 @@ const loadReviewsForSpotActionCreator = (reviews) => {
     return {
         type: READ_REVIEWS_SPOT,
         reviews
+    }
+}
+
+const updateReviewActionCreator = (review) => {
+    return {
+        type: UPDATE_REVIEW,
+        review
     }
 }
 
@@ -51,6 +59,27 @@ export function fetchReviewsForSpot(spotId){
         if(res.ok){
             const reviews = await res.json();
             dispatch(loadReviewsForSpotActionCreator(reviews));
+        }
+    }
+}
+
+export function updateReview(review, reviewId){
+    return async (dispatch) => {
+        const res = await csrfFetch(`/api/reviews/${reviewId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(review)
+        }).catch(res => res)
+
+        if(res.ok){
+            const review = await res.json();
+            dispatch(updateReviewActionCreator(review));
+            return review;
+        }else{
+            const result = await res.json();
+            return result;
         }
     }
 }
@@ -98,6 +127,8 @@ const initialState = {  spot: {}, user: {}  };
 
 const reviewReducer = (state = initialState, action) => {
     let newState;
+    let updatedReview;
+    let updatedSpot;
     switch (action.type){
         case READ_REVIEWS_USER:
             newState = {...state};
@@ -114,6 +145,25 @@ const reviewReducer = (state = initialState, action) => {
             }, {})
             newState = { ...state, spot: normalizedReviews };
             return newState;
+        case UPDATE_REVIEW:
+            updatedReview = state.user[action.review.id] || state.spot[action.review.id]
+            updatedReview.review = action.review.review
+            updatedReview.stars = action.review.stars
+            updatedSpot = { ...state.spot }
+            if(updatedSpot[action.review.id]){
+                updatedSpot[action.review.id] = { 
+                    ...updatedReview
+                }
+            }
+            return { 
+                spot: { 
+                    ...updatedSpot
+                }, 
+                user: {
+                    ...state.user, 
+                    [action.review.id]: { ...updatedReview } 
+                }
+            }
         case DELETE_REVIEW:
             newState = {spot: {...state.spot}, user: {...state.user}};
             delete newState.spot[action.reviewId];

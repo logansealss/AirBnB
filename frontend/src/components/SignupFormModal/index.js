@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from '../../context/Modal';
 import SignupForm from './SignupForm';
 
-function SignupFormModal({ afterSubmission, className }) {
+function SignupFormModal({ afterClicked, afterSubmission, className }) {
   const [showModal, setShowModal] = useState(false);
 
   function onSignup() {
@@ -12,10 +12,15 @@ function SignupFormModal({ afterSubmission, className }) {
     }
   }
 
+  function onClick(){
+    setShowModal(true)
+    afterClicked()
+  }
+
   return (
     <>
       <div
-        onClick={() => setShowModal(true)}
+        onClick={onClick}
         className={className ? className : ""}
       >
         Sign up

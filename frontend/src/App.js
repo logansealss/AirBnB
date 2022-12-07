@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import UserSpots from "./components/UserSpots";
 import UserReviews from "./components/UserReviews";
 import PageNotFound from "./components/PageNotFound";
+import UserBookings from "./components/UserBookings/UserBookings";
 
 function App() {
 
@@ -39,6 +40,9 @@ function App() {
           </Route>
           <Route path="/myspots">
             <UserSpots></UserSpots>
+          </Route>
+          <Route path="/mybookings">
+            <UserBookings />
           </Route>
           <Route>
             <PageNotFound></PageNotFound>

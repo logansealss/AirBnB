@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteReview } from "../../store/reviewsReducer";
+import OwnerDropdown from "../UpdateDropdown";
 
 import "./SpotReview.css"
 
-const MONTH = ["January","February","March","April","May","June","July",
-            "August","September","October","November","December"];
+const MONTH = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
 
 function SpotReview({ review }) {
 
@@ -19,10 +19,19 @@ function SpotReview({ review }) {
         <div className="review-container">
             <div className="review-header">
                 <div className="review-info-container">
-                    <div className="review-user-name">
-                        {review.User.firstName}
+                    <div
+                        className="review-user-info"
+                    >
+                        <div className="review-user-name">
+                            {review.User.firstName}
+                        </div>
+                        <div className="review-user-date">{`${month} ${year}`}</div>
                     </div>
-                    <div className="review-user-date">{`${month} ${year}`}</div>
+                    {user && user.id === review.userId &&
+                        <OwnerDropdown
+                            review={review}
+                        />
+                    }
                 </div>
             </div>
             <div className="users-review">

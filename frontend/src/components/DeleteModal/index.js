@@ -1,23 +1,35 @@
 import React, { useState } from 'react';
 import { Modal } from '../../context/Modal';
-import CreateReviewForm from './CreateReviewForm'
+import DeletePopup from './DeletePopup'
 
-function CreateReviewFormModal({ whenClicked, afterSubmission, className, spotId, review, isDiv }) {
+export default function DeleteModal({ whenClicked, className, booking, spot, review, isDiv }) {
   const [showModal, setShowModal] = useState(false);
 
   function onCompletion() {
     setShowModal(false);
-    if (afterSubmission) {
-      afterSubmission();
-    }
   }
 
-  function onClick(){
+  function onClick() {
     setShowModal(true)
-    if(whenClicked){
+    if (whenClicked) {
       whenClicked()
     }
   }
+
+  let type
+
+  if(booking){
+    type = "booking"
+  }
+
+  if(spot){
+    type = "spot"
+  }
+
+  if(review){
+    type = "review"
+  }
+
 
   return (
     <>
@@ -26,29 +38,23 @@ function CreateReviewFormModal({ whenClicked, afterSubmission, className, spotId
           onClick={onClick}
           className={className ? className : ""}
         >
-          {!review ? 'Create review' : 'Update review'}
+          {`Delete ${type}`}
         </div> :
         <button
           onClick={() => setShowModal(true)}
           className={className ? className : ""}
         >
-          {!review ? 'Create review' : 'Update review'}
+          {`Delete ${type}`}
         </button>
       }
       {showModal && (
         <Modal
           onClose={() => setShowModal(false)}
-          className="form-container"
+          className="delete-popup"
         >
-          <CreateReviewForm 
-            onCompletion={onCompletion} 
-            spotId={spotId} 
-            reviewToUpdate={review} 
-          />
+          <DeletePopup onCompletion={onCompletion} spot={spot} review={review} booking={booking} />
         </Modal>
       )}
     </>
   );
 }
-
-export default CreateReviewFormModal;

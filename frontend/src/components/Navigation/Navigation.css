@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 924px;
+    width: 100%;
     margin: auto;
 }
 
@@ -15,6 +15,7 @@
 }
 
 .nav-container{
+    z-index: 1;
     background-color: #FFF;
     border-bottom: 1px #DDD solid;
     position: sticky;
@@ -31,7 +32,6 @@
 
 .menu-button-container{
     position: relative;
-    
 }
 
 .menu-button{
