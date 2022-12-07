@@ -14,7 +14,7 @@ export default function UserBookings() {
     const user = useSelector(state => state.session.user);
     const bookings = useSelector(state => state.bookings.user);
     const [loaded, setLoaded] = useState(false)
-    const sortedBookings = Object.values(bookings).sort((a, b) => a.startDate < b.startDate ? -1 : 1)
+    const sortedBookings = Object.values(bookings).sort((a, b) => a.startDate > b.startDate ? -1 : 1)
 
     useEffect(() => {
 
@@ -43,7 +43,7 @@ export default function UserBookings() {
             <div className="centering-spot-container">
                 <div>
                     <div className="spot-container">
-                        {Object.values(bookings).map(booking => (
+                        {sortedBookings.map(booking => (
                             <UserBooking key={booking.id} booking={booking}></UserBooking>
                             // <div>
                             //    { booking.id}

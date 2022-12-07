@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from "react"
+import { useHistory } from 'react-router-dom'
 
 import { csrfFetch } from '../../store/csrf'
 import "./BookingCard.css"
@@ -10,6 +11,7 @@ export function getDateStr(date) {
 
 export default function ({ spot, reviewValues }) {
 
+    const history = useHistory()
     const user = useSelector(state => state.session.user)
     const bookingErr = "This spot is booked for those dates. Please try again."
 
@@ -88,6 +90,7 @@ export default function ({ spot, reviewValues }) {
                 if(res.ok){
                     console.log("booking created!")
                     // redirect to user bookings page
+                    history.push('/mybookings')
                 }
             }).catch(res => {
                 if(res.status === 403){
