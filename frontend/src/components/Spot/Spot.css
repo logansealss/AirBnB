@@ -36,6 +36,12 @@
     border-radius: 15px;
 }
 
+.bad-image{
+    object-fit: cover;
+    height: 40%;
+    width: 40%;
+}
+
 .missing-preview-image{
     height: 100%;
     width: 100%;
@@ -46,6 +52,9 @@
     width: 292px;
     background-color: #DDD;
     border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .spot-text-bold{

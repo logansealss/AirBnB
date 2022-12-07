@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
-import BookingModal from "../BookingFormModal";
 
+
+import BookingModal from "../BookingFormModal";
 import DeleteModal from "../DeleteModal";
 import "./UserBooking.css"
+import BadImage from "../../images/badpic.svg"
 
 function UserBooking({ booking }) {
 
@@ -23,18 +25,12 @@ function UserBooking({ booking }) {
             <div>
                 <div>
                     <Link to={`/spots/${booking.Spot.id}`} className="spot-link">
-                        {booking.Spot.previewImage
-                            ? (
-                                <div className="image-container">
-                                    <img src={booking.Spot.previewImage} className="spot-image" />
-                                </div>
-                            )
-                            : (
-                                <div className="image-container no-preview-image">
-                                    <i className="fa-regular fa-image fa-2xl"></i>
-                                </div>
-                            )
-                        }
+                        <div className="image-container">
+                            <img
+                                src={booking.Spot.previewImage || BadImage}
+                                onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
+                                className={booking.Spot.previewImage ? "spot-image" : "bad-image"} />
+                        </div>
                         <div id="spot-info">
                             <div className="spot-header" >
                                 <div className="spot-text-bold">{booking.Spot.name}</div>

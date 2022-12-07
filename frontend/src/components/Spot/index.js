@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+
+import BadImage from "../../images/badpic.svg"
 import "./Spot.css"
 
 function Spot({ spot }) {
@@ -10,18 +12,12 @@ function Spot({ spot }) {
             <div>
                 <div>
                     <Link to={`/spots/${spot.id}`} className="spot-link">
-                        {spot.previewImage
-                            ? (
-                                <div className="image-container">
-                                    <img src={spot.previewImage} className="spot-image" />
-                                </div>
-                            )
-                            : (
-                                <div className="image-container no-preview-image">
-                                    <i className="fa-regular fa-image fa-2xl"></i>
-                                </div>
-                            )
-                        }
+                        <div className="image-container">
+                            <img
+                                src={spot.previewImage || BadImage}
+                                onError={(e) => {e.target.src = BadImage; e.target.className = "bad-image"}}
+                                className={spot.previewImage ? "spot-image" : "bad-image"} />
+                        </div>
                         <div id="spot-info">
                             <div className="spot-header" >
                                 <div className="spot-text-bold">{spot.city}, {spot.state}</div>
