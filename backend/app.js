@@ -31,6 +31,10 @@ app.use(cookieParser());
 // Content-Type of "app.ication/json"
 app.use(express.json());
 
+// added for using AWS S3 buckets
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
 // Security Middleware
 if (!isProduction) {
     // enable cors only in development
