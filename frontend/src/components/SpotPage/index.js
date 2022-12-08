@@ -64,9 +64,9 @@ function SpotPage() {
             previewImage = img
             break
         }
-        if (!previewImage) {
-            previewImage = img
-        }
+        // if (!previewImage) {
+        //     previewImage = img
+        // }
     }
 
     if (previewImage) {
@@ -132,56 +132,46 @@ function SpotPage() {
                     <div id="spot-pictures-container">
                         <div id="single-picture-container">
                             <div id="picture-container-div">
-                                {
-                                    <img
-                                        src={previewImage ? previewImage.url : BadImage}
-                                        onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
-                                        className={previewImage ? "single-picture-container" : "bad-image"}
-                                    />
-                                }
+                                <img
+                                    src={previewImage ? previewImage.url : BadImage}
+                                    onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
+                                    className={previewImage ? "single-picture-container" : "bad-image"}
+                                />
                             </div>
                         </div>
                         <div className="image-columns">
                             <div className="image-rows">
                                 <div className="row-image top-row-image">
-                                    {
-                                        <img
-                                            src={spotImages[0] ? spotImages[0].url : BadImage}
-                                            onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
-                                            className={spotImages[0] ? "smaller-images" : "bad-image"}
-                                        />
-                                    }
+                                    <img
+                                        src={spotImages[0] ? spotImages[0].url : BadImage}
+                                        onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
+                                        className={spotImages[0] ? "smaller-images" : "bad-image"}
+                                    />
                                 </div>
                                 <div className="row-image">
-                                    {
-                                        <img
-                                            src={spotImages[2] ? spotImages[2].url : BadImage}
-                                            onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
-                                            className={spotImages[2] ? "smaller-images" : "bad-image"}
-                                        />
-                                    }
+                                    <img
+                                        src={spotImages[2] ? spotImages[2].url : BadImage}
+                                        onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
+                                        className={spotImages[2] ? "smaller-images" : "bad-image"}
+                                    />
                                 </div>
                             </div>
                         </div>
                         <div className="image-columns">
                             <div className="image-rows">
                                 <div className="row-image top-row-image top-right">
-                                    {
-                                        <img
-                                            src={spotImages[1] ? spotImages[1].url : BadImage}
-                                            onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
-                                            className={spotImages[1] ? "smaller-images" : "bad-image"}
-                                        />
-                                    }
+                                    <img
+                                        src={spotImages[1] ? spotImages[1].url : BadImage}
+                                        onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
+                                        className={spotImages[1] ? "smaller-images" : "bad-image"}
+                                    />
                                 </div>
                                 <div className="row-image bottom-right">
-                                    {
-                                        <img
-                                            src={spotImages[3] ? spotImages[3].url : BadImage}
-                                            onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
-                                            className={spotImages[3] ? "smaller-images" : "bad-image"}
-                                        />
-                                    }
+                                    <img
+                                        src={spotImages[3] ? spotImages[3].url : BadImage}
+                                        onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
+                                        className={spotImages[3] ? "smaller-images" : "bad-image"}
+                                    />
                                 </div>
                             </div>
                         </div>
