@@ -155,9 +155,9 @@ function SpotPage() {
                                 <div className="row-image">
                                     {
                                         <img
-                                            src={spotImages[1] ? spotImages[1].url : BadImage}
+                                            src={spotImages[2] ? spotImages[2].url : BadImage}
                                             onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
-                                            className={spotImages[1] ? "smaller-images" : "bad-image"}
+                                            className={spotImages[2] ? "smaller-images" : "bad-image"}
                                         />
                                     }
                                 </div>
@@ -168,9 +168,9 @@ function SpotPage() {
                                 <div className="row-image top-row-image top-right">
                                     {
                                         <img
-                                            src={spotImages[2] ? spotImages[2].url : BadImage}
+                                            src={spotImages[1] ? spotImages[1].url : BadImage}
                                             onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
-                                            className={spotImages[2] ? "smaller-images" : "bad-image"}
+                                            className={spotImages[1] ? "smaller-images" : "bad-image"}
                                         />
                                     }
                                 </div>

@@ -11,6 +11,7 @@
 
 .photo-form {
     width: 925px;
+    margin-bottom: 50px;
 }
 
 .photo-form-container {
@@ -35,12 +36,15 @@
 .delete-photo-button img {
     height: 100%;
     width: 100%;
-    filter: invert(14%) sepia(86%) saturate(5931%) hue-rotate(327deg) brightness(88%) contrast(94%);
+    filter: invert(16%) sepia(71%) saturate(5554%) hue-rotate(326deg) brightness(87%) contrast(98%);
 }
 
 .delete-photo-button:hover {
     cursor: pointer;
-    filter: invert(26%) sepia(25%) saturate(5644%) hue-rotate(343deg) brightness(91%) contrast(72%);
+}
+
+.delete-photo-button:hover img{
+    filter: invert(11%) sepia(75%) saturate(5179%) hue-rotate(325deg) brightness(94%) contrast(97%);
 }
 
 .delete-photo {
@@ -54,4 +58,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.spot-input-container input button{
+    background-color: red;
+}
+
+.image-input{
+    font-weight: 500;
+}
+
+.spot-photos-submit{
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error{
+    color: #c03515;
+}
+
+.spot-owner-buttons.spot-photos-submit-button{
+    width: 50%;
 }

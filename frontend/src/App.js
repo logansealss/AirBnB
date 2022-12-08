@@ -29,6 +29,7 @@ function App() {
         <Switch>
           <Route path="/" exact>
             <SpotsPage></SpotsPage>
+            <Footer></Footer>
           </Route>
           <Route path="/spots/:spotId" exact>
             <SpotPage />
@@ -53,7 +54,7 @@ function App() {
           </Route>
         </Switch>
       )}
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </>
   );
 }

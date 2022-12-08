@@ -4,7 +4,7 @@ import { deleteBooking } from "../../store/bookingsReducer";
 
 
 import { deleteReview } from "../../store/reviewsReducer";
-import { deleteSpot, fetchSingleSpot } from "../../store/spotReducer";
+import { deleteSpot, deleteSpotImage, fetchSingleSpot } from "../../store/spotReducer";
 
 import "./DeletePopup.css"
 
@@ -30,7 +30,8 @@ export default function DeletePopup({ onCompletion, spot, review, booking, spotI
             await dispatch(deleteBooking(booking.id))
         }
         if(spotImage){
-            
+            await dispatch(deleteSpotImage(spotImage.id))
+            onCompletion()
         }
     }
 

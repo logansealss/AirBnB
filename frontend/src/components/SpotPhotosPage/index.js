@@ -1,12 +1,13 @@
 import { useParams, useHistory, Redirect } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { fetchSingleSpot } from "../../store/spotReducer";
+import { addSpotImage } from "../../store/spotReducer";
 import LoadingIcon from "../LoadingIcon/LoadingIcon";
 import DeletePhotoModal from "../DeletePhotoModal";
 import BadImage from "../../images/badpic.svg"
-import TrashCan from "../../images/trashcan.svg"
 import "./SpotPhotosPage.css"
 
 export default function SpotPhotosPage() {
@@ -72,16 +73,39 @@ export default function SpotPhotosPage() {
     const updatePreviewFile = (e) => {
         const file = e.target.files[0];
         if (file) setPreviewFile(file);
+        else setPreviewFile(null)
     };
 
     const updateAdditionalFiles = (e) => {
         const files = e.target.files;
+        console.log("total count additional files", files.length + spotImages.length)
         if (files.length + spotImages.length > 4) {
             setAdditionalImagesErr("You cannot have more than 4 additional images")
             return
         }
-        setAdditionalImages(files);
+        else {
+            const files = e.target.files;
+            setAdditionalImages(files);
+            setAdditionalImagesErr(undefined)
+        }
     };
+
+    function onSubmit(e) {
+        e.preventDefault()
+        if (previewFile) {
+            dispatch(addSpotImage(spot.id, previewFile, true))
+        }
+
+        if (!additionalImagesErr && additionalImages.length > 0) {
+
+            for (let i = 0; i < additionalImages.length; i++) {
+                dispatch(addSpotImage(spot.id, additionalImages[i], false))
+            }
+        }
+
+        setPreviewFile(null)
+        setAdditionalImages([])
+    }
 
     return (
         <div
@@ -89,7 +113,13 @@ export default function SpotPhotosPage() {
         >
             <div id="user-reviews-header-container">
                 <h1 id="user-reviews-header">
-                    Update photos for {spot.name}
+                    Update photos for
+                    <Link
+                        to={`/spots/${spot.id}`}
+                        className="link-to-spot"
+                    >
+                        <span>{` ${spot.name}`}</span>
+                    </Link>
                 </h1>
             </div>
             <div
@@ -103,17 +133,14 @@ export default function SpotPhotosPage() {
                         >
                             <img
                                 src={previewImage ? previewImage.url : BadImage}
-                                onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
+                                onError={(e) => {
+                                    e.target.className = "bad-image"
+                                    e.target.src = BadImage;
+                                }}
                                 className={previewImage ? "single-picture-container" : "bad-image"}
+
                             />
                             {previewImage &&
-                                // <div
-                                //     className="delete-photo-button"
-                                // >
-                                //     <img
-                                //         src={TrashCan}
-                                //     />
-                                // </div>
                                 <DeletePhotoModal
                                     spotImage={previewImage}
                                 />
@@ -133,13 +160,9 @@ export default function SpotPhotosPage() {
                                     className={spotImages[0] ? "smaller-images" : "bad-image"}
                                 />
                                 {spotImages[0] &&
-                                    <div
-                                        className="delete-photo-button"
-                                    >
-                                        <img
-                                            src={TrashCan}
-                                        />
-                                    </div>
+                                    <DeletePhotoModal
+                                        spotImage={spotImages[0]}
+                                    />
                                 }
                             </div>
                         </div>
@@ -148,18 +171,14 @@ export default function SpotPhotosPage() {
                                 className="picture-delete"
                             >
                                 <img
-                                    src={spotImages[1] ? spotImages[1].url : BadImage}
+                                    src={spotImages[2] ? spotImages[2].url : BadImage}
                                     onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
-                                    className={spotImages[1] ? "smaller-images" : "bad-image"}
+                                    className={spotImages[2] ? "smaller-images" : "bad-image"}
                                 />
-                                {spotImages[1] &&
-                                    <div
-                                        className="delete-photo-button"
-                                    >
-                                        <img
-                                            src={TrashCan}
-                                        />
-                                    </div>
+                                {spotImages[2] &&
+                                    <DeletePhotoModal
+                                        spotImage={spotImages[2]}
+                                    />
                                 }
                             </div>
                         </div>
@@ -172,18 +191,14 @@ export default function SpotPhotosPage() {
                                 className="picture-delete"
                             >
                                 <img
-                                    src={spotImages[2] ? spotImages[2].url : BadImage}
+                                    src={spotImages[1] ? spotImages[1].url : BadImage}
                                     onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
-                                    className={spotImages[2] ? "smaller-images" : "bad-image"}
+                                    className={spotImages[1] ? "smaller-images" : "bad-image"}
                                 />
-                                {spotImages[2] &&
-                                    <div
-                                        className="delete-photo-button"
-                                    >
-                                        <img
-                                            src={TrashCan}
-                                        />
-                                    </div>
+                                {spotImages[1] &&
+                                    <DeletePhotoModal
+                                        spotImage={spotImages[1]}
+                                    />
                                 }
                             </div>
                         </div>
@@ -197,13 +212,9 @@ export default function SpotPhotosPage() {
                                     className={spotImages[3] ? "smaller-images" : "bad-image"}
                                 />
                                 {spotImages[3] &&
-                                    <div
-                                        className="delete-photo-button"
-                                    >
-                                        <img
-                                            src={TrashCan}
-                                        />
-                                    </div>
+                                    <DeletePhotoModal
+                                        spotImage={spotImages[3]}
+                                    />
                                 }
                             </div>
                         </div>
@@ -212,6 +223,7 @@ export default function SpotPhotosPage() {
             </div>
             <form
                 className="photo-form"
+                onSubmit={onSubmit}
             >
                 <div
                     className="photo-form-container"
@@ -221,7 +233,7 @@ export default function SpotPhotosPage() {
                     >
                         {!previewImage ?
                             <div
-                                className="spot-input-container preview-image-input"
+                                className="spot-input-container image-input"
                             >
                                 <label>
                                     Preview Image
@@ -231,7 +243,9 @@ export default function SpotPhotosPage() {
                                     onChange={updatePreviewFile}
                                 />
                             </div> :
-                            <div>
+                            <div
+                                className="image-input"
+                            >
                                 Delete preview image to add another
                             </div>
                         }
@@ -241,10 +255,12 @@ export default function SpotPhotosPage() {
                     >
                         {spotImages.length < 4 ?
                             <div
-                                className="spot-input-container preview-image-input"
+                                className="spot-input-container image-input"
                             >
-                                <label>
-                                    Additional Images
+                                <label
+                                    className={additionalImagesErr ? 'error' : ''}
+                                >
+                                    {additionalImagesErr ? `${additionalImagesErr}` : 'Additional Images'}
                                 </label>
                                 <input
                                     type="file"
@@ -252,12 +268,26 @@ export default function SpotPhotosPage() {
                                     onChange={updateAdditionalFiles}
                                 />
                             </div> :
-                            <div>
+                            <div
+                                className="image-input"
+
+                            >
                                 Delete an additional image to add another
                             </div>
                         }
                     </div>
                 </div>
+                {(!previewImage || spotImages.length < 4) && (
+                    <div
+                        className="spot-photos-submit"
+                    >
+                        <button
+                            className="spot-owner-buttons spot-photos-submit-button"
+                        >
+                            Add photos
+                        </button>
+                    </div>
+                )}
             </form>
         </div>
 

@@ -491,7 +491,7 @@ router.post('/:id/images', requireAuth, singleMulterUpload("image"), async (req,
             });
         }else{
             
-            const preview = req.body.preview;
+            let preview = req.body.preview;
 
             if(preview === "true"){
                 const previewImage = await SpotImage.findOne({

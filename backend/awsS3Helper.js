@@ -1,8 +1,8 @@
-const awsBucketPrefix = "https://logan-sealss-example-bucket.s3.amazonaws.com/"
+const awsBucket = ".amazonaws.com/"
 
 function getAwsKey(url){
-    if(url.startsWith(awsBucketPrefix)){
-        const [_, key] = url.split(awsBucketPrefix)
+    if(url.includes(awsBucket)){
+        const [_, key] = url.split(awsBucket)
         return key
     }
 }
