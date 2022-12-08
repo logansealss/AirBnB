@@ -5,6 +5,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotPage from "./components/SpotPage";
 import SpotsPage from "./components/SpotsPage";
+import SpotPhotosPage from "./components/SpotPhotosPage";
 import CreateSpotForm from "./components/CreateSpotForm";
 import Footer from "./components/Footer";
 import UserSpots from "./components/UserSpots";
@@ -29,8 +30,11 @@ function App() {
           <Route path="/" exact>
             <SpotsPage></SpotsPage>
           </Route>
-          <Route path="/spots/:spotId">
+          <Route path="/spots/:spotId" exact>
             <SpotPage />
+          </Route>
+          <Route path="/spots/:spotId/photos">
+            <SpotPhotosPage />
           </Route>
           <Route path="/createspot">
             <CreateSpotForm></CreateSpotForm>

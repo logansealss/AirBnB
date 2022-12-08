@@ -8,7 +8,7 @@ import { deleteSpot, fetchSingleSpot } from "../../store/spotReducer";
 
 import "./DeletePopup.css"
 
-export default function DeletePopup({ onCompletion, spot, review, booking }) {
+export default function DeletePopup({ onCompletion, spot, review, booking, spotImage }) {
 
     const history = useHistory()
     const dispatch = useDispatch()
@@ -29,6 +29,9 @@ export default function DeletePopup({ onCompletion, spot, review, booking }) {
         if (booking) {
             await dispatch(deleteBooking(booking.id))
         }
+        if(spotImage){
+            
+        }
     }
 
     let type
@@ -43,6 +46,10 @@ export default function DeletePopup({ onCompletion, spot, review, booking }) {
   
     if(review){
       type = "review"
+    }
+
+    if(spotImage){
+        type="image"
     }
 
     return (

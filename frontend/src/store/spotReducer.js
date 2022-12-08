@@ -194,6 +194,10 @@ const spotReducer = (state = initialState, action) => {
             return newState;
         case READ_SINGLE_SPOT:
             newState = { ...state };
+            action.spot.SpotImages = action.spot.SpotImages.reduce((obj, img) => {
+                obj[img.id] = img
+                return obj
+            }, {})
             newState.singleSpot = action.spot;
             return newState;
         case CREATE_SPOT:

@@ -14,11 +14,12 @@ function UserSpot({ spot }) {
             <div>
                 <div>
                     <Link to={`/spots/${spot.id}`} className="spot-link">
-                    <div className="image-container">
+                        <div className="image-container">
                             <img
                                 src={spot.previewImage || BadImage}
-                                onError={(e) => {e.target.src = BadImage; e.target.className = "bad-image"}}
-                                className={spot.previewImage ? "spot-image" : "bad-image"} />
+                                onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
+                                className={spot.previewImage ? "spot-image" : "bad-image"}
+                            />
                         </div>
                         <div id="spot-info">
                             <div className="spot-header" >
@@ -46,11 +47,11 @@ function UserSpot({ spot }) {
                     </Link>
                 </div>
                 <div id="owner-buttons-container">
-                    <UpdateSpotModal 
-                        className="spot-owner-buttons" 
+                    <UpdateSpotModal
+                        className="spot-owner-buttons"
                         spot={spot}
                     />
-                    <DeleteModal 
+                    <DeleteModal
                         className="spot-owner-buttons"
                         spot={spot}
                     />
