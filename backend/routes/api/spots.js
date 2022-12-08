@@ -4,7 +4,8 @@ const express = require('express')
 const { requireAuth } = require('../../utils/auth');
 const { User, Spot, SpotImage, Review, sequelize, ReviewImage, Booking } = require('../../db/models');
 const { Op } = require("sequelize");
-const { validateReview, validateSpot, validateBooking, validateBookingEndDate, validateImage } = require('../../utils/inputValidators');
+const { validateReview, validateSpot, validateBooking, validateBookingEndDate } = require('../../utils/inputValidators');
+const { singleMulterUpload, singlePublicFileUpload } = require("../../awsS3")
 sequelize.Sequelize.DataTypes.postgres.DECIMAL.parse = parseFloat;
 
 const router = express.Router();
@@ -476,7 +477,7 @@ router.post('/:id/reviews', requireAuth, validateReview, async (req, res, next) 
     }
 });
 
-router.post('/:id/images', requireAuth, validateImage, async (req, res, next) => {
+router.post('/:id/images', requireAuth, singleMulterUpload("image"), async (req, res, next) => {
 
     const spot = await Spot.findByPk(req.params.id);
     
@@ -489,10 +490,10 @@ router.post('/:id/images', requireAuth, validateImage, async (req, res, next) =>
                 "statusCode": 403
             });
         }else{
+            
+            const preview = req.body.preview;
 
-            let {url, preview} = req.body;
-
-            if(preview === true){
+            if(preview === "true"){
                 const previewImage = await SpotImage.findOne({
                     where: {
                         spotId: spot.id,
@@ -509,6 +510,8 @@ router.post('/:id/images', requireAuth, validateImage, async (req, res, next) =>
             }else{
                 preview = false;
             }
+
+            const url = await singlePublicFileUpload(req.file);
 
             const newImage = await spot.createSpotImage({
                 url,

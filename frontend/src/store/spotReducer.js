@@ -57,43 +57,43 @@ const deleteSpotActionCreator = (spotId) => {
     }
 }
 
-export function fetchUserSpots(){
+export function fetchUserSpots() {
     return async (dispatch) => {
         const res = await csrfFetch('/api/spots/current');
 
-        if(res.ok){
+        if (res.ok) {
             const spots = await res.json();
             dispatch(loadUserSpotsActionCreator(spots));
         }
     }
 }
 
-export function fetchSpots(){
+export function fetchSpots() {
     return async (dispatch) => {
         const res = await csrfFetch('/api/spots');
 
-        if(res.ok){
+        if (res.ok) {
             const spots = await res.json();
             dispatch(loadSpotsActionCreator(spots));
         }
     }
 }
 
-export function fetchSingleSpot(spotId){
+export function fetchSingleSpot(spotId) {
     return async (dispatch) => {
         const res = await csrfFetch(`/api/spots/${spotId}`);
 
-        if(res.ok){
+        if (res.ok) {
             const spot = await res.json();
             dispatch(loadSingleSpotActionCreator(spot));
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 }
 
-export function createNewSpot(newSpot, user){
+export function createNewSpot(newSpot, user) {
     return async (dispatch) => {
         const res = await csrfFetch(`/api/spots/`, {
             method: "POST",
@@ -104,39 +104,42 @@ export function createNewSpot(newSpot, user){
         }).catch(res => res)
 
 
-        if(res.ok){
+        if (res.ok) {
             const spot = await res.json();
-            if(newSpot.imageURL){
+            if (newSpot.image) {
+                
+                const formData = new FormData();
+                formData.append("image", newSpot.image)
+                formData.append("preview", true)
+
                 const res = await csrfFetch(`/api/spots/${spot.id}/images`, {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "multipart/form-data",
                     },
-                    body: JSON.stringify({
-                        "url": newSpot.imageURL,
-                        "preview": true
-                      })
+                    body: formData
                 }).catch(res => res)
 
-                if(res.ok){
-                    spot.previewImage = newSpot.imageURL;
+                if (res.ok) {
+                    const imageObj = await res.json()
+                    spot.previewImage = imageObj.url;
                 }
             }
 
-            if(!spot.previewImage){
+            if (!spot.previewImage) {
                 spot.previewImage = null;
             }
 
             dispatch(createSpotActionCreator(spot));
             return spot;
-        }else{
+        } else {
             const result = await res.json();
             return result;
         }
     }
 }
 
-export function updateSpot(updatedSpot, spotId){
+export function updateSpot(updatedSpot, spotId) {
     return async (dispatch) => {
         const res = await csrfFetch(`/api/spots/${spotId}`, {
             method: "PUT",
@@ -146,79 +149,79 @@ export function updateSpot(updatedSpot, spotId){
             body: JSON.stringify(updatedSpot)
         }).catch(res => res)
 
-        if(res.ok){
+        if (res.ok) {
             const spot = await res.json();
             dispatch(updateSpotActionCreator(spot));
-        }else{
+        } else {
             const result = await res.json();
             return result;
         }
     }
 }
 
-export function deleteSpot(spotId){
+export function deleteSpot(spotId) {
     return async (dispatch) => {
         const res = await csrfFetch(`/api/spots/${spotId}`, {
             method: "DELETE"
         });
 
-        if(res.ok){
+        if (res.ok) {
             dispatch(deleteSpotActionCreator(spotId));
         }
     }
 }
 
-const initialState = {  allSpots: {}, singleSpot: {}  };
+const initialState = { allSpots: {}, singleSpot: {} };
 
 const spotReducer = (state = initialState, action) => {
-  let newState;
-  switch (action.type) {
-    case READ_ALL_SPOTS:
-        newState = { ...state };
-        const normalizedSpots = action.spots.Spots.reduce((obj, curSpot) => {
-            obj[curSpot.id] = curSpot;
-            return obj;
-        }, {});
-        newState.allSpots = normalizedSpots;
-        return newState;
-    case READ_USER_SPOTS:
-        newState = { ...state };
-        const normalizedUserSpots = action.spots.Spots.reduce((obj, curSpot) => {
-            obj[curSpot.id] = curSpot;
-            return obj;
-        }, {});
-        newState.allSpots = normalizedUserSpots;
-        return newState;
-    case READ_SINGLE_SPOT:
-        newState = { ...state };
-        newState.singleSpot = action.spot;
-        return newState;
-    case CREATE_SPOT:
-        const newSpot = action.spot;
-        newSpot.avgRating = null;
-        newState = {...state, allSpots: {...state.allSpots, [action.spot.id]: newSpot}};
-        return newState
-    case UPDATE_SPOT:
-        newState = { allSpots: {...state.allSpots}, singleSpot: {...state.singleSpot, ...action.spot}};
-        if(newState.allSpots[action.spot.id]){
-            const updatedSpot = {...newState.allSpots[action.spot.id], ...action.spot};
-            newState.allSpots[action.spot.id] = updatedSpot;
-        }
-        return newState;
-    case DELETE_SPOT:
-        newState = { allSpots: {...state.allSpots}, singleSpot: {...state.singleSpot}};
-        delete newState.allSpots[action.spotId];
-        if(newState.singleSpot.id === action.spotId){
-            newState.singleSpot = {};
-        }
-        return newState;
-    case RESET_ALL_SPOTS:
-        newState = { ...state };
-        newState.allSpots = {};
-        return newState;
-    default:
-      return state;
-  }
+    let newState;
+    switch (action.type) {
+        case READ_ALL_SPOTS:
+            newState = { ...state };
+            const normalizedSpots = action.spots.Spots.reduce((obj, curSpot) => {
+                obj[curSpot.id] = curSpot;
+                return obj;
+            }, {});
+            newState.allSpots = normalizedSpots;
+            return newState;
+        case READ_USER_SPOTS:
+            newState = { ...state };
+            const normalizedUserSpots = action.spots.Spots.reduce((obj, curSpot) => {
+                obj[curSpot.id] = curSpot;
+                return obj;
+            }, {});
+            newState.allSpots = normalizedUserSpots;
+            return newState;
+        case READ_SINGLE_SPOT:
+            newState = { ...state };
+            newState.singleSpot = action.spot;
+            return newState;
+        case CREATE_SPOT:
+            const newSpot = action.spot;
+            newSpot.avgRating = null;
+            newState = { ...state, allSpots: { ...state.allSpots, [action.spot.id]: newSpot } };
+            return newState
+        case UPDATE_SPOT:
+            newState = { allSpots: { ...state.allSpots }, singleSpot: { ...state.singleSpot, ...action.spot } };
+            if (newState.allSpots[action.spot.id]) {
+                const updatedSpot = { ...newState.allSpots[action.spot.id], ...action.spot };
+                newState.allSpots[action.spot.id] = updatedSpot;
+            }
+            return newState;
+        case DELETE_SPOT:
+            newState = { allSpots: { ...state.allSpots }, singleSpot: { ...state.singleSpot } };
+            delete newState.allSpots[action.spotId];
+            if (newState.singleSpot.id === action.spotId) {
+                newState.singleSpot = {};
+            }
+            return newState;
+        case RESET_ALL_SPOTS:
+            newState = { ...state };
+            newState.allSpots = {};
+            return newState;
+        default:
+            return state;
+    }
 };
 
 export default spotReducer;
