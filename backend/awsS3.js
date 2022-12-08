@@ -38,7 +38,19 @@ const multiplePublicFileUpload = async (files) => {
   );
 };
 
-// --------------------------- Prviate UPLOAD ------------------------
+// --------------------------- Delete File ------------------------
+const deleteFile = async (Key) => {
+
+  const params = {
+    Bucket: NAME_OF_BUCKET,
+    Key,
+  };
+
+  s3.deleteObject(params)
+};
+
+
+// --------------------------- Private UPLOAD ------------------------
 
 const singlePrivateFileUpload = async (file) => {
   const { originalname, mimetype, buffer } = await file;
@@ -89,6 +101,7 @@ const multipleMulterUpload = (nameOfKey) =>
   multer({ storage: storage }).array(nameOfKey);
 
 module.exports = {
+  deleteFile,
   s3,
   singlePublicFileUpload,
   multiplePublicFileUpload,

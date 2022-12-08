@@ -2,7 +2,9 @@
 const express = require('express')
 
 const { requireAuth } = require('../../utils/auth');
-const { Spot, SpotImage} = require('../../db/models');
+const { Spot, SpotImage } = require('../../db/models');
+const { getAwsKey } = require('../../awsS3Helper')
+const { deleteFile } = require('../../awsS3')
 
 const router = express.Router();
 
@@ -18,6 +20,12 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
     if(imageWithSpot){
 
         if(req.user.id === imageWithSpot.Spot.ownerId){
+
+            const awsKey = getAwsKey(imageWithSpot.url)
+
+            if(awsKey){
+                await deleteFile(awsKey)
+            }
 
             await imageWithSpot.destroy();
             return res.json({
