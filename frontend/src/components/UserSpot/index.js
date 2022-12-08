@@ -1,11 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import UpdateSpotModal from "../UpdateSpotModal";
 import DeleteModal from "../DeleteModal";
 import BadImage from "../../images/badpic.svg"
 import "./UserSpot.css"
 
+
 function UserSpot({ spot }) {
+
+    const history = useHistory()
+    
+    function redirectToPhotos(){
+        history.push(`/spots/${spot.id}/photos`)
+    }
 
     return (
         <div
@@ -51,6 +58,12 @@ function UserSpot({ spot }) {
                         className="spot-owner-buttons"
                         spot={spot}
                     />
+                        <button
+                            className="spot-owner-buttons"
+                            onClick={redirectToPhotos}
+                        >
+                            Update photos
+                        </button>
                     <DeleteModal
                         className="spot-owner-buttons"
                         spot={spot}

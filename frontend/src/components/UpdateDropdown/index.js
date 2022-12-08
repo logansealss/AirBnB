@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useHistory } from "react-router-dom";
 
 import UpdateSpotModal from "../UpdateSpotModal";
 import DeleteModal from "../DeleteModal";
@@ -11,8 +12,9 @@ export default function OwnerDropdown({ spot, review }) {
 
     const [menuOpen, toggleMenuOpen] = useState(false);
     const ref = useRef()
+    const history = useHistory()
 
-    function closeMenu(){
+    function closeMenu() {
         toggleMenuOpen(false);
     }
 
@@ -32,6 +34,10 @@ export default function OwnerDropdown({ spot, review }) {
     }, [menuOpen]);
 
     const popupMenuClass = menuOpen ? "dropdown-menu popup-menu-visible" : "dropdown-menu popup-menu-hidden"
+
+    function redirectToPhotos(){
+        history.push(`/spots/${spot.id}/photos`)
+    }
 
     return (
         <div
@@ -58,6 +64,12 @@ export default function OwnerDropdown({ spot, review }) {
                             isDiv={true}
                             whenClicked={closeMenu}
                         />
+                        <div
+                            onClick={redirectToPhotos}
+                            className={'popup-menu-option'}
+                        >
+                            Update photos
+                        </div>
                         <DeleteModal
                             className={'popup-menu-option'}
                             spot={spot}
