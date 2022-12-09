@@ -7,7 +7,9 @@ function LoginFormModal({ afterClicked, afterSubmission, className }) {
 
   function onLogin() {
     setShowModal(false);
-    afterSubmission();
+    if (afterSubmission) {
+      afterSubmission();
+    }
   }
 
   function onClick() {

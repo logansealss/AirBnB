@@ -15,7 +15,7 @@ export default function DeletePopup({ onCompletion, spot, review, booking, spotI
 
     async function onDelete() {
         if (spot) {
-            dispatch(deleteSpot(spot.id))
+            await dispatch(deleteSpot(spot.id))
             if(history.location.pathname === `/spots/${spot.id}`){
                 history.push('/')
             }
