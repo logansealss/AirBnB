@@ -1,0 +1,84 @@
+.centering-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center
+}
+
+#spot-pictures-container.no-padding {
+    padding: 0;
+}
+
+.photo-form {
+    width: 925px;
+    margin-bottom: 50px;
+}
+
+.photo-form-container {
+    display: flex;
+}
+
+.photo-form-input {
+    display: flex;
+    justify-content: flex-start;
+    width: 50%;
+}
+
+.delete-photo-button {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    /* background-color: red; */
+    top: 5px;
+    right: 5px;
+}
+
+.delete-photo-button img {
+    height: 100%;
+    width: 100%;
+    filter: invert(16%) sepia(71%) saturate(5554%) hue-rotate(326deg) brightness(87%) contrast(98%);
+}
+
+.delete-photo-button:hover {
+    cursor: pointer;
+}
+
+.delete-photo-button:hover img{
+    filter: invert(11%) sepia(75%) saturate(5179%) hue-rotate(325deg) brightness(94%) contrast(97%);
+}
+
+.delete-photo {
+    position: relative;
+}
+
+.picture-delete {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spot-input-container input button{
+    background-color: red;
+}
+
+.image-input{
+    font-weight: 500;
+}
+
+.spot-photos-submit{
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error{
+    color: #c03515;
+}
+
+.spot-owner-buttons.spot-photos-submit-button{
+    width: 50%;
+}

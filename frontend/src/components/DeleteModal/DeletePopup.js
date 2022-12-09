@@ -4,18 +4,18 @@ import { deleteBooking } from "../../store/bookingsReducer";
 
 
 import { deleteReview } from "../../store/reviewsReducer";
-import { deleteSpot, fetchSingleSpot } from "../../store/spotReducer";
+import { deleteSpot, deleteSpotImage, fetchSingleSpot } from "../../store/spotReducer";
 
 import "./DeletePopup.css"
 
-export default function DeletePopup({ onCompletion, spot, review, booking }) {
+export default function DeletePopup({ onCompletion, spot, review, booking, spotImage }) {
 
     const history = useHistory()
     const dispatch = useDispatch()
 
     async function onDelete() {
         if (spot) {
-            dispatch(deleteSpot(spot.id))
+            await dispatch(deleteSpot(spot.id))
             if(history.location.pathname === `/spots/${spot.id}`){
                 history.push('/')
             }
@@ -28,6 +28,10 @@ export default function DeletePopup({ onCompletion, spot, review, booking }) {
         }
         if (booking) {
             await dispatch(deleteBooking(booking.id))
+        }
+        if(spotImage){
+            await dispatch(deleteSpotImage(spotImage.id))
+            onCompletion()
         }
     }
 
@@ -43,6 +47,10 @@ export default function DeletePopup({ onCompletion, spot, review, booking }) {
   
     if(review){
       type = "review"
+    }
+
+    if(spotImage){
+        type="image"
     }
 
     return (

@@ -37,7 +37,7 @@ export default function UserBookings() {
         <>
             <div id="user-spots-header-container">
                 <h1 id="user-spots-header">
-                    {`${user.username}'s bookings`}
+                    {sortedBookings.length > 0 ? `${user.username}'s bookings` : "You don't have any bookings"}
                 </h1>
             </div>
             <div className="centering-spot-container">
@@ -45,9 +45,6 @@ export default function UserBookings() {
                     <div className="spot-container">
                         {sortedBookings.map(booking => (
                             <UserBooking key={booking.id} booking={booking}></UserBooking>
-                            // <div>
-                            //    { booking.id}
-                            // </div>
                         ))}
                     </div>
                 </div>

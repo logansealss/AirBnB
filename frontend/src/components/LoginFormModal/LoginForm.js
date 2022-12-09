@@ -32,12 +32,12 @@ function LoginForm({ onLogin }) {
       .then(() => {
         onLogin()
       })
-      .catch(
-        async (res) => {
-          const data = await res.json();
-          if (data && data.message) setErrors([data.message]);
-        }
-      );
+      // .catch(
+      //   async (res) => {
+      //     const data = await res.json();
+      //     if (data && data.message) setErrors([data.message]);
+      //   }
+      // );
   }
 
   return (

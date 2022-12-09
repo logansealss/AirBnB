@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from '../../context/Modal';
 import DeletePopup from './DeletePopup'
 
-export default function DeleteModal({ whenClicked, className, booking, spot, review, isDiv }) {
+export default function DeleteModal({ children, whenClicked, className, booking, spot, review, spotImage, isDiv }) {
   const [showModal, setShowModal] = useState(false);
 
   function onCompletion() {
@@ -30,6 +30,9 @@ export default function DeleteModal({ whenClicked, className, booking, spot, rev
     type = "review"
   }
 
+  if(spotImage){
+    type = "image"
+  }
 
   return (
     <>

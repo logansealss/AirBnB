@@ -14,7 +14,7 @@
 }
 
 .spot-owner-buttons{
-    border: none;
+    border: 1px solid #db0d64;
     background-color: #db0d64;
     color: #fff;
     border-radius: 12px;

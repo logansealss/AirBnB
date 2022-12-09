@@ -85,14 +85,14 @@
     border-radius: 15px 0 0 15px;
 }
 
-#single-picture-container img{
+.single-picture-container{
     object-fit: cover;
     height: 100%;
     width: 100%;
     border-radius: 15px 0 0 15px;
 }
 
-.image-rows img{
+.smaller-images{
     object-fit: cover;
     height: 100%;
     width: 100%;
@@ -126,11 +126,11 @@
     border-bottom-right-radius: 15px;
 }
 
-.top-row-image.top-right img{
+.top-row-image.top-right .smaller-images{
     border-top-right-radius: 15px;
 }
 
-.row-image.bottom-right img{
+.row-image.bottom-right .smaller-images{
     border-bottom-right-radius: 15px;
 }
 

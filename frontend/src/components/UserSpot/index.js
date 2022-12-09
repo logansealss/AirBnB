@@ -1,17 +1,17 @@
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { deleteSpot } from "../../store/spotReducer";
+import { Link, useHistory } from "react-router-dom";
+
 import UpdateSpotModal from "../UpdateSpotModal";
 import DeleteModal from "../DeleteModal";
-
+import BadImage from "../../images/badpic.svg"
 import "./UserSpot.css"
+
 
 function UserSpot({ spot }) {
 
-    const dispatch = useDispatch();
-
-    function deleteSpotClickEvent() {
-        dispatch(deleteSpot(spot.id));
+    const history = useHistory()
+    
+    function redirectToPhotos(){
+        history.push(`/spots/${spot.id}/photos`)
     }
 
     return (
@@ -21,18 +21,13 @@ function UserSpot({ spot }) {
             <div>
                 <div>
                     <Link to={`/spots/${spot.id}`} className="spot-link">
-                        {spot.previewImage
-                            ? (
-                                <div className="image-container">
-                                    <img src={spot.previewImage} className="spot-image" />
-                                </div>
-                            )
-                            : (
-                                <div className="image-container no-preview-image">
-                                    <i className="fa-regular fa-image fa-2xl"></i>
-                                </div>
-                            )
-                        }
+                        <div className="image-container">
+                            <img
+                                src={spot.previewImage || BadImage}
+                                onError={(e) => { e.target.src = BadImage; e.target.className = "bad-image" }}
+                                className={spot.previewImage ? "spot-image" : "bad-image"}
+                            />
+                        </div>
                         <div id="spot-info">
                             <div className="spot-header" >
                                 <div className="spot-text-bold">{spot.name}</div>
@@ -59,11 +54,17 @@ function UserSpot({ spot }) {
                     </Link>
                 </div>
                 <div id="owner-buttons-container">
-                    <UpdateSpotModal 
-                        className="spot-owner-buttons" 
+                    <UpdateSpotModal
+                        className="spot-owner-buttons"
                         spot={spot}
                     />
-                    <DeleteModal 
+                        <button
+                            className="spot-owner-buttons"
+                            onClick={redirectToPhotos}
+                        >
+                            Update photos
+                        </button>
+                    <DeleteModal
                         className="spot-owner-buttons"
                         spot={spot}
                     />
