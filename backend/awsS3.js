@@ -53,6 +53,38 @@ const deleteFile = async (Key) => {
 };
 
 
+// --------------------------- Delete Files ------------------------
+const deleteFiles = async (Objects) => {
+
+  const params = {
+    Bucket: NAME_OF_BUCKET,
+    Delete: {
+      Objects,
+      Quiet: false
+    }
+  };
+  s3.deleteObjects(params, function (err, data) {
+    if (err) console.log(err, err.stack); // an error occurred
+    else console.log(data);           // successful response
+
+    // data = {
+    //   Deleted: [
+    //     {
+    //       DeleteMarker: true,
+    //       DeleteMarkerVersionId: "A._w1z6EFiCF5uhtQMDal9JDkID9tQ7F",
+    //       Key: "objectkey1"
+    //     },
+    //     {
+    //       DeleteMarker: true,
+    //       DeleteMarkerVersionId: "iOd_ORxhkKe_e8G8_oSGxt2PjsCZKlkt",
+    //       Key: "objectkey2"
+    //     }
+    //   ]
+    // }
+  });
+};
+
+
 // --------------------------- Private UPLOAD ------------------------
 
 const singlePrivateFileUpload = async (file) => {
@@ -105,6 +137,7 @@ const multipleMulterUpload = (nameOfKey) =>
 
 module.exports = {
   deleteFile,
+  deleteFiles,
   s3,
   singlePublicFileUpload,
   multiplePublicFileUpload,

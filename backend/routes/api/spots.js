@@ -2,6 +2,8 @@
 const express = require('express')
 
 const { requireAuth } = require('../../utils/auth');
+const { getAwsArrDeleteObjects, getAwsKey } = require('../../awsS3Helper')
+const { deleteFiles } = require("../../awsS3")
 const { User, Spot, SpotImage, Review, sequelize, ReviewImage, Booking } = require('../../db/models');
 const { Op } = require("sequelize");
 const { validateReview, validateSpot, validateBooking, validateBookingEndDate } = require('../../utils/inputValidators');
@@ -602,7 +604,11 @@ router.put('/:id', requireAuth, validateSpot, async (req, res, next) => {
 
 router.delete('/:id', requireAuth, async (req, res, next) => {
 
-    const spot = await Spot.findByPk(req.params.id);
+    const spot = await Spot.findByPk(req.params.id, {
+        include: {
+            model: SpotImage
+        }       
+    });
 
     if(spot){
         const spotObj = spot.toJSON();
@@ -614,6 +620,19 @@ router.delete('/:id', requireAuth, async (req, res, next) => {
             });
         }else{
             await spot.destroy();
+            const awsKeysToDelete = []
+
+            for(let i = 0; i < spotObj.SpotImages.length; i++){
+                const key = getAwsKey(spotObj.SpotImages[i].url)
+                if(key){
+                    awsKeysToDelete.push(key)
+                }
+            }
+            
+            const awsObjectArr = getAwsArrDeleteObjects(awsKeysToDelete)
+        
+            deleteFiles(awsObjectArr)
+
             res.json({
                 "message": "Successfully deleted",
                 "statusCode": 200
