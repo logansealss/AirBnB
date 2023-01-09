@@ -30,38 +30,41 @@ LairBnB is a website clone inspired by [AirBnB](https://www.airbnb.com/). It is 
 
 Users are able to view spot information and click on a spot to see more details.
 
-![image](https://user-images.githubusercontent.com/106628994/192161288-041f1c22-b275-4c6e-8866-bc618b51a40c.png)
+![ezgif com-gif-maker (2)](https://user-images.githubusercontent.com/106628994/211241730-1d6604b2-6f82-45e9-9392-be2f9ddc2a8e.gif)
 
 ### Dropdown Menu
 
-The dropdown menu allows a user that is not signed in to sign up or log in to the site. Logged in users are able to view their spots and reviews, as well as create a spot.
+The dropdown menu allows a user that is not signed in to sign up or log in to the site. Logged in users are able to view their spots, reviews, and bookings, as well as create a spot.
 
-![image](https://user-images.githubusercontent.com/106628994/192161731-c2be44f2-0db8-4691-a2ef-e5b76c44aa51.png)
+![Screenshot 2023-01-08 225722](https://user-images.githubusercontent.com/106628994/211243410-213e2de3-6f6a-4575-82de-7e01a1f9c170.png)
 
-### Spot Details Page
+### Book a spot
 
-This page provides more details about the spot to the user. A user can add a review to a spot from this page.
+![ezgif com-gif-maker (3)](https://user-images.githubusercontent.com/106628994/211242385-297b8108-6e36-4483-ae5b-891b13a0836f.gif)
 
-![image](https://user-images.githubusercontent.com/106628994/192161296-5790bd80-2d29-4b23-a183-7c0201003754.png)
-![image](https://user-images.githubusercontent.com/106628994/192161305-b318bc2f-3430-44bd-b8aa-71219d565651.png)
+### Add, update and delete a review
 
-### View Your Spots
+![ezgif com-gif-maker (4)](https://user-images.githubusercontent.com/106628994/211242567-20c9ce3b-b23b-41f4-a44a-25411a7ffcfc.gif)
+
+### View, update and delete your spots
 
 A logged in user is able to view all of their spots as well as update and delete spots.
 
-![image](https://user-images.githubusercontent.com/106628994/192161668-1ea9486c-e779-4e9d-9eec-354fa968ec2a.png)
+![ezgif com-gif-maker (5)](https://user-images.githubusercontent.com/106628994/211243247-e54713c8-70da-4fdf-a041-64d5f68a7837.gif)
 
-### View Your Reviews
+### Edit photos of your spots
 
-A logged in user is able to view and delete their reviews.
+![ezgif com-gif-maker (7)](https://user-images.githubusercontent.com/106628994/211244033-a53bbbf4-918c-4097-b8ef-34d2248d170d.gif)
 
-![image](https://user-images.githubusercontent.com/106628994/192161685-033e4ef4-9616-4954-ac6b-0c15016d9796.png)
+### View your reviews
+
+A logged in user is able to view, update, and delete their reviews.
+
+![ezgif com-gif-maker (6)](https://user-images.githubusercontent.com/106628994/211243352-2b8c09f3-917b-491d-9ff4-d9ead1dba429.gif)
 
 ## To-Do List
 
- - Allow users to update reviews and add/remove images to a review.
- - Allow users to add/remove images to a spot.
- - Allow users to create, read, update and delete bookings.
+ - Add search functionality to find spots
 
 ## Get Started
 
